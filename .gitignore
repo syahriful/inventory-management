@@ -1,0 +1,4 @@
+.idea
+.vscode
+.env
+/backend/application.exe
