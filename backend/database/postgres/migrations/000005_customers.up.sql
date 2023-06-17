@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS customers
+(
+    id           SERIAL,
+    code         VARCHAR(100) NOT NULL UNIQUE,
+    name         VARCHAR(100) NOT NULL,
+    created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+)
