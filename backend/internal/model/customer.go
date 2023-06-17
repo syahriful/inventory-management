@@ -1,14 +1,11 @@
 package model
 
-import (
-	"time"
-)
+import "time"
 
-type User struct {
+type Customer struct {
 	ID        int64
+	Code      string
 	Name      string
-	Username  string
-	Password  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

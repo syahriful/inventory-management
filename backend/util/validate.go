@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"github.com/go-playground/validator/v10"
 	"inventory-management/backend/internal/http/presenter/response"
 	"reflect"
@@ -23,9 +24,9 @@ func ValidateStruct(entity interface{}) []*response.ErrorResponse {
 		var errors []*response.ErrorResponse
 		for _, err := range err.(validator.ValidationErrors) {
 			var element response.ErrorResponse
-			element.FailedField = err.StructNamespace()
+			element.FailedField = err.Field()
 			element.Tag = err.Tag()
-			element.Value = err.Param()
+			element.Value = fmt.Sprintf("Error validation '%s' for '%s' field", err.Tag(), err.Field())
 			errors = append(errors, &element)
 		}
 

@@ -2,20 +2,13 @@ package service
 
 import (
 	"context"
+	"errors"
 	"inventory-management/backend/internal/http/presenter/request"
 	"inventory-management/backend/internal/http/presenter/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
 	"inventory-management/backend/util"
 )
-
-type UserServiceContract interface {
-	FindAll(ctx context.Context) ([]*response.UserResponse, error)
-	FindByID(ctx context.Context, id int64) (*response.UserResponse, error)
-	Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error)
-	Update(ctx context.Context, request *request.UpdateUserRequest) (*response.UserResponse, error)
-	Delete(ctx context.Context, id int64) error
-}
 
 type UserService struct {
 	UserRepository repository.UserRepositoryContract
@@ -38,7 +31,7 @@ func (service *UserService) FindAll(ctx context.Context) ([]*response.UserRespon
 		userResponses = append(userResponses, &response.UserResponse{
 			ID:        user.ID,
 			Name:      user.Name,
-			Email:     user.Email,
+			Username:  user.Username,
 			CreatedAt: user.CreatedAt.String(),
 			UpdatedAt: user.UpdatedAt.String(),
 		})
@@ -56,7 +49,7 @@ func (service *UserService) FindByID(ctx context.Context, id int64) (*response.U
 	return &response.UserResponse{
 		ID:        user.ID,
 		Name:      user.Name,
-		Email:     user.Email,
+		Username:  user.Username,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
 	}, nil
@@ -68,9 +61,14 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 		return nil, err
 	}
 
+	_, err = service.UserRepository.FindByUsername(ctx, request.Username)
+	if err == nil {
+		return nil, errors.New("username already exist")
+	}
+
 	user, err := service.UserRepository.Create(ctx, &model.User{
 		Name:     request.Name,
-		Email:    request.Email,
+		Username: request.Username,
 		Password: passwordHashed,
 	})
 	if err != nil {
@@ -80,7 +78,7 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 	return &response.UserResponse{
 		ID:        user.ID,
 		Name:      user.Name,
-		Email:     user.Email,
+		Username:  user.Username,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
 	}, nil
@@ -113,7 +111,7 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 	return &response.UserResponse{
 		ID:        user.ID,
 		Name:      user.Name,
-		Email:     user.Email,
+		Username:  user.Username,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
 	}, nil

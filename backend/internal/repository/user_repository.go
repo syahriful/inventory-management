@@ -7,14 +7,6 @@ import (
 	"log"
 )
 
-type UserRepositoryContract interface {
-	FindAll(ctx context.Context) ([]*model.User, error)
-	FindByID(ctx context.Context, id int64) (*model.User, error)
-	Create(ctx context.Context, user *model.User) (*model.User, error)
-	Update(ctx context.Context, user *model.User) (*model.User, error)
-	Delete(ctx context.Context, id int64) error
-}
-
 type UserRepository struct {
 	DB *gorm.DB
 }
@@ -39,6 +31,17 @@ func (repository *UserRepository) FindAll(ctx context.Context) ([]*model.User, e
 func (repository *UserRepository) FindByID(ctx context.Context, id int64) (*model.User, error) {
 	var user model.User
 	err := repository.DB.WithContext(ctx).First(&user, id).Error
+	if err != nil {
+		log.Println("[UserRepository][FindByID] problem with scanning db row, err: ", err.Error())
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (repository *UserRepository) FindByUsername(ctx context.Context, username string) (*model.User, error) {
+	var user model.User
+	err := repository.DB.WithContext(ctx).Where("username = ?", username).First(&user).Error
 	if err != nil {
 		log.Println("[UserRepository][FindByID] problem with scanning db row, err: ", err.Error())
 		return nil, err

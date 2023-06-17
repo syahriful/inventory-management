@@ -9,7 +9,7 @@ var (
 func ReturnErrorValidation(c *fiber.Ctx, code int, err []*ErrorResponse) error {
 	return c.Status(code).JSON(ErrorValidationResponse{
 		Code:   code,
-		Status: "There are errors validation",
+		Status: "There are inaccuracies in the validation process",
 		Error:  err,
 	})
 }

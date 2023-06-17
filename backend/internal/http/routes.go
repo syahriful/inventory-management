@@ -8,15 +8,14 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"inventory-management/backend/cmd/config"
-	"inventory-management/backend/internal/http/controller"
 	"inventory-management/backend/internal/http/middleware"
 	"inventory-management/backend/internal/http/presenter/response"
-	"inventory-management/backend/internal/repository"
-	"inventory-management/backend/internal/service"
+	"inventory-management/backend/internal/http/routes"
 	"os"
 )
 
 func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber.App, error) {
+	// Init app and middlewares
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
@@ -37,34 +36,20 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 	app.Use(middleware.XApiKeyMiddleware(configuration))
 	app.Use(middleware.NewCORSMiddleware())
 	app.Use(middleware.NewLoggerMiddleware(logFile))
-	if configuration.Get("STATE") == "production" {
-		app.Use(middleware.NewCSRFMiddleware())
-	}
+	app.Use(middleware.NewCSRFMiddleware(configuration))
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Welcome to my Inventory API")
-	})
-
+	// Init database
 	db, err := config.NewPostgresSQLGorm(configuration)
 	if err != nil {
 		return nil, err
 	}
 
-	userRepository := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepository)
-	userController := controller.NewUserController(userService)
-
+	// Register the routes
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Welcome to my Inventory API")
+	})
 	api := app.Group("/api")
-	{
-		users := api.Group("/users")
-		{
-			users.Get("/", userController.FindAll)
-			users.Get("/:id", userController.FindByID)
-			users.Post("/", userController.Create)
-			users.Patch("/:id", userController.Update)
-			users.Delete("/:id", userController.Delete)
-		}
-	}
+	routes.NewUserRoutes(db, api)
 
 	return app, nil
 }

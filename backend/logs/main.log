@@ -1,0 +1,59 @@
+[17-Jun-2023 20:14:42] | 200 | 115.4455ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:14:45] | 404 | 109.8975ms | 127.0.0.1 | GET | /api/users/7 | record not found
+[17-Jun-2023 20:15:01] | 403 |      0s | 127.0.0.1 | PATCH | /api/users/10 | Forbidden
+[17-Jun-2023 20:15:14] | 403 |      0s | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:17:07] | 404 | 10.4198ms | 127.0.0.1 | GET | /api/users/7 | record not found
+[17-Jun-2023 20:17:11] | 403 | 592.4µs | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:17:29] | 200 | 109.061ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:17:31] | 403 |      0s | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:18:55] | 404 | 9.9158ms | 127.0.0.1 | GET | /api/users/7 | record not found
+[17-Jun-2023 20:18:57] | 200 | 105.3289ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:19:01] | 200 | 104.9502ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:19:19] | 201 | 158.9359ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:20:54] | 403 |      0s | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:21:00] | 403 | 287.9µs | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:21:04] | 200 | 125.5812ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:21:05] | 201 | 170.7286ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:21:11] | 500 | 154.3007ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:22:53] | 201 | 173.4636ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:23:06] | 403 | 510.1µs | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:23:09] | 200 | 125.1377ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:23:11] | 400 | 118.7µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:23:18] | 400 | 622.3µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:23:30] | 400 | 815.6µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:24:06] | 403 | 508.9µs | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:24:10] | 200 | 115.2033ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:24:12] | 400 | 833.3µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:24:35] | 200 | 122.5593ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:24:36] | 400 | 1.8674ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:26:01] | 400 | 507.5µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:29:49] | 400 |      0s | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:30:53] | 400 | 509.7µs | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:44:03] | 400 |      0s | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:44:06] | 400 |      0s | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:45:21] | 400 | 1.0085ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:46:13] | 404 | 121.8836ms | 127.0.0.1 | PATCH | /api/users/10 | record not found
+[17-Jun-2023 20:46:22] | 201 | 166.8263ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 20:46:40] | 200 | 119.1828ms | 127.0.0.1 | PATCH | /api/users/5 | -
+[17-Jun-2023 20:46:55] | 200 | 122.6352ms | 127.0.0.1 | PATCH | /api/users/5 | -
+[17-Jun-2023 20:47:03] | 400 | 474.3µs | 127.0.0.1 | PATCH | /api/users/5 | -
+[17-Jun-2023 20:47:11] | 400 |   161µs | 127.0.0.1 | PATCH | /api/users/5 | -
+[17-Jun-2023 20:50:52] | 200 | 132.8695ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:50:53] | 200 | 104.5195ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:50:58] | 200 | 107.3828ms | 127.0.0.1 | GET | /api/users/5 | -
+[17-Jun-2023 20:53:53] | 200 | 120.9576ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:53:54] | 200 | 103.1343ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:54:05] | 200 | 119.6399ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:54:08] | 500 | 161.1388ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:54:16] | 403 |      0s | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:54:21] | 200 | 116.0018ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:54:24] | 500 | 168.9679ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:56:39] | 403 |      0s | 127.0.0.1 | POST | /api/users | Forbidden
+[17-Jun-2023 20:56:42] | 200 | 123.6844ms | 127.0.0.1 | GET | /api/users | -
+[17-Jun-2023 20:56:44] | 500 | 157.6905ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:58:00] | 500 | 168.989ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:58:01] | 500 | 161.0704ms | 127.0.0.1 | POST | /api/users | ERROR: duplicate key value violates unique constraint "users_username_key" (SQLSTATE 23505)
+[17-Jun-2023 20:58:26] | 500 | 163.8894ms | 127.0.0.1 | POST | /api/users | username already exist
+[17-Jun-2023 20:58:43] | 201 | 157.0672ms | 127.0.0.1 | POST | /api/users | -
+[17-Jun-2023 21:00:34] | 500 | 60.8133ms | 127.0.0.1 | POST | /api/users | username already exist
+[17-Jun-2023 21:07:24] | 500 | 180.3135ms | 127.0.0.1 | POST | /api/users | username already exist

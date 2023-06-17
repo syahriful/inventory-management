@@ -45,7 +45,7 @@ func NewJWTMiddleware() fiber.Handler {
 			userClaims := userContext.Claims.(jwt.MapClaims)
 
 			ctx.Locals("id", userClaims["id"])
-			ctx.Locals("email", userClaims["email"])
+			ctx.Locals("username", userClaims["username"])
 			return ctx.Next()
 		},
 	})
@@ -71,13 +71,19 @@ func NewLoggerMiddleware(logFile *os.File) fiber.Handler {
 	})
 }
 
-func NewCSRFMiddleware() fiber.Handler {
-	return csrf.New(csrf.Config{
-		KeyLookup:      "header:X-CSRF-Token",
-		CookieName:     "csrf_token",
-		CookieSameSite: "Lax",
-		CookieHTTPOnly: true,
-		Expiration:     15 * time.Minute,
-		KeyGenerator:   utils.UUID,
-	})
+func NewCSRFMiddleware(configuration config.Config) fiber.Handler {
+	if configuration.Get("STATE") == "production" {
+		return csrf.New(csrf.Config{
+			KeyLookup:      "header:X-CSRF-Token",
+			CookieName:     "csrf_token",
+			CookieSameSite: "Lax",
+			CookieHTTPOnly: true,
+			Expiration:     30 * time.Minute,
+			KeyGenerator:   utils.UUID,
+		})
+	}
+
+	return func(ctx *fiber.Ctx) error {
+		return ctx.Next()
+	}
 }
