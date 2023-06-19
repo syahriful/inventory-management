@@ -1,7 +1,5 @@
 package model
 
-import "time"
-
 type ProductQuality struct {
 	ID          int64
 	ProductCode string
@@ -9,7 +7,5 @@ type ProductQuality struct {
 	Price       int64
 	Quantity    float64
 	Type        string
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	Product     *Product
+	Product     *Product `gorm:"foreignKey:ProductCode;references:Code"`
 }

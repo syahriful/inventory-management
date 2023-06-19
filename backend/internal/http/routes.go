@@ -48,8 +48,10 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to my Inventory API")
 	})
+
 	api := app.Group("/api")
-	routes.NewUserRoutes(db, api)
+	routes.NewUserRoute(db, api)
+	routes.NewProductRoute(db, api)
 
 	return app, nil
 }

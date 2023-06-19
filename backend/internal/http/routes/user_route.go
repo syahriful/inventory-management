@@ -8,7 +8,7 @@ import (
 	"inventory-management/backend/internal/service"
 )
 
-func NewUserRoutes(db *gorm.DB, prefix fiber.Router) {
+func NewUserRoute(db *gorm.DB, prefix fiber.Router) {
 	userRepository := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)
 	userController := controller.NewUserController(userService)

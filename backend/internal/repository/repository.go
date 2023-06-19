@@ -13,3 +13,12 @@ type UserRepositoryContract interface {
 	Update(ctx context.Context, user *model.User) (*model.User, error)
 	Delete(ctx context.Context, id int64) error
 }
+
+type ProductRepositoryContract interface {
+	FindAll(ctx context.Context) ([]*model.Product, error)
+	FindByID(ctx context.Context, id int64) (*model.Product, error)
+	FindByCode(ctx context.Context, code string) (*model.Product, error)
+	Create(ctx context.Context, product *model.Product) (*model.Product, error)
+	Update(ctx context.Context, product *model.Product) (*model.Product, error)
+	Delete(ctx context.Context, id int64) error
+}
