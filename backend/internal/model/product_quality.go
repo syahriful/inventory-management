@@ -11,4 +11,5 @@ type ProductQuality struct {
 	Type        string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	Product     *Product
 }

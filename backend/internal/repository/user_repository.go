@@ -4,7 +4,6 @@ import (
 	"context"
 	"gorm.io/gorm"
 	"inventory-management/backend/internal/model"
-	"log"
 )
 
 type UserRepository struct {
@@ -21,7 +20,6 @@ func (repository *UserRepository) FindAll(ctx context.Context) ([]*model.User, e
 	var users []*model.User
 	err := repository.DB.WithContext(ctx).Find(&users).Error
 	if err != nil {
-		log.Println("[UserRepository][FindAll] problem with scanning db row, err: ", err.Error())
 		return nil, err
 	}
 
@@ -32,7 +30,6 @@ func (repository *UserRepository) FindByID(ctx context.Context, id int64) (*mode
 	var user model.User
 	err := repository.DB.WithContext(ctx).First(&user, id).Error
 	if err != nil {
-		log.Println("[UserRepository][FindByID] problem with scanning db row, err: ", err.Error())
 		return nil, err
 	}
 
@@ -43,7 +40,6 @@ func (repository *UserRepository) FindByUsername(ctx context.Context, username s
 	var user model.User
 	err := repository.DB.WithContext(ctx).Where("username = ?", username).First(&user).Error
 	if err != nil {
-		log.Println("[UserRepository][FindByID] problem with scanning db row, err: ", err.Error())
 		return nil, err
 	}
 
@@ -53,7 +49,6 @@ func (repository *UserRepository) FindByUsername(ctx context.Context, username s
 func (repository *UserRepository) Create(ctx context.Context, user *model.User) (*model.User, error) {
 	err := repository.DB.WithContext(ctx).Create(user).Error
 	if err != nil {
-		log.Println("[UserRepository][Create] problem with scanning db row, err: ", err.Error())
 		return nil, err
 	}
 
@@ -63,7 +58,6 @@ func (repository *UserRepository) Create(ctx context.Context, user *model.User) 
 func (repository *UserRepository) Update(ctx context.Context, user *model.User) (*model.User, error) {
 	err := repository.DB.WithContext(ctx).Select("name", "password").Updates(&user).Error
 	if err != nil {
-		log.Println("[UserRepository][Update] problem querying to db, err: ", err.Error())
 		return nil, err
 	}
 
@@ -74,7 +68,6 @@ func (repository *UserRepository) Delete(ctx context.Context, id int64) error {
 	var user model.User
 	err := repository.DB.WithContext(ctx).Delete(&user, id).Error
 	if err != nil {
-		log.Println("[UserRepository][Delete] problem querying to db, err: ", err.Error())
 		return err
 	}
 

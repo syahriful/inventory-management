@@ -10,4 +10,5 @@ type Product struct {
 	UnitMassDescription string
 	CreatedAt           time.Time
 	UpdatedAt           time.Time
+	ProductQualities    []*ProductQuality
 }
