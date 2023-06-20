@@ -21,3 +21,10 @@ type ProductRepositoryContract interface {
 	Update(ctx context.Context, product *model.Product) (*model.Product, error)
 	Delete(ctx context.Context, code string) error
 }
+
+type ProductQualityRepositoryContract interface {
+	FindAll(ctx context.Context) ([]*model.ProductQuality, error)
+	FindAllByProductCode(ctx context.Context, productCode string) ([]*model.ProductQuality, error)
+	FindByID(ctx context.Context, id int64) (*model.ProductQuality, error)
+	Delete(ctx context.Context, id int64) error
+}

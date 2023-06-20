@@ -21,3 +21,9 @@ type ProductServiceContract interface {
 	Update(ctx context.Context, request *request.UpdateProductRequest) (*response.ProductResponse, error)
 	Delete(ctx context.Context, code string) error
 }
+
+type ProductQualityServiceContract interface {
+	FindAll(ctx context.Context) ([]*response.ProductQualityResponse, error)
+	FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error)
+	Delete(ctx context.Context, id int64) error
+}

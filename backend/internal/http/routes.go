@@ -52,6 +52,7 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 	api := app.Group("/api")
 	routes.NewUserRoute(db, api)
 	routes.NewProductRoute(db, api)
+	routes.NewProductQualityRoute(db, api)
 
 	return app, nil
 }

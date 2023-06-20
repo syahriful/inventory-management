@@ -156,3 +156,37 @@
 [20-Jun-2023 11:44:32] | 200 | 107.5767ms | 127.0.0.1 | GET | /api/products/Z1YA9T9NF0 | -
 [20-Jun-2023 11:47:17] | 200 | 131.8061ms | 127.0.0.1 | DELETE | /api/products/Z1YA9T9NF0 | -
 [20-Jun-2023 11:47:23] | 201 | 124.4736ms | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 13:21:36] | 200 | 120.0216ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 13:22:08] | 404 | 117.9316ms | 127.0.0.1 | PATCH | /api/products/Z1YA9T9NF0 | record not found
+[20-Jun-2023 13:22:14] | 200 | 133.1882ms | 127.0.0.1 | PATCH | /api/products/Q8Y7RSZLBU | -
+[20-Jun-2023 13:22:21] | 201 | 120.7279ms | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 13:22:24] | 400 | 104.7849ms | 127.0.0.1 | GET | /api/product-qualities/Z1YA9T9NF0 | record not found
+[20-Jun-2023 13:22:26] | 200 | 116.9371ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 13:22:41] | 200 | 102.8931ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 13:23:09] | 200 | 124.9371ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:23:32] | 200 | 108.2023ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:23:34] | 200 | 108.1298ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:00] | 200 | 122.3879ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:02] | 200 | 118.2697ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:04] | 200 | 114.8266ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:06] | 200 | 105.4491ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:10] | 400 | 105.5808ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU2 | record not found
+[20-Jun-2023 13:32:13] | 200 | 108.2746ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:16] | 400 | 109.1075ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUs | record not found
+[20-Jun-2023 13:32:52] | 200 | 124.0498ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:32:54] | 404 | 106.4478ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUs | record not found
+[20-Jun-2023 13:32:57] | 200 | 108.6203ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:33:04] | 404 | 103.8784ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUg | record not found
+[20-Jun-2023 13:33:09] | 200 | 111.5033ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:33:13] | 404 | 106.8671ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUs | record not found
+[20-Jun-2023 13:33:14] | 404 | 1.9404ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUs | record not found
+[20-Jun-2023 13:33:14] | 404 | 1.8642ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBUs | record not found
+[20-Jun-2023 13:33:16] | 200 | 114.9074ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:37:38] | 200 | 128.6075ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:38:58] | 400 |   617µs | 127.0.0.1 | DELETE | /api/product-qualities/Z1YA9T9NF0 | failed to convert: strconv.Atoi: parsing "Z1YA9T9NF0": invalid syntax
+[20-Jun-2023 13:39:40] | 500 | 120.4141ms | 127.0.0.1 | DELETE | /api/product-qualities/473 | record not found
+[20-Jun-2023 13:40:07] | 404 | 119.2053ms | 127.0.0.1 | DELETE | /api/product-qualities/473 | record not found
+[20-Jun-2023 13:40:13] | 200 | 114.7573ms | 127.0.0.1 | DELETE | /api/product-qualities/47 | -
+[20-Jun-2023 13:40:23] | 200 | 111.0711ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 13:40:27] | 200 | 121.2218ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
+[20-Jun-2023 13:40:30] | 200 | 108.7768ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
