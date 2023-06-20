@@ -52,5 +52,5 @@ func (controller *ProductQualityController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, fiber.StatusOK, "OK", nil)
+	return response.ReturnSuccess(ctx, fiber.StatusOK, "deleted", nil)
 }

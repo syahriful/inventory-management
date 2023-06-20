@@ -345,3 +345,8 @@
 [20-Jun-2023 20:20:42] | 200 | 110.0004ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
 [20-Jun-2023 20:20:49] | 200 | 131.9394ms | 127.0.0.1 | PATCH | /api/customers/F62NB91A3B | -
 [20-Jun-2023 20:20:55] | 200 | 115.1588ms | 127.0.0.1 | DELETE | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:23:40] | 404 | 124.3411ms | 127.0.0.1 | DELETE | /api/customers/F62NB91A3B | record not found
+[20-Jun-2023 20:23:43] | 404 | 113.5953ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | record not found
+[20-Jun-2023 20:23:47] | 200 | 108.1912ms | 127.0.0.1 | GET | /api/customers | -
+[20-Jun-2023 20:23:56] | 404 | 105.103ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | record not found
+[20-Jun-2023 20:24:03] | 200 | 110.3992ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -

@@ -21,8 +21,7 @@ func NewAuthController(userService service.UserServiceContract) *AuthController 
 
 func (controller *AuthController) Login(ctx *fiber.Ctx) error {
 	var loginUserRequest request.LoginUserRequest
-	err := ctx.BodyParser(&loginUserRequest)
-	if err != nil {
+	if err := ctx.BodyParser(&loginUserRequest); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
@@ -41,8 +40,7 @@ func (controller *AuthController) Login(ctx *fiber.Ctx) error {
 
 func (controller *AuthController) Register(ctx *fiber.Ctx) error {
 	var userRequest request.CreateUserRequest
-	err := ctx.BodyParser(&userRequest)
-	if err != nil {
+	if err := ctx.BodyParser(&userRequest); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 

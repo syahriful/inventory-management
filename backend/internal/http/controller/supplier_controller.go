@@ -43,8 +43,7 @@ func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
 
 func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 	var supplierRequest request.CreateSupplierRequest
-	err := ctx.BodyParser(&supplierRequest)
-	if err != nil {
+	if err := ctx.BodyParser(&supplierRequest); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
@@ -58,7 +57,7 @@ func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusCreated, "OK", supplier)
+	return response.ReturnSuccess(ctx, http.StatusCreated, "created", supplier)
 }
 
 func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
@@ -82,7 +81,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "OK", supplier)
+	return response.ReturnSuccess(ctx, http.StatusOK, "updated", supplier)
 }
 
 func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
@@ -95,5 +94,5 @@ func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "OK", nil)
+	return response.ReturnSuccess(ctx, http.StatusOK, "deleted", nil)
 }

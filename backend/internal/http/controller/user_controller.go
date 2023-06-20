@@ -46,8 +46,7 @@ func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
 
 func (controller *UserController) Create(ctx *fiber.Ctx) error {
 	var userRequest request.CreateUserRequest
-	err := ctx.BodyParser(&userRequest)
-	if err != nil {
+	if err := ctx.BodyParser(&userRequest); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
@@ -66,8 +65,7 @@ func (controller *UserController) Create(ctx *fiber.Ctx) error {
 
 func (controller *UserController) Update(ctx *fiber.Ctx) error {
 	var userRequest request.UpdateUserRequest
-	err := ctx.BodyParser(&userRequest)
-	if err != nil {
+	if err := ctx.BodyParser(&userRequest); err != nil {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
