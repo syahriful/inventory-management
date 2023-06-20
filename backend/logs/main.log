@@ -312,3 +312,36 @@
 [20-Jun-2023 19:44:38] | 200 | 122.1202ms | 127.0.0.1 | GET | /api/product-qualities | -
 [20-Jun-2023 19:44:42] | 200 | 119.7158ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
 [20-Jun-2023 19:44:56] | 200 | 116.0838ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 20:13:40] | 200 | 124.1977ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 20:13:59] | 200 | 105.9766ms | 127.0.0.1 | GET | /api/customers | -
+[20-Jun-2023 20:14:03] | 404 | 117.3912ms | 127.0.0.1 | GET | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:14:46] | 400 | 505.5µs | 127.0.0.1 | POST | /api/customers | -
+[20-Jun-2023 20:14:49] | 201 | 132.7542ms | 127.0.0.1 | POST | /api/customers | -
+[20-Jun-2023 20:14:57] | 200 | 106.4785ms | 127.0.0.1 | GET | /api/customers | -
+[20-Jun-2023 20:14:59] | 404 | 112.4775ms | 127.0.0.1 | GET | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:15:05] | 200 | 117.3821ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:15:21] | 200 | 116.3614ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:15:35] | 200 | 110.0793ms | 127.0.0.1 | GET | /api/customers | -
+[20-Jun-2023 20:15:38] | 200 | 105.7422ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:15:41] | 200 | 123.49ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[20-Jun-2023 20:15:56] | 200 | 122.2963ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 20:16:12] | 200 | 116.2886ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:16:42] | 200 | 123.8307ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:17:15] | 200 | 123.3646ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:17:22] | 200 | 110.0131ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 20:17:24] | 200 | 109.7648ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:17:43] | 405 | 516.5µs | 127.0.0.1 | PATCH | /api/customers/OZM62RD4RM | Method Not Allowed
+[20-Jun-2023 20:17:51] | 405 |  62.9µs | 127.0.0.1 | PATCH | /api/customers/OZM62RD4RMs | Method Not Allowed
+[20-Jun-2023 20:17:55] | 405 | 758.4µs | 127.0.0.1 | PATCH | /api/customers/OZM62RD4RM | Method Not Allowed
+[20-Jun-2023 20:18:10] | 404 | 126.527ms | 127.0.0.1 | PATCH | /api/customers/OZM62RD4RM | record not found
+[20-Jun-2023 20:18:16] | 200 | 111.4679ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 20:18:20] | 404 | 105.4358ms | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:18:55] | 404 | 107.6233ms | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:18:58] | 200 | 116.0622ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:19:45] | 400 | 790.8µs | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MR | -
+[20-Jun-2023 20:19:48] | 404 | 11.907ms | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:19:54] | 404 | 116.277ms | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MRs | record not found
+[20-Jun-2023 20:19:58] | 404 | 102.7835ms | 127.0.0.1 | PATCH | /api/customers/5R6TZZ05MR | record not found
+[20-Jun-2023 20:20:42] | 200 | 110.0004ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:20:49] | 200 | 131.9394ms | 127.0.0.1 | PATCH | /api/customers/F62NB91A3B | -
+[20-Jun-2023 20:20:55] | 200 | 115.1588ms | 127.0.0.1 | DELETE | /api/customers/F62NB91A3B | -

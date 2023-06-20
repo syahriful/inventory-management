@@ -57,6 +57,7 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 	routes.NewProductRoute(db, api)
 	routes.NewProductQualityRoute(db, api)
 	routes.NewSupplierRoute(db, api)
+	routes.NewCustomerRoute(db, api)
 
 	app.Get("*", func(c *fiber.Ctx) error {
 		return response.ReturnError(c, fiber.StatusNotFound, errors.New("the requested resource was not found"))

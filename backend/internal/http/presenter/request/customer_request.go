@@ -5,5 +5,6 @@ type CreateCustomerRequest struct {
 }
 
 type UpdateCustomerRequest struct {
+	Code string
 	Name string `json:"name" validate:"required,min=3,max=100"`
 }
