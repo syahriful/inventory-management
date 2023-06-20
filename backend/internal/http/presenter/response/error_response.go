@@ -1,14 +1,17 @@
 package response
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"net/http"
+)
 
 var (
 	NotFound = "record not found"
 )
 
-func ReturnErrorValidation(c *fiber.Ctx, code int, err []*ErrorResponse) error {
-	return c.Status(code).JSON(ErrorValidationResponse{
-		Code:   code,
+func ReturnErrorValidation(c *fiber.Ctx, err []*ErrorResponse) error {
+	return c.Status(http.StatusBadRequest).JSON(ErrorValidationResponse{
+		Code:   http.StatusBadRequest,
 		Status: "There are inaccuracies in the validation process",
 		Error:  err,
 	})

@@ -40,8 +40,8 @@ func (repository *ProductService) FindAll(ctx context.Context) ([]*response.Prod
 	return productResponses, nil
 }
 
-func (repository *ProductService) FindByID(ctx context.Context, id int64) (*response.ProductResponse, error) {
-	product, err := repository.ProductRepository.FindByID(ctx, id)
+func (repository *ProductService) FindByID(ctx context.Context, code string) (*response.ProductResponse, error) {
+	product, err := repository.ProductRepository.FindByCode(ctx, code)
 	if err != nil {
 		return nil, err
 	}
@@ -79,10 +79,12 @@ func (repository *ProductService) FindByCode(ctx context.Context, code string) (
 	var productQualities []*response.ProductQualityResponse
 	for _, productQuality := range product.ProductQualities {
 		productQualities = append(productQualities, &response.ProductQualityResponse{
-			Quality:  productQuality.Quality,
-			Price:    productQuality.Price,
-			Quantity: productQuality.Quantity,
-			Type:     productQuality.Type,
+			ID:          productQuality.ID,
+			ProductCode: productQuality.ProductCode,
+			Quality:     productQuality.Quality,
+			Price:       productQuality.Price,
+			Quantity:    productQuality.Quantity,
+			Type:        productQuality.Type,
 		})
 	}
 
@@ -132,7 +134,7 @@ func (repository *ProductService) Create(ctx context.Context, request *request.C
 }
 
 func (repository *ProductService) Update(ctx context.Context, request *request.UpdateProductRequest) (*response.ProductResponse, error) {
-	checkProduct, err := repository.ProductRepository.FindByID(ctx, request.ID)
+	checkProduct, err := repository.ProductRepository.FindByCode(ctx, request.Code)
 	if err != nil {
 		return nil, err
 	}
@@ -172,13 +174,13 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 	}, nil
 }
 
-func (repository *ProductService) Delete(ctx context.Context, id int64) error {
-	checkProduct, err := repository.ProductRepository.FindByID(ctx, id)
+func (repository *ProductService) Delete(ctx context.Context, code string) error {
+	checkProduct, err := repository.ProductRepository.FindByCode(ctx, code)
 	if err != nil {
 		return err
 	}
 
-	err = repository.ProductRepository.Delete(ctx, checkProduct.ID)
+	err = repository.ProductRepository.Delete(ctx, checkProduct.Code)
 	if err != nil {
 		return err
 	}

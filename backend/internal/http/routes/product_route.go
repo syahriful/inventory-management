@@ -15,8 +15,8 @@ func NewProductRoute(db *gorm.DB, prefix fiber.Router) {
 
 	products := prefix.Group("/products")
 	products.Get("/", productController.FindAll)
-	products.Get("/:id", productController.FindByID)
+	products.Get("/:code", productController.FindByCode)
 	products.Post("/", productController.Create)
-	products.Patch("/:id", productController.Update)
-	products.Delete("/:id", productController.Delete)
+	products.Patch("/:code", productController.Update)
+	products.Delete("/:code", productController.Delete)
 }

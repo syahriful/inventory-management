@@ -8,7 +8,7 @@ type CreateProductRequest struct {
 }
 
 type UpdateProductRequest struct {
-	ID                  int64
+	Code                string
 	Name                string                         `json:"name" validate:"required,max=100"`
 	UnitMassAcronym     string                         `json:"unit_mass_acronym" validate:"required,max=20"`
 	UnitMassDescription string                         `json:"unit_mass_description" validate:"required,max=50"`

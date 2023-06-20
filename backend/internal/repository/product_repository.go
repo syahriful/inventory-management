@@ -26,16 +26,6 @@ func (repository *ProductRepository) FindAll(ctx context.Context) ([]*model.Prod
 	return products, nil
 }
 
-func (repository *ProductRepository) FindByID(ctx context.Context, id int64) (*model.Product, error) {
-	var product model.Product
-	err := repository.DB.WithContext(ctx).Preload("ProductQualities").First(&product, id).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return &product, nil
-}
-
 func (repository *ProductRepository) FindByCode(ctx context.Context, code string) (*model.Product, error) {
 	var product model.Product
 	err := repository.DB.WithContext(ctx).Preload("ProductQualities").Where("code = ?", code).First(&product).Error
@@ -47,7 +37,14 @@ func (repository *ProductRepository) FindByCode(ctx context.Context, code string
 }
 
 func (repository *ProductRepository) Create(ctx context.Context, product *model.Product) (*model.Product, error) {
-	err := repository.DB.WithContext(ctx).Create(&product).Error
+	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		err := tx.WithContext(ctx).Create(&product).Error
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +54,7 @@ func (repository *ProductRepository) Create(ctx context.Context, product *model.
 
 func (repository *ProductRepository) Update(ctx context.Context, product *model.Product) (*model.Product, error) {
 	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		err := tx.WithContext(ctx).Updates(&product).Error
+		err := tx.WithContext(ctx).Where("code = ?", product.Code).Updates(&product).Error
 		if err != nil {
 			return err
 		}
@@ -79,9 +76,9 @@ func (repository *ProductRepository) Update(ctx context.Context, product *model.
 	return product, nil
 }
 
-func (repository *ProductRepository) Delete(ctx context.Context, id int64) error {
+func (repository *ProductRepository) Delete(ctx context.Context, code string) error {
 	var product model.Product
-	err := repository.DB.WithContext(ctx).Delete(&product, id).Error
+	err := repository.DB.WithContext(ctx).Where("code = ?", code).Delete(&product).Error
 	if err != nil {
 		return err
 	}

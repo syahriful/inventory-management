@@ -53,7 +53,7 @@ func (controller *UserController) Create(ctx *fiber.Ctx) error {
 
 	errValidation := util.ValidateStruct(userRequest)
 	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, fiber.StatusBadRequest, errValidation)
+		return response.ReturnErrorValidation(ctx, errValidation)
 	}
 
 	user, err := controller.UserService.Create(ctx.Context(), &userRequest)
@@ -73,7 +73,7 @@ func (controller *UserController) Update(ctx *fiber.Ctx) error {
 
 	errValidation := util.ValidateStruct(userRequest)
 	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, fiber.StatusBadRequest, errValidation)
+		return response.ReturnErrorValidation(ctx, errValidation)
 	}
 
 	id, err := ctx.ParamsInt("id")

@@ -132,3 +132,27 @@
 [19-Jun-2023 11:33:57] | 404 | 102.5523ms | 127.0.0.1 | PATCH | /api/products/2 | record not found
 [19-Jun-2023 11:34:01] | 200 | 127.1447ms | 127.0.0.1 | PATCH | /api/products/3 | -
 [19-Jun-2023 11:34:26] | 200 | 133.9537ms | 127.0.0.1 | PATCH | /api/products/3 | -
+[20-Jun-2023 11:22:28] | 200 | 118.6427ms | 127.0.0.1 | GET | /api/products/Y3B8CPY6S4 | -
+[20-Jun-2023 11:22:36] | 200 | 105.534ms | 127.0.0.1 | GET | /api/products | -
+[20-Jun-2023 11:23:20] | 200 | 121.2492ms | 127.0.0.1 | GET | /api/products/Y3B8CPY6S4 | -
+[20-Jun-2023 11:27:20] | 200 | 122.0349ms | 127.0.0.1 | DELETE | /api/products/Y3B8CPY6S4 | -
+[20-Jun-2023 11:27:26] | 201 | 114.2123ms | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 11:27:31] | 200 | 104.2312ms | 127.0.0.1 | GET | /api/products | -
+[20-Jun-2023 11:27:39] | 404 | 108.1809ms | 127.0.0.1 | GET | /api/products/Y3B8CPY6S4 | record not found
+[20-Jun-2023 11:27:43] | 200 | 103.9724ms | 127.0.0.1 | GET | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:28:25] | 200 | 123.3945ms | 127.0.0.1 | GET | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:28:27] | 404 | 106.3896ms | 127.0.0.1 | PATCH | /api/products/Y3B8CPY6S4 | record not found
+[20-Jun-2023 11:28:32] | 200 | 133.0113ms | 127.0.0.1 | PATCH | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:28:57] | 200 | 130.3114ms | 127.0.0.1 | PATCH | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:29:59] | 400 | 992.5µs | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 11:30:03] | 400 | 1.0008ms | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 11:37:13] | 400 |      0s | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 11:37:35] | 400 | 507.5µs | 127.0.0.1 | POST | /api/products | Key: 'CreateProductRequest.UnitMassDescription' Error:Field validation for 'UnitMassDescription' failed on the 'required' tag
+[20-Jun-2023 11:40:22] | 400 | 505.9µs | 127.0.0.1 | POST | /api/products | Key: 'CreateProductRequest.UnitMassDescription' Error:Field validation for 'UnitMassDescription' failed on the 'required' tag
+[20-Jun-2023 11:40:24] | 400 | 341.6µs | 127.0.0.1 | POST | /api/products | Key: 'CreateProductRequest.UnitMassDescription' Error:Field validation for 'UnitMassDescription' failed on the 'required' tag
+[20-Jun-2023 11:43:26] | 400 | 505.2µs | 127.0.0.1 | POST | /api/products | -
+[20-Jun-2023 11:44:09] | 200 | 117.9381ms | 127.0.0.1 | GET | /api/products | -
+[20-Jun-2023 11:44:12] | 200 | 110.0517ms | 127.0.0.1 | GET | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:44:32] | 200 | 107.5767ms | 127.0.0.1 | GET | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:47:17] | 200 | 131.8061ms | 127.0.0.1 | DELETE | /api/products/Z1YA9T9NF0 | -
+[20-Jun-2023 11:47:23] | 201 | 124.4736ms | 127.0.0.1 | POST | /api/products | -

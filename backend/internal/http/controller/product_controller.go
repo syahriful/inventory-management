@@ -27,13 +27,10 @@ func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {
 	return response.ReturnSuccess(ctx, fiber.StatusOK, "OK", products)
 }
 
-func (controller *ProductController) FindByID(ctx *fiber.Ctx) error {
-	id, err := ctx.ParamsInt("id")
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
+func (controller *ProductController) FindByCode(ctx *fiber.Ctx) error {
+	code := ctx.Params("code")
 
-	product, err := controller.ProductService.FindByID(ctx.Context(), int64(id))
+	product, err := controller.ProductService.FindByCode(ctx.Context(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -53,7 +50,7 @@ func (controller *ProductController) Create(ctx *fiber.Ctx) error {
 
 	errValidation := util.ValidateStruct(productRequest)
 	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, fiber.StatusBadRequest, errValidation)
+		return response.ReturnErrorValidation(ctx, errValidation)
 	}
 
 	product, err := controller.ProductService.Create(ctx.Context(), &productRequest)
@@ -73,15 +70,11 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 
 	errValidation := util.ValidateStruct(productRequest)
 	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, fiber.StatusBadRequest, errValidation)
+		return response.ReturnErrorValidation(ctx, errValidation)
 	}
 
-	id, err := ctx.ParamsInt("id")
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
-
-	productRequest.ID = int64(id)
+	code := ctx.Params("code")
+	productRequest.Code = code
 	product, err := controller.ProductService.Update(ctx.Context(), &productRequest)
 	if err != nil {
 		if err.Error() == response.NotFound {
@@ -94,12 +87,8 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 }
 
 func (controller *ProductController) Delete(ctx *fiber.Ctx) error {
-	id, err := ctx.ParamsInt("id")
-	if err != nil {
-		return fiber.NewError(fiber.StatusBadRequest, err.Error())
-	}
-
-	err = controller.ProductService.Delete(ctx.Context(), int64(id))
+	code := ctx.Params("code")
+	err := controller.ProductService.Delete(ctx.Context(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
