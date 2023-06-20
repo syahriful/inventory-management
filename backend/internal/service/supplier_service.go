@@ -52,6 +52,10 @@ func (service *SupplierService) FindByCode(ctx context.Context, code string) (*r
 		productQualityResponse.ID = transaction.ProductQuality.ID
 		productQualityResponse.Quality = transaction.ProductQuality.Quality
 		productQualityResponse.Price = transaction.ProductQuality.Price
+		productQualityResponse.Product = &response.ProductResponse{
+			Code: transaction.ProductQuality.Product.Code,
+			Name: transaction.ProductQuality.Product.Name,
+		}
 
 		transactionResponses = append(transactionResponses, &response.TransactionResponse{
 			ID:               transaction.ID,
