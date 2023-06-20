@@ -8,9 +8,9 @@ type Transaction struct {
 	ProductQualityID int64
 	ProductQuality   *ProductQuality
 	SupplierCode     *string
-	Supplier         *Supplier
+	Supplier         *Supplier `gorm:"foreignKey:SupplierCode;references:Code"`
 	CustomerCode     *string
-	Customer         *Customer
+	Customer         *Customer `gorm:"foreignKey:CustomerCode;references:Code"`
 	Description      *string
 	Quantity         float64
 	Type             string

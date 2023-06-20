@@ -8,5 +8,5 @@ type Customer struct {
 	Name         string
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
-	Transactions []*Transaction
+	Transactions []*Transaction `gorm:"foreignKey:CustomerCode;references:Code"`
 }

@@ -190,3 +190,50 @@
 [20-Jun-2023 13:40:23] | 200 | 111.0711ms | 127.0.0.1 | GET | /api/product-qualities | -
 [20-Jun-2023 13:40:27] | 200 | 121.2218ms | 127.0.0.1 | GET | /api/product-qualities/Q8Y7RSZLBU | -
 [20-Jun-2023 13:40:30] | 200 | 108.7768ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[20-Jun-2023 14:16:42] | 200 | 120.8255ms | 127.0.0.1 | GET | /api/products | -
+[20-Jun-2023 14:16:48] | 200 | 114.7733ms | 127.0.0.1 | GET | /api/products/Q8Y7RSZLBU | -
+[20-Jun-2023 14:46:39] | 500 | 503.2µs | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Transaction's field Supplier: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:46:46] | 500 | 978.9µs | 127.0.0.1 | GET | /api/suppliers/Q8Y7RSZLBU | invalid field found for struct inventory-management/backend/internal/model.Transaction's field Supplier: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:47:14] | 500 | 509.2µs | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Transaction's field Supplier: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:47:34] | 500 | 1.0353ms | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Customer's field Transactions: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:47:35] | 500 |  77.8µs | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Customer's field Transactions: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:48:05] | 500 | 1.0273ms | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Transaction's field Supplier: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:48:47] | 200 | 122.6578ms | 127.0.0.1 | GET | /api/suppliers | -
+[20-Jun-2023 14:49:06] | 200 | 115.65ms | 127.0.0.1 | GET | /api/products | -
+[20-Jun-2023 14:49:08] | 200 | 115.3607ms | 127.0.0.1 | GET | /api/products/Q8Y7RSZLBU | -
+[20-Jun-2023 14:49:15] | 404 | 107.9325ms | 127.0.0.1 | GET | /api/suppliers/Q8Y7RSZLBU | record not found
+[20-Jun-2023 14:49:35] | 200 | 126.516ms | 127.0.0.1 | GET | /api/suppliers | -
+[20-Jun-2023 14:49:36] | 200 | 107.2437ms | 127.0.0.1 | GET | /api/suppliers | -
+[20-Jun-2023 14:49:44] | 500 | 1.0405ms | 127.0.0.1 | GET | /api/suppliers | invalid field found for struct inventory-management/backend/internal/model.Transaction's field Supplier: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[20-Jun-2023 14:50:39] | 400 |      0s | 127.0.0.1 | POST | /api/suppliers | -
+[20-Jun-2023 14:50:44] | 400 |      0s | 127.0.0.1 | POST | /api/suppliers | -
+[20-Jun-2023 14:50:49] | 400 |      0s | 127.0.0.1 | POST | /api/suppliers | -
+[20-Jun-2023 14:50:57] | 201 | 122.9787ms | 127.0.0.1 | POST | /api/suppliers | -
+[20-Jun-2023 14:52:29] | 201 | 133.995ms | 127.0.0.1 | POST | /api/suppliers | -
+[20-Jun-2023 14:53:33] | 200 | 117.9061ms | 127.0.0.1 | PATCH | /api/suppliers/OZM62RD4RM | -
+[20-Jun-2023 14:54:40] | 200 | 121.2123ms | 127.0.0.1 | GET | /api/suppliers/OZM62RD4RM | -
+[20-Jun-2023 14:54:47] | 200 | 107.0097ms | 127.0.0.1 | DELETE | /api/suppliers/OZM62RD4RM | -
+[20-Jun-2023 14:55:48] | 200 | 122.0758ms | 127.0.0.1 | GET | /api/suppliers | -
+[20-Jun-2023 14:55:53] | 200 | 120.1305ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 14:58:55] | 200 | 119.0614ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 14:59:24] | 200 | 113.3781ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:01:06] | 200 | 121.1176ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:01:07] | 200 | 2.8461ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:01:08] | 200 | 2.5865ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:01:49] | 200 | 120.8678ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:02:58] | 500 | 132.7582ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | failed to encode args[1]: unable to encode (func(*gorm.DB) error)(0x7f78c0) into binary format for int4 (OID 23): cannot find encode plan
+[20-Jun-2023 15:06:20] | 200 | 127.4037ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:07:09] | 200 | 132.5876ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:15:12] | 200 | 119.2732ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:15:38] | 200 | 107.5594ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 15:20:06] | 500 | 132.1951ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | Product: unsupported relations for schema ProductQuality
+[20-Jun-2023 15:20:24] | 200 | 124.8408ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:24:43] | 200 | 119.6326ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:24:59] | 200 | 133.2744ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:27:37] | 200 | 111.554ms | 127.0.0.1 | GET | /api/products/Q8Y7RSZLBU | -
+[20-Jun-2023 15:27:44] | 200 | 109.6426ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[20-Jun-2023 15:27:53] | 200 | 110.4996ms | 127.0.0.1 | GET | /api/product-qualities | -
+[20-Jun-2023 15:27:57] | 200 | 103.4873ms | 127.0.0.1 | GET | /api/suppliers | -
+[20-Jun-2023 15:28:19] | 500 | 130.8385ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | ERROR: column "codes" does not exist (SQLSTATE 42703)
+[20-Jun-2023 15:29:09] | 200 | 121.0718ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:29:29] | 200 | 131.5938ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -

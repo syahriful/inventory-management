@@ -27,3 +27,19 @@ type ProductQualityServiceContract interface {
 	FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error)
 	Delete(ctx context.Context, id int64) error
 }
+
+type SupplierServiceContract interface {
+	FindAll(ctx context.Context) ([]*response.SupplierResponse, error)
+	FindByCode(ctx context.Context, code string) (*response.SupplierResponse, error)
+	Create(ctx context.Context, request *request.CreateSupplierRequest) (*response.SupplierResponse, error)
+	Update(ctx context.Context, request *request.UpdateSupplierRequest) (*response.SupplierResponse, error)
+	Delete(ctx context.Context, code string) error
+}
+
+type CustomerServiceContract interface {
+	FindAll(ctx context.Context) ([]*response.CustomerResponse, error)
+	FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error)
+	Create(ctx context.Context, request *request.CreateCustomerRequest) (*response.CustomerResponse, error)
+	Update(ctx context.Context, request *request.UpdateCustomerRequest) (*response.CustomerResponse, error)
+	Delete(ctx context.Context, code string) error
+}
