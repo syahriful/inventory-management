@@ -38,7 +38,7 @@ func (repository *UserRepository) FindByID(ctx context.Context, id int64) (*mode
 
 func (repository *UserRepository) FindByUsername(ctx context.Context, username string) (*model.User, error) {
 	var user model.User
-	err := repository.DB.WithContext(ctx).Where("username = ?", username).First(&user).Error
+	err := repository.DB.WithContext(ctx).Select("username", "password").Where("username = ?", username).First(&user).Error
 	if err != nil {
 		return nil, err
 	}

@@ -237,3 +237,49 @@
 [20-Jun-2023 15:28:19] | 500 | 130.8385ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | ERROR: column "codes" does not exist (SQLSTATE 42703)
 [20-Jun-2023 15:29:09] | 200 | 121.0718ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
 [20-Jun-2023 15:29:29] | 200 | 131.5938ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[20-Jun-2023 15:41:49] | 400 | 119.0171ms | 127.0.0.1 | POST | /api/auth/login | record not found
+[20-Jun-2023 15:42:00] | 201 | 162.9992ms | 127.0.0.1 | POST | /api/users | -
+[20-Jun-2023 15:42:03] | 400 | 112.7943ms | 127.0.0.1 | POST | /api/auth/login | invalid password
+[20-Jun-2023 15:42:25] | 400 | 558.9µs | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:42:28] | 400 | 524.8µs | 127.0.0.1 | POST | /api/auth/login | invalid character '}' looking for beginning of value
+[20-Jun-2023 15:42:31] | 400 | 338.8µs | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:43:04] | 200 | 171.9689ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:47:13] | 200 | 174.1028ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:47:18] | 400 | 161.3777ms | 127.0.0.1 | POST | /api/auth/login | invalid password
+[20-Jun-2023 15:47:27] | 400 | 114.3155ms | 127.0.0.1 | POST | /api/auth/login | record not found
+[20-Jun-2023 15:47:29] | 200 | 157.7597ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:49:07] | 500 | 166.6678ms | 127.0.0.1 | POST | /api/auth/register | username already exist
+[20-Jun-2023 15:49:14] | 201 | 170.8314ms | 127.0.0.1 | POST | /api/auth/register | -
+[20-Jun-2023 15:49:22] | 200 | 158.7904ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:50:26] | 200 | 175.6401ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:50:30] | 401 |      0s | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:50:35] | 401 | 577.3µs | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:50:58] | 200 | 153.7835ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:51:02] | 401 | 892.7µs | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:51:21] | 401 | 795.6µs | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:51:38] | 200 | 63.908ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:51:41] | 200 | 114.5889ms | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:51:53] | 401 |      0s | 127.0.0.1 | PATCH | /api/users/5 | -
+[20-Jun-2023 15:53:54] | 200 | 172.0545ms | 127.0.0.1 | POST | /api/auth/login | -
+[20-Jun-2023 15:54:09] | 200 | 178.3314ms | 127.0.0.1 | POST | /api/login | -
+[20-Jun-2023 15:54:12] | 401 |      0s | 127.0.0.1 | POST | /api/auth/register | -
+[20-Jun-2023 15:54:18] | 500 | 167.3827ms | 127.0.0.1 | POST | /api/register | username already exist
+[20-Jun-2023 15:54:44] | 401 |      0s | 127.0.0.1 | POST | /api/registers | -
+[20-Jun-2023 15:54:47] | 500 | 169.7974ms | 127.0.0.1 | POST | /api/register | username already exist
+[20-Jun-2023 15:54:54] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:54:58] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:55:04] | 404 |   506µs | 127.0.0.1 | GET | /api/userss | Cannot GET /api/userss
+[20-Jun-2023 15:55:06] | 404 | 639.8µs | 127.0.0.1 | GET | /api/userss | Cannot GET /api/userss
+[20-Jun-2023 15:55:32] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:55:34] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:55:45] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:55:46] | 200 |      0s | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:56:05] | 404 | 505.9µs | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:56:06] | 404 | 1.0067ms | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:56:09] | 404 |      0s | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:56:10] | 404 |      0s | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:56:18] | 200 | 120.0746ms | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:56:20] | 404 |  61.9µs | 127.0.0.1 | GET | /api/userss | -
+[20-Jun-2023 15:56:23] | 200 | 108.9319ms | 127.0.0.1 | GET | /api/users | -
+[20-Jun-2023 15:57:22] | 401 |      0s | 127.0.0.1 | GET | /api | -
+[20-Jun-2023 15:57:29] | 200 |      0s | 127.0.0.1 | GET | / | -

@@ -44,7 +44,6 @@ func NewJWTMiddleware() fiber.Handler {
 			userContext := ctx.Locals("user").(*jwt.Token)
 			userClaims := userContext.Claims.(jwt.MapClaims)
 
-			ctx.Locals("id", userClaims["id"])
 			ctx.Locals("username", userClaims["username"])
 			return ctx.Next()
 		},

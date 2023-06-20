@@ -3,11 +3,13 @@ package service
 import (
 	"context"
 	"errors"
+	"github.com/golang-jwt/jwt/v4"
 	"inventory-management/backend/internal/http/presenter/request"
 	"inventory-management/backend/internal/http/presenter/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
 	"inventory-management/backend/util"
+	"time"
 )
 
 type UserService struct {
@@ -52,6 +54,32 @@ func (service *UserService) FindByID(ctx context.Context, id int64) (*response.U
 		Username:  user.Username,
 		CreatedAt: user.CreatedAt.String(),
 		UpdatedAt: user.UpdatedAt.String(),
+	}, nil
+}
+
+func (service *UserService) VerifyLogin(ctx context.Context, request *request.LoginUserRequest) (*response.UserLoginResponse, error) {
+	user, err := service.UserRepository.FindByUsername(ctx, request.Username)
+	if err != nil {
+		return nil, err
+	}
+
+	err = util.VerifyPassword(user.Password, request.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	myClaims := jwt.Claims(jwt.MapClaims{
+		"email": user.Username,
+		"exp":   time.Now().Add(time.Hour * 72).Unix(),
+	})
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, myClaims)
+	token, err := claims.SignedString([]byte("secret"))
+	if err != nil {
+		return nil, err
+	}
+
+	return &response.UserLoginResponse{
+		Token: token,
 	}, nil
 }
 

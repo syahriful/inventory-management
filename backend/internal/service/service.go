@@ -9,6 +9,7 @@ import (
 type UserServiceContract interface {
 	FindAll(ctx context.Context) ([]*response.UserResponse, error)
 	FindByID(ctx context.Context, id int64) (*response.UserResponse, error)
+	VerifyLogin(ctx context.Context, request *request.LoginUserRequest) (*response.UserLoginResponse, error)
 	Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error)
 	Update(ctx context.Context, request *request.UpdateUserRequest) (*response.UserResponse, error)
 	Delete(ctx context.Context, id int64) error

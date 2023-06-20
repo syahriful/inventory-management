@@ -46,14 +46,21 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 
 	// Register the routes
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Welcome to my Inventory API")
+		return response.ReturnSuccess(c, fiber.StatusOK, "Welcome to the Inventory Management API", nil)
 	})
 
 	api := app.Group("/api")
+	routes.NewAuthRoute(db, api)
+
+	app.Use(middleware.NewJWTMiddleware())
 	routes.NewUserRoute(db, api)
 	routes.NewProductRoute(db, api)
 	routes.NewProductQualityRoute(db, api)
 	routes.NewSupplierRoute(db, api)
+
+	app.Get("*", func(c *fiber.Ctx) error {
+		return response.ReturnError(c, fiber.StatusNotFound, errors.New("the requested resource was not found"))
+	})
 
 	return app, nil
 }
