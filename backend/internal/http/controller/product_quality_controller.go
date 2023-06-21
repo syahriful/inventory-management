@@ -22,7 +22,7 @@ func (controller *ProductQualityController) FindAll(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, fiber.StatusOK, "OK", productQualities)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", productQualities)
 }
 
 func (controller *ProductQualityController) FindAllByProductCode(ctx *fiber.Ctx) error {
@@ -35,7 +35,7 @@ func (controller *ProductQualityController) FindAllByProductCode(ctx *fiber.Ctx)
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, fiber.StatusOK, "OK", productQualities)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", productQualities)
 }
 
 func (controller *ProductQualityController) Delete(ctx *fiber.Ctx) error {
@@ -52,5 +52,5 @@ func (controller *ProductQualityController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, fiber.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "deleted", nil)
 }

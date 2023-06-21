@@ -25,7 +25,7 @@ func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "OK", suppliers)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", suppliers)
 }
 
 func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
@@ -38,7 +38,7 @@ func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "OK", supplier)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", supplier)
 }
 
 func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
@@ -56,7 +56,7 @@ func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusCreated, "created", supplier)
+	return response.ReturnJSON(ctx, http.StatusCreated, "created", supplier)
 }
 
 func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
@@ -79,7 +79,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "updated", supplier)
+	return response.ReturnJSON(ctx, http.StatusOK, "updated", supplier)
 }
 
 func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
@@ -92,5 +92,5 @@ func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnSuccess(ctx, http.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil)
 }

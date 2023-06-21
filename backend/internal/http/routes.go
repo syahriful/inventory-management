@@ -30,7 +30,7 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 				code = e.Code
 			}
 
-			return response.ReturnError(ctx, code, err)
+			return response.ReturnJSON(ctx, code, err.Error(), nil)
 		},
 	})
 	app.Use(etag.New())
@@ -130,9 +130,9 @@ func NewRoutes(db *gorm.DB, app *fiber.App) {
 }
 
 func NotFoundHandler(c *fiber.Ctx) error {
-	return response.ReturnError(c, fiber.StatusNotFound, errors.New("the requested resource was not found"))
+	return response.ReturnJSON(c, fiber.StatusNotFound, "the requested resource was not found", nil)
 }
 
 func WelcomeHandler(c *fiber.Ctx) error {
-	return response.ReturnSuccess(c, fiber.StatusOK, "Welcome to the Inventory Management API", nil)
+	return response.ReturnJSON(c, fiber.StatusOK, "Welcome to the Inventory Management API", nil)
 }
