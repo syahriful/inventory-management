@@ -47,9 +47,8 @@ func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidation := util.ValidateStruct(supplierRequest)
-	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, errValidation)
+	if errValidate := util.ValidateStruct(supplierRequest); errValidate != nil {
+		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
 	supplier, err := controller.SupplierService.Create(ctx.Context(), &supplierRequest)
@@ -67,9 +66,8 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidation := util.ValidateStruct(supplierRequest)
-	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, errValidation)
+	if errValidate := util.ValidateStruct(supplierRequest); errValidate != nil {
+		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
 	supplierRequest.Code = code

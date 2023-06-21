@@ -41,7 +41,7 @@ func (service *SupplierService) FindAll(ctx context.Context) ([]*response.Suppli
 }
 
 func (service *SupplierService) FindByCode(ctx context.Context, code string) (*response.SupplierResponse, error) {
-	supplier, err := service.SupplierRepository.FindByCode(ctx, code)
+	supplier, err := service.SupplierRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return nil, err
 	}

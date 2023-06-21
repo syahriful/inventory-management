@@ -25,8 +25,7 @@ func (controller *AuthController) Login(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidate := util.ValidateStruct(loginUserRequest)
-	if errValidate != nil {
+	if errValidate := util.ValidateStruct(loginUserRequest); errValidate != nil {
 		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
@@ -44,9 +43,8 @@ func (controller *AuthController) Register(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidation := util.ValidateStruct(userRequest)
-	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, errValidation)
+	if errValidate := util.ValidateStruct(userRequest); errValidate != nil {
+		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
 	user, err := controller.UserService.Create(ctx.Context(), &userRequest)

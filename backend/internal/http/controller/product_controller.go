@@ -47,9 +47,8 @@ func (controller *ProductController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidation := util.ValidateStruct(productRequest)
-	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, errValidation)
+	if errValidate := util.ValidateStruct(productRequest); errValidate != nil {
+		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
 	product, err := controller.ProductService.Create(ctx.Context(), &productRequest)
@@ -66,9 +65,8 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	errValidation := util.ValidateStruct(productRequest)
-	if errValidation != nil {
-		return response.ReturnErrorValidation(ctx, errValidation)
+	if errValidate := util.ValidateStruct(productRequest); errValidate != nil {
+		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
 	code := ctx.Params("code")

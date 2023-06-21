@@ -26,13 +26,23 @@ func (repository *SupplierRepository) FindAll(ctx context.Context) ([]*model.Sup
 	return suppliers, nil
 }
 
-func (repository *SupplierRepository) FindByCode(ctx context.Context, code string) (*model.Supplier, error) {
+func (repository *SupplierRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Supplier, error) {
 	var supplier model.Supplier
 	err := repository.DB.WithContext(ctx).Preload("Transactions").Preload("Transactions.ProductQuality", func(tx *gorm.DB) *gorm.DB {
 		return tx.Select("id", "product_code", "quality", "price")
 	}).Preload("Transactions.ProductQuality.Product", func(tx *gorm.DB) *gorm.DB {
 		return tx.Select("code", "name")
 	}).Where("code = ?", code).First(&supplier).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &supplier, nil
+}
+
+func (repository *SupplierRepository) FindByCode(ctx context.Context, code string) (*model.Supplier, error) {
+	var supplier model.Supplier
+	err := repository.DB.WithContext(ctx).Where("code = ?", code).First(&supplier).Error
 	if err != nil {
 		return nil, err
 	}

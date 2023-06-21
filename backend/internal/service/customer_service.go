@@ -39,7 +39,7 @@ func (service *CustomerService) FindAll(ctx context.Context) ([]*response.Custom
 }
 
 func (service *CustomerService) FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error) {
-	customer, err := service.CustomerRepository.FindByCode(ctx, code)
+	customer, err := service.CustomerRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return nil, err
 	}

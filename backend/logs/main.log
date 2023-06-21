@@ -350,3 +350,19 @@
 [20-Jun-2023 20:23:47] | 200 | 108.1912ms | 127.0.0.1 | GET | /api/customers | -
 [20-Jun-2023 20:23:56] | 404 | 105.103ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | record not found
 [20-Jun-2023 20:24:03] | 200 | 110.3992ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[21-Jun-2023 19:06:06] | 200 | 117.2764ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[21-Jun-2023 19:06:07] | 200 | 103.5712ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[21-Jun-2023 19:06:16] | 404 | 104.7237ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | record not found
+[21-Jun-2023 19:07:36] | 201 | 118.6001ms | 127.0.0.1 | POST | /api/customers | -
+[21-Jun-2023 19:08:08] | 404 | 108.0704ms | 127.0.0.1 | GET | /api/customers/F62NB91A3B | record not found
+[21-Jun-2023 19:08:16] | 200 | 109.0595ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -
+[21-Jun-2023 19:08:21] | 200 | 116.2017ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[21-Jun-2023 19:08:51] | 201 | 125.6194ms | 127.0.0.1 | POST | /api/suppliers | -
+[21-Jun-2023 19:09:01] | 200 | 104.083ms | 127.0.0.1 | GET | /api/suppliers | -
+[21-Jun-2023 19:09:09] | 200 | 107.9222ms | 127.0.0.1 | GET | /api/suppliers/JIZ18FUZFS | -
+[21-Jun-2023 19:09:17] | 200 | 115.4459ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
+[21-Jun-2023 19:09:25] | 200 | 110.4467ms | 127.0.0.1 | GET | /api/suppliers/JIZ18FUZFS | -
+[21-Jun-2023 19:09:30] | 200 | 110.0891ms | 127.0.0.1 | DELETE | /api/suppliers/JIZ18FUZFS | -
+[21-Jun-2023 19:09:32] | 404 | 103.8004ms | 127.0.0.1 | GET | /api/suppliers/JIZ18FUZFS | record not found
+[21-Jun-2023 19:09:37] | 200 | 103.9896ms | 127.0.0.1 | GET | /api/suppliers | -
+[21-Jun-2023 19:32:07] | 200 | 126.654ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -

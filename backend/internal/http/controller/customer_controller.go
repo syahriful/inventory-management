@@ -47,8 +47,7 @@ func (controller *CustomerController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusBadRequest, err.Error())
 	}
 
-	errValidate := util.ValidateStruct(customerRequest)
-	if errValidate != nil {
+	if errValidate := util.ValidateStruct(customerRequest); errValidate != nil {
 		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
@@ -66,8 +65,7 @@ func (controller *CustomerController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusBadRequest, err.Error())
 	}
 
-	errValidate := util.ValidateStruct(customerRequest)
-	if errValidate != nil {
+	if errValidate := util.ValidateStruct(customerRequest); errValidate != nil {
 		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
