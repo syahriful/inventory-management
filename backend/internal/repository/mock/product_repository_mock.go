@@ -11,7 +11,7 @@ type ProductRepositoryMock struct {
 }
 
 func (mock *ProductRepositoryMock) FindAll(ctx context.Context) ([]*model.Product, error) {
-	args := mock.Called()
+	args := mock.Called(ctx)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -20,7 +20,7 @@ func (mock *ProductRepositoryMock) FindAll(ctx context.Context) ([]*model.Produc
 }
 
 func (mock *ProductRepositoryMock) FindByCode(ctx context.Context, code string) (*model.Product, error) {
-	args := mock.Called(code)
+	args := mock.Called(ctx, code)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -29,7 +29,7 @@ func (mock *ProductRepositoryMock) FindByCode(ctx context.Context, code string) 
 }
 
 func (mock *ProductRepositoryMock) Create(ctx context.Context, product *model.Product) (*model.Product, error) {
-	args := mock.Called(product)
+	args := mock.Called(ctx, product)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -38,7 +38,7 @@ func (mock *ProductRepositoryMock) Create(ctx context.Context, product *model.Pr
 }
 
 func (mock *ProductRepositoryMock) Update(ctx context.Context, product *model.Product) (*model.Product, error) {
-	args := mock.Called(product)
+	args := mock.Called(ctx, product)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -47,6 +47,6 @@ func (mock *ProductRepositoryMock) Update(ctx context.Context, product *model.Pr
 }
 
 func (mock *ProductRepositoryMock) Delete(ctx context.Context, code string) error {
-	args := mock.Called(code)
+	args := mock.Called(ctx, code)
 	return args.Error(0)
 }

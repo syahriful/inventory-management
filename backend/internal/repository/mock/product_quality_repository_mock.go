@@ -11,7 +11,7 @@ type ProductQualityRepositoryMock struct {
 }
 
 func (mock *ProductQualityRepositoryMock) FindAll(ctx context.Context) ([]*model.ProductQuality, error) {
-	args := mock.Called()
+	args := mock.Called(ctx)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -20,7 +20,7 @@ func (mock *ProductQualityRepositoryMock) FindAll(ctx context.Context) ([]*model
 }
 
 func (mock *ProductQualityRepositoryMock) FindAllByProductCode(ctx context.Context, productCode string) ([]*model.ProductQuality, error) {
-	args := mock.Called(productCode)
+	args := mock.Called(ctx, productCode)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -29,7 +29,7 @@ func (mock *ProductQualityRepositoryMock) FindAllByProductCode(ctx context.Conte
 }
 
 func (mock *ProductQualityRepositoryMock) FindByID(ctx context.Context, id int64) (*model.ProductQuality, error) {
-	args := mock.Called(id)
+	args := mock.Called(ctx, id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -38,6 +38,6 @@ func (mock *ProductQualityRepositoryMock) FindByID(ctx context.Context, id int64
 }
 
 func (mock *ProductQualityRepositoryMock) Delete(ctx context.Context, id int64) error {
-	args := mock.Called(id)
+	args := mock.Called(ctx, id)
 	return args.Error(0)
 }

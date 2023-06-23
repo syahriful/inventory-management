@@ -9,7 +9,7 @@ import (
 	"inventory-management/backend/internal/http/presenter/request"
 	"inventory-management/backend/internal/http/presenter/response"
 	"inventory-management/backend/internal/model"
-	mock2 "inventory-management/backend/internal/repository/mock"
+	repository "inventory-management/backend/internal/repository/mock"
 	"testing"
 )
 
@@ -67,10 +67,11 @@ func TestUserService_FindAll(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindAll").Return(tc.expectedUserRepoFindAll, tc.expectedUserRepoFindAllError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindAll", ctx).Return(tc.expectedUserRepoFindAll, tc.expectedUserRepoFindAllError)
+			svc := NewUserService(&repo)
 			result, err := svc.FindAll(ctx)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -123,10 +124,11 @@ func TestUserService_FindByID(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindByID", tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindByID", ctx, tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
+			svc := NewUserService(&repo)
 			result, err := svc.FindByID(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -197,10 +199,11 @@ func TestUserService_VerifyLogin(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindByUsername", tc.request.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindByUsername", ctx, tc.request.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
+			svc := NewUserService(&repo)
 			result, err := svc.VerifyLogin(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -286,11 +289,12 @@ func TestUserService_Create(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindByUsername", tc.requestRepo.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
-			repo.On("Create", mock.Anything).Return(tc.expectedUserRepoCreate, tc.expectedUserRepoCreateError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindByUsername", ctx, tc.requestRepo.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
+			repo.On("Create", ctx, mock.Anything).Return(tc.expectedUserRepoCreate, tc.expectedUserRepoCreateError)
+			svc := NewUserService(&repo)
 			result, err := svc.Create(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -367,11 +371,12 @@ func TestUserService_Update(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindByID", tc.requestUserRepoFindByID).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
-			repo.On("Update", mock.Anything).Return(tc.expectedUserRepoUpdate, tc.expectedUserRepoUpdateError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindByID", ctx, tc.requestUserRepoFindByID).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
+			repo.On("Update", ctx, mock.Anything).Return(tc.expectedUserRepoUpdate, tc.expectedUserRepoUpdateError)
+			svc := NewUserService(&repo)
 			result, err := svc.Update(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -420,11 +425,12 @@ func TestUserService_Delete(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			var repo mock2.UserRepositoryMock
-			repo.On("FindByID", tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
-			repo.On("Delete", tc.request).Return(tc.expectedUserRepoUpdateError)
-			svc := NewUserService(&repo)
 			ctx := context.Background()
+
+			var repo repository.UserRepositoryMock
+			repo.On("FindByID", ctx, tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
+			repo.On("Delete", ctx, tc.request).Return(tc.expectedUserRepoUpdateError)
+			svc := NewUserService(&repo)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
