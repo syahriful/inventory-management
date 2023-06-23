@@ -6,3 +6,6 @@ migrate:
 
 table:
 	migrate create -ext sql -dir backend/database/postgres/migrations -seq ${table}
+
+test:
+	cd backend && go test -v ./...
