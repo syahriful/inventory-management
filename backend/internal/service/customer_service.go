@@ -101,10 +101,8 @@ func (service *CustomerService) Update(ctx context.Context, request *request.Upd
 		return nil, err
 	}
 
-	customer, err := service.CustomerRepository.Update(ctx, &model.Customer{
-		Code: checkCustomer.Code,
-		Name: request.Name,
-	})
+	checkCustomer.Name = request.Name
+	customer, err := service.CustomerRepository.Update(ctx, checkCustomer)
 	if err != nil {
 		return nil, err
 	}
