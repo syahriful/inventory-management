@@ -130,7 +130,6 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 	checkUser.ID = request.ID
 	checkUser.Name = request.Name
 	checkUser.Password = newPassword
-
 	user, err := service.UserRepository.Update(ctx, checkUser)
 	if err != nil {
 		return nil, err

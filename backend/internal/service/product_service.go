@@ -150,15 +150,11 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 		})
 	}
 
-	var productModel model.Product
-	productModel.ID = checkProduct.ID
-	productModel.Code = checkProduct.Code
-	productModel.Name = request.Name
-	productModel.UnitMassAcronym = request.UnitMassAcronym
-	productModel.UnitMassDescription = request.UnitMassDescription
-	productModel.ProductQualities = productQualities
-
-	product, err := repository.ProductRepository.Update(ctx, &productModel)
+	checkProduct.Name = request.Name
+	checkProduct.UnitMassAcronym = request.UnitMassAcronym
+	checkProduct.UnitMassDescription = request.UnitMassDescription
+	checkProduct.ProductQualities = productQualities
+	product, err := repository.ProductRepository.Update(ctx, checkProduct)
 	if err != nil {
 		return nil, err
 	}

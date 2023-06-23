@@ -395,3 +395,12 @@
 [23-Jun-2023 22:26:28] | 400 | 982.9µs | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
 [23-Jun-2023 22:26:33] | 200 | 117.9798ms | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
 [23-Jun-2023 22:26:38] | 200 | 107.5813ms | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
+[23-Jun-2023 22:29:23] | 200 | 124.3659ms | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
+[23-Jun-2023 22:29:27] | 200 | 110.8448ms | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
+[23-Jun-2023 22:29:31] | 200 | 105.2887ms | 127.0.0.1 | PATCH | /api/suppliers/5R6TZZ05MR | -
+[23-Jun-2023 22:29:57] | 200 | 107.3139ms | 127.0.0.1 | GET | /api/products | -
+[23-Jun-2023 22:30:17] | 200 | 129.4676ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
+[23-Jun-2023 22:30:59] | 200 | 137.5261ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
+[23-Jun-2023 22:31:03] | 200 | 119.7703ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
+[23-Jun-2023 22:31:05] | 200 | 120.1844ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
+[23-Jun-2023 22:31:12] | 200 | 120.631ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -

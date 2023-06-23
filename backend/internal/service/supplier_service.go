@@ -109,12 +109,10 @@ func (service *SupplierService) Update(ctx context.Context, request *request.Upd
 		return nil, err
 	}
 
-	supplier, err := service.SupplierRepository.Update(ctx, &model.Supplier{
-		Code:    checkSupplier.Code,
-		Name:    request.Name,
-		Address: request.Address,
-		Phone:   request.Phone,
-	})
+	checkSupplier.Name = request.Name
+	checkSupplier.Address = request.Address
+	checkSupplier.Phone = request.Phone
+	supplier, err := service.SupplierRepository.Update(ctx, checkSupplier)
 	if err != nil {
 		return nil, err
 	}
