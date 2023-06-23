@@ -3,6 +3,7 @@ package util
 import (
 	"errors"
 	"golang.org/x/crypto/bcrypt"
+	"inventory-management/backend/internal/http/presenter/response"
 )
 
 func HashPassword(password string) (string, error) {
@@ -17,7 +18,7 @@ func HashPassword(password string) (string, error) {
 func VerifyPassword(hashedPassword, password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		return errors.New("invalid password")
+		return errors.New(response.InvalidPassword)
 	}
 
 	return nil

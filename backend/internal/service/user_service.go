@@ -69,8 +69,8 @@ func (service *UserService) VerifyLogin(ctx context.Context, request *request.Lo
 	}
 
 	myClaims := jwt.Claims(jwt.MapClaims{
-		"email": user.Username,
-		"exp":   time.Now().Add(time.Hour * 72).Unix(),
+		"username": user.Username,
+		"exp":      time.Now().Add(time.Hour * 72).Unix(),
 	})
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, myClaims)
 	token, err := claims.SignedString([]byte("secret"))
@@ -91,7 +91,7 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 
 	_, err = service.UserRepository.FindByUsername(ctx, request.Username)
 	if err == nil {
-		return nil, errors.New("username already exist")
+		return nil, errors.New(response.UsernameExists)
 	}
 
 	user, err := service.UserRepository.Create(ctx, &model.User{

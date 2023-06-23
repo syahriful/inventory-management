@@ -6,7 +6,9 @@ import (
 )
 
 var (
-	NotFound = "record not found"
+	NotFound        = "record not found"
+	InvalidPassword = "invalid password"
+	UsernameExists  = "username already exist"
 )
 
 type ApiResponse struct {
