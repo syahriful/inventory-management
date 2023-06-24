@@ -40,36 +40,6 @@ func (repository *ProductService) FindAll(ctx context.Context) ([]*response.Prod
 	return productResponses, nil
 }
 
-func (repository *ProductService) FindByID(ctx context.Context, code string) (*response.ProductResponse, error) {
-	product, err := repository.ProductRepository.FindByCode(ctx, code)
-	if err != nil {
-		return nil, err
-	}
-
-	var productQualities []*response.ProductQualityResponse
-	for _, productQuality := range product.ProductQualities {
-		productQualities = append(productQualities, &response.ProductQualityResponse{
-			ID:          productQuality.ID,
-			ProductCode: productQuality.ProductCode,
-			Quality:     productQuality.Quality,
-			Price:       productQuality.Price,
-			Quantity:    productQuality.Quantity,
-			Type:        productQuality.Type,
-		})
-	}
-
-	return &response.ProductResponse{
-		ID:                  product.ID,
-		Code:                product.Code,
-		Name:                product.Name,
-		UnitMassAcronym:     product.UnitMassAcronym,
-		UnitMassDescription: product.UnitMassDescription,
-		CreatedAt:           product.CreatedAt.String(),
-		UpdatedAt:           product.UpdatedAt.String(),
-		ProductQualities:    productQualities,
-	}, nil
-}
-
 func (repository *ProductService) FindByCode(ctx context.Context, code string) (*response.ProductResponse, error) {
 	product, err := repository.ProductRepository.FindByCode(ctx, code)
 	if err != nil {
@@ -116,7 +86,6 @@ func (repository *ProductService) Create(ctx context.Context, request *request.C
 	productModel.UnitMassAcronym = request.UnitMassAcronym
 	productModel.UnitMassDescription = request.UnitMassDescription
 	productModel.ProductQualities = productQualities
-
 	product, err := repository.ProductRepository.Create(ctx, &productModel)
 	if err != nil {
 		return nil, err
