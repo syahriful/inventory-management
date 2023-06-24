@@ -403,7 +403,7 @@ func TestUserService_Delete(t *testing.T) {
 		expectedSvcError              error
 	}{
 		{
-			name:    "Update user with required fields",
+			name:    "User exists with given ID",
 			request: 1,
 			expectedUserRepoFindByID: &model.User{
 				ID:   1,

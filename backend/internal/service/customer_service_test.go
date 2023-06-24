@@ -226,6 +226,20 @@ func TestCustomerService_Update(t *testing.T) {
 			expectedCustomerRepoUpdateError:     nil,
 			expectedSvcError:                    nil,
 		},
+		{
+			name: "Customer doesnt exists with given Code when updating data",
+			request: &request.UpdateCustomerRequest{
+				Code: "WDWDARFSYH",
+				Name: "Arfian",
+			},
+			requestCustomerRepoFindByCode:       "WDWDARFSYH",
+			expectedCustomerRepoFindByCode:      nil,
+			expectedCustomerRepoUpdate:          nil,
+			expectedSvc:                         nil,
+			expectedCustomerRepoUpdateError:     errors.New("getting an error"),
+			expectedCustomerRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                    errors.New(response.NotFound),
+		},
 	}
 
 	for _, tc := range testCases {
@@ -262,7 +276,7 @@ func TestCustomerService_Delete(t *testing.T) {
 		expectedSvcError                    error
 	}{
 		{
-			name:    "Update customer with required fields",
+			name:    "Customer exists with given Code",
 			request: "WDWDARFSYH",
 			expectedCustomerRepoFindByCode: &model.Customer{
 				ID:   1,
@@ -274,7 +288,7 @@ func TestCustomerService_Delete(t *testing.T) {
 			expectedCustomerRepoFindByCodeError: nil,
 		},
 		{
-			name:                                "Customer doesnt exists with given ID when deleting data",
+			name:                                "Customer doesnt exists with given Code when deleting data",
 			request:                             "WDWDARFSYH",
 			expectedCustomerRepoFindByCode:      nil,
 			expectedCustomerRepoUpdateError:     errors.New("getting an error"),

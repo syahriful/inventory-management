@@ -252,6 +252,22 @@ func TestSupplierService_Update(t *testing.T) {
 			expectedSupplierRepoUpdateError:     nil,
 			expectedSvcError:                    nil,
 		},
+		{
+			name: "Supplier doesnt exists with given Code when updating data",
+			request: &request.UpdateSupplierRequest{
+				Code:    "WDWDARFSYH",
+				Name:    "Arfian",
+				Address: "Cisaat",
+				Phone:   "089922238421",
+			},
+			requestSupplierRepoFindByCode:       "WDWDARFSYH",
+			expectedSupplierRepoFindByCode:      nil,
+			expectedSupplierRepoUpdate:          nil,
+			expectedSvc:                         nil,
+			expectedSupplierRepoUpdateError:     errors.New("getting an error"),
+			expectedSupplierRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                    errors.New(response.NotFound),
+		},
 	}
 
 	for _, tc := range testCases {
@@ -288,7 +304,7 @@ func TestSupplierService_Delete(t *testing.T) {
 		expectedSvcError                    error
 	}{
 		{
-			name:    "Update supplier with required fields",
+			name:    "Supplier exists with given Code",
 			request: "WDWDARFSYH",
 			expectedSupplierRepoFindByCode: &model.Supplier{
 				ID:      1,
@@ -302,7 +318,7 @@ func TestSupplierService_Delete(t *testing.T) {
 			expectedSupplierRepoFindByCodeError: nil,
 		},
 		{
-			name:                                "Supplier doesnt exists with given ID when deleting data",
+			name:                                "Supplier doesnt exists with given Code when deleting data",
 			request:                             "WDWDARFSYH",
 			expectedSupplierRepoFindByCode:      nil,
 			expectedSupplierRepoUpdateError:     errors.New("getting an error"),

@@ -99,7 +99,7 @@ func TestProductService_FindByCode(t *testing.T) {
 		expectedSvcError                   error
 	}{
 		{
-			name:    "Product exists with given ID",
+			name:    "Product exists with given Code",
 			request: "KKDJALS",
 			expectedProductRepoFindByCode: &model.Product{
 				ID:                  1,
@@ -121,7 +121,7 @@ func TestProductService_FindByCode(t *testing.T) {
 			expectedSvcError:                   nil,
 		},
 		{
-			name:                               "Product doesnt exists with given ID",
+			name:                               "Product doesnt exists with given Code",
 			request:                            "KKDJALS",
 			expectedProductRepoFindByCode:      nil,
 			expectedSvc:                        nil,
@@ -279,7 +279,7 @@ func TestProductService_Update(t *testing.T) {
 			expectedProductRepoFindByCodeError: nil,
 		},
 		{
-			name: "Product doesnt exists with given ID when updating data",
+			name: "Product doesnt exists with given Code when updating data",
 			request: &request.UpdateProductRequest{
 				Code:                "KKDJALS",
 				Name:                "Shark",
@@ -330,7 +330,7 @@ func TestProductService_Delete(t *testing.T) {
 		expectedSvcError                   error
 	}{
 		{
-			name:    "Product exists with given ID",
+			name:    "Product exists with given Code",
 			request: "KKDJALS",
 			expectedProductRepoFindByCode: &model.Product{
 				ID:                  1,
@@ -344,7 +344,7 @@ func TestProductService_Delete(t *testing.T) {
 			expectedProductRepoFindByCodeError: nil,
 		},
 		{
-			name:                               "Product doesnt exists with given ID when deleting data",
+			name:                               "Product doesnt exists with given Code when deleting data",
 			request:                            "KKDJALS",
 			expectedProductRepoFindByCode:      nil,
 			expectedProductRepoUpdateError:     errors.New("getting an error"),
