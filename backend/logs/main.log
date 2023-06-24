@@ -404,3 +404,5 @@
 [23-Jun-2023 22:31:03] | 200 | 119.7703ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
 [23-Jun-2023 22:31:05] | 200 | 120.1844ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
 [23-Jun-2023 22:31:12] | 200 | 120.631ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
+[24-Jun-2023 12:42:47] | 200 | 213.9788ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[24-Jun-2023 12:42:52] | 404 | 106.5305ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFHl | record not found

@@ -300,7 +300,7 @@ func TestSupplierService_Delete(t *testing.T) {
 		request                             string
 		expectedSupplierRepoFindByCode      *model.Supplier
 		expectedSupplierRepoFindByCodeError error
-		expectedSupplierRepoUpdateError     error
+		expectedSupplierRepoDeleteError     error
 		expectedSvcError                    error
 	}{
 		{
@@ -313,7 +313,7 @@ func TestSupplierService_Delete(t *testing.T) {
 				Address: "Sukabumi",
 				Phone:   "082291832488",
 			},
-			expectedSupplierRepoUpdateError:     nil,
+			expectedSupplierRepoDeleteError:     nil,
 			expectedSvcError:                    nil,
 			expectedSupplierRepoFindByCodeError: nil,
 		},
@@ -321,7 +321,7 @@ func TestSupplierService_Delete(t *testing.T) {
 			name:                                "Supplier doesnt exists with given Code when deleting data",
 			request:                             "WDWDARFSYH",
 			expectedSupplierRepoFindByCode:      nil,
-			expectedSupplierRepoUpdateError:     errors.New("getting an error"),
+			expectedSupplierRepoDeleteError:     errors.New("getting an error"),
 			expectedSvcError:                    errors.New(response.NotFound),
 			expectedSupplierRepoFindByCodeError: errors.New(response.NotFound),
 		},
@@ -333,7 +333,7 @@ func TestSupplierService_Delete(t *testing.T) {
 
 			var repo repository.SupplierRepositoryMock
 			repo.On("FindByCode", ctx, tc.request).Return(tc.expectedSupplierRepoFindByCode, tc.expectedSupplierRepoFindByCodeError)
-			repo.On("Delete", ctx, tc.request).Return(tc.expectedSupplierRepoUpdateError)
+			repo.On("Delete", ctx, tc.request).Return(tc.expectedSupplierRepoDeleteError)
 			svc := NewSupplierService(&repo)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {

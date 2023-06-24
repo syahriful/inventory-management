@@ -272,7 +272,7 @@ func TestCustomerService_Delete(t *testing.T) {
 		request                             string
 		expectedCustomerRepoFindByCode      *model.Customer
 		expectedCustomerRepoFindByCodeError error
-		expectedCustomerRepoUpdateError     error
+		expectedCustomerRepoDeleteError     error
 		expectedSvcError                    error
 	}{
 		{
@@ -283,7 +283,7 @@ func TestCustomerService_Delete(t *testing.T) {
 				Code: "WDWDARFSYH",
 				Name: "Widdy Arfiansyah",
 			},
-			expectedCustomerRepoUpdateError:     nil,
+			expectedCustomerRepoDeleteError:     nil,
 			expectedSvcError:                    nil,
 			expectedCustomerRepoFindByCodeError: nil,
 		},
@@ -291,7 +291,7 @@ func TestCustomerService_Delete(t *testing.T) {
 			name:                                "Customer doesnt exists with given Code when deleting data",
 			request:                             "WDWDARFSYH",
 			expectedCustomerRepoFindByCode:      nil,
-			expectedCustomerRepoUpdateError:     errors.New("getting an error"),
+			expectedCustomerRepoDeleteError:     errors.New("getting an error"),
 			expectedSvcError:                    errors.New(response.NotFound),
 			expectedCustomerRepoFindByCodeError: errors.New(response.NotFound),
 		},
@@ -303,7 +303,7 @@ func TestCustomerService_Delete(t *testing.T) {
 
 			var repo repository.CustomerRepositoryMock
 			repo.On("FindByCode", ctx, tc.request).Return(tc.expectedCustomerRepoFindByCode, tc.expectedCustomerRepoFindByCodeError)
-			repo.On("Delete", ctx, tc.request).Return(tc.expectedCustomerRepoUpdateError)
+			repo.On("Delete", ctx, tc.request).Return(tc.expectedCustomerRepoDeleteError)
 			svc := NewCustomerService(&repo)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {

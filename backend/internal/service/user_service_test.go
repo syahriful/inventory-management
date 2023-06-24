@@ -399,7 +399,7 @@ func TestUserService_Delete(t *testing.T) {
 		request                       int64
 		expectedUserRepoFindByID      *model.User
 		expectedUserRepoFindByIDError error
-		expectedUserRepoUpdateError   error
+		expectedUserRepoDeleteError   error
 		expectedSvcError              error
 	}{
 		{
@@ -409,7 +409,7 @@ func TestUserService_Delete(t *testing.T) {
 				ID:   1,
 				Name: "Widdy Arfiansyah",
 			},
-			expectedUserRepoUpdateError:   nil,
+			expectedUserRepoDeleteError:   nil,
 			expectedSvcError:              nil,
 			expectedUserRepoFindByIDError: nil,
 		},
@@ -417,7 +417,7 @@ func TestUserService_Delete(t *testing.T) {
 			name:                          "User doesnt exists with given ID when deleting data",
 			request:                       1,
 			expectedUserRepoFindByID:      nil,
-			expectedUserRepoUpdateError:   errors.New("getting an error"),
+			expectedUserRepoDeleteError:   errors.New("getting an error"),
 			expectedSvcError:              errors.New(response.NotFound),
 			expectedUserRepoFindByIDError: errors.New(response.NotFound),
 		},
@@ -429,7 +429,7 @@ func TestUserService_Delete(t *testing.T) {
 
 			var repo repository.UserRepositoryMock
 			repo.On("FindByID", ctx, tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
-			repo.On("Delete", ctx, tc.request).Return(tc.expectedUserRepoUpdateError)
+			repo.On("Delete", ctx, tc.request).Return(tc.expectedUserRepoDeleteError)
 			svc := NewUserService(&repo)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {

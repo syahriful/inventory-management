@@ -326,7 +326,7 @@ func TestProductService_Delete(t *testing.T) {
 		request                            string
 		expectedProductRepoFindByCode      *model.Product
 		expectedProductRepoFindByCodeError error
-		expectedProductRepoUpdateError     error
+		expectedProductRepoDeleteError     error
 		expectedSvcError                   error
 	}{
 		{
@@ -339,7 +339,7 @@ func TestProductService_Delete(t *testing.T) {
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
 			},
-			expectedProductRepoUpdateError:     nil,
+			expectedProductRepoDeleteError:     nil,
 			expectedSvcError:                   nil,
 			expectedProductRepoFindByCodeError: nil,
 		},
@@ -347,7 +347,7 @@ func TestProductService_Delete(t *testing.T) {
 			name:                               "Product doesnt exists with given Code when deleting data",
 			request:                            "KKDJALS",
 			expectedProductRepoFindByCode:      nil,
-			expectedProductRepoUpdateError:     errors.New("getting an error"),
+			expectedProductRepoDeleteError:     errors.New("getting an error"),
 			expectedSvcError:                   errors.New(response.NotFound),
 			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
 		},
@@ -359,7 +359,7 @@ func TestProductService_Delete(t *testing.T) {
 
 			var repo repository.ProductRepositoryMock
 			repo.On("FindByCode", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
-			repo.On("Delete", ctx, tc.request).Return(tc.expectedProductRepoUpdateError)
+			repo.On("Delete", ctx, tc.request).Return(tc.expectedProductRepoDeleteError)
 			svc := NewProductService(&repo)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {
