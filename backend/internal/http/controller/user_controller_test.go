@@ -32,15 +32,15 @@ func TestUserController_FindAll(t *testing.T) {
 			expectedBody: []*response.UserResponse{
 				{
 					ID:        1,
-					Username:  "admin",
-					Name:      "Administrator",
+					Username:  "wdyarfn",
+					Name:      "Widdy Arfiansyah",
 					CreatedAt: "2021-01-01 00:00:00",
 					UpdatedAt: "2021-01-01 00:00:00",
 				},
 				{
 					ID:        2,
-					Username:  "member",
-					Name:      "Member",
+					Username:  "Arfian",
+					Name:      "arfn",
 					CreatedAt: "2021-01-01 00:00:00",
 					UpdatedAt: "2021-01-01 00:00:00",
 				},
@@ -107,8 +107,8 @@ func TestUserController_FindByID(t *testing.T) {
 			expectedStatus: "OK",
 			expectedBody: &response.UserResponse{
 				ID:        1,
-				Username:  "admin",
-				Name:      "Administrator",
+				Username:  "wdyarfn",
+				Name:      "Widdy Arfiansyah",
 				CreatedAt: "2021-01-01 00:00:00",
 				UpdatedAt: "2021-01-01 00:00:00",
 			},
@@ -174,7 +174,6 @@ func TestUserController_FindByID(t *testing.T) {
 }
 
 func TestUserController_Create(t *testing.T) {
-
 	testCases := []struct {
 		name           string
 		request        *request.CreateUserRequest
@@ -293,7 +292,6 @@ func TestUserController_Create(t *testing.T) {
 }
 
 func TestUserController_Update(t *testing.T) {
-
 	testCases := []struct {
 		name           string
 		request        *request.UpdateUserRequest
