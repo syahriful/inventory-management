@@ -17,7 +17,7 @@ func NewProductQualityController(productQualityService service.ProductQualitySer
 }
 
 func (controller *ProductQualityController) FindAll(ctx *fiber.Ctx) error {
-	productQualities, err := controller.ProductQualityService.FindAll(ctx.Context())
+	productQualities, err := controller.ProductQualityService.FindAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -27,7 +27,7 @@ func (controller *ProductQualityController) FindAll(ctx *fiber.Ctx) error {
 
 func (controller *ProductQualityController) FindAllByProductCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	productQualities, err := controller.ProductQualityService.FindAllByProductCode(ctx.Context(), code)
+	productQualities, err := controller.ProductQualityService.FindAllByProductCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -44,7 +44,7 @@ func (controller *ProductQualityController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusBadRequest, err.Error())
 	}
 
-	err = controller.ProductQualityService.Delete(ctx.Context(), int64(id))
+	err = controller.ProductQualityService.Delete(ctx.UserContext(), int64(id))
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())

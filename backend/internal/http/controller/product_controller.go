@@ -19,7 +19,7 @@ func NewProductController(productService service.ProductServiceContract) *Produc
 }
 
 func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {
-	products, err := controller.ProductService.FindAll(ctx.Context())
+	products, err := controller.ProductService.FindAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -30,7 +30,7 @@ func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {
 func (controller *ProductController) FindByCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 
-	product, err := controller.ProductService.FindByCode(ctx.Context(), code)
+	product, err := controller.ProductService.FindByCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -51,7 +51,7 @@ func (controller *ProductController) Create(ctx *fiber.Ctx) error {
 		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
-	product, err := controller.ProductService.Create(ctx.Context(), &productRequest)
+	product, err := controller.ProductService.Create(ctx.UserContext(), &productRequest)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -71,7 +71,7 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 
 	code := ctx.Params("code")
 	productRequest.Code = code
-	product, err := controller.ProductService.Update(ctx.Context(), &productRequest)
+	product, err := controller.ProductService.Update(ctx.UserContext(), &productRequest)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -84,7 +84,7 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 
 func (controller *ProductController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	err := controller.ProductService.Delete(ctx.Context(), code)
+	err := controller.ProductService.Delete(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())

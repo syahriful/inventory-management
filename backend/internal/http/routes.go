@@ -1,8 +1,6 @@
 package http
 
 import (
-	"encoding/json"
-	"errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -19,20 +17,7 @@ import (
 
 func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber.App, error) {
 	// Init app and middlewares
-	app := fiber.New(fiber.Config{
-		JSONEncoder: json.Marshal,
-		JSONDecoder: json.Unmarshal,
-		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-			code := fiber.StatusInternalServerError
-
-			var e *fiber.Error
-			if errors.As(err, &e) {
-				code = e.Code
-			}
-
-			return response.ReturnJSON(ctx, code, err.Error(), nil)
-		},
-	})
+	app := fiber.New(middleware.FiberConfig())
 	app.Use(etag.New())
 	app.Use(requestid.New())
 	app.Use(recover.New())

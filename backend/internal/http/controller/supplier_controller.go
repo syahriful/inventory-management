@@ -20,7 +20,7 @@ func NewSupplierController(supplierService service.SupplierServiceContract) *Sup
 }
 
 func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
-	suppliers, err := controller.SupplierService.FindAll(ctx.Context())
+	suppliers, err := controller.SupplierService.FindAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -30,7 +30,7 @@ func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
 
 func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	supplier, err := controller.SupplierService.FindByCode(ctx.Context(), code)
+	supplier, err := controller.SupplierService.FindByCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -51,7 +51,7 @@ func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 		return response.ReturnErrorValidation(ctx, errValidate)
 	}
 
-	supplier, err := controller.SupplierService.Create(ctx.Context(), &supplierRequest)
+	supplier, err := controller.SupplierService.Create(ctx.UserContext(), &supplierRequest)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
@@ -71,7 +71,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 	}
 
 	supplierRequest.Code = code
-	supplier, err := controller.SupplierService.Update(ctx.Context(), &supplierRequest)
+	supplier, err := controller.SupplierService.Update(ctx.UserContext(), &supplierRequest)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
@@ -84,7 +84,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 
 func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	err := controller.SupplierService.Delete(ctx.Context(), code)
+	err := controller.SupplierService.Delete(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.NotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())

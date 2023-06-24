@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -16,6 +18,23 @@ import (
 )
 
 var SecretKey = []byte("secret")
+
+func FiberConfig() fiber.Config {
+	return fiber.Config{
+		JSONEncoder: json.Marshal,
+		JSONDecoder: json.Unmarshal,
+		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
+			code := fiber.StatusInternalServerError
+
+			var e *fiber.Error
+			if errors.As(err, &e) {
+				code = e.Code
+			}
+
+			return response.ReturnJSON(ctx, code, err.Error(), nil)
+		},
+	}
+}
 
 func XApiKeyMiddleware(configuration config.Config) fiber.Handler {
 	return func(ctx *fiber.Ctx) error {

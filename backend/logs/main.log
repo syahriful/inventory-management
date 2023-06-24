@@ -406,3 +406,13 @@
 [23-Jun-2023 22:31:12] | 200 | 120.631ms | 127.0.0.1 | PATCH | /api/products/YCXM532UFH | -
 [24-Jun-2023 12:42:47] | 200 | 213.9788ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
 [24-Jun-2023 12:42:52] | 404 | 106.5305ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFHl | record not found
+[24-Jun-2023 14:32:28] | 200 | 154.8744ms | 127.0.0.1 | GET | /api/users | -
+[24-Jun-2023 14:32:30] | 200 | 109.1537ms | 127.0.0.1 | GET | /api/users | -
+[24-Jun-2023 14:51:05] | 200 | 118.769ms | 127.0.0.1 | GET | /api/users | -
+[24-Jun-2023 14:51:08] | 200 | 109.8093ms | 127.0.0.1 | GET | /api/products | -
+[24-Jun-2023 14:51:11] | 200 | 107.452ms | 127.0.0.1 | GET | /api/product-qualities | -
+[24-Jun-2023 14:51:12] | 200 | 114.2042ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[24-Jun-2023 15:19:26] | 200 | 129.8632ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[24-Jun-2023 15:19:27] | 200 | 107.891ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[24-Jun-2023 15:19:30] | 404 | 105.7037ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFHl | record not found
+[24-Jun-2023 15:19:33] | 200 | 105.2157ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
