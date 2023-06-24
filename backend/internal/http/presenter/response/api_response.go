@@ -9,6 +9,7 @@ var (
 	NotFound        = "record not found"
 	InvalidPassword = "invalid password"
 	UsernameExists  = "username already exist"
+	ErrorValidation = "There are inaccuracies in the validation process"
 )
 
 type ApiResponse struct {
@@ -32,7 +33,7 @@ type ErrorValidationResponse struct {
 func ReturnErrorValidation(c *fiber.Ctx, err []*ErrorResponse) error {
 	return c.Status(http.StatusBadRequest).JSON(ErrorValidationResponse{
 		Code:   http.StatusBadRequest,
-		Status: "There are inaccuracies in the validation process",
+		Status: ErrorValidation,
 		Error:  err,
 	})
 }
