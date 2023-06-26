@@ -55,3 +55,64 @@ func (repository *ProductQualityRepository) Delete(ctx context.Context, id int64
 
 	return nil
 }
+
+func (repository *ProductQualityRepository) IncreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error {
+	var productQuality model.ProductQuality
+	err := tx.WithContext(ctx).First(&productQuality, id).Error
+	if err != nil {
+		return err
+	}
+
+	productQuality.Quantity += quantity
+	err = tx.WithContext(ctx).Select("quantity").Updates(&productQuality).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repository *ProductQualityRepository) DecreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error {
+	var productQuality model.ProductQuality
+	err := tx.WithContext(ctx).First(&productQuality, id).Error
+	if err != nil {
+		return err
+	}
+
+	productQuality.Quantity -= quantity
+	err = tx.WithContext(ctx).Select("quantity").Updates(&productQuality).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repository *ProductQualityRepository) TransferStock(ctx context.Context, fromID int64, toID int64, quantity float64, tx *gorm.DB) error {
+	var fromProductQuality model.ProductQuality
+	err := tx.WithContext(ctx).First(&fromProductQuality, fromID).Error
+	if err != nil {
+		return err
+	}
+
+	var toProductQuality model.ProductQuality
+	err = tx.WithContext(ctx).Select("quantity").First(&toProductQuality, toID).Error
+	if err != nil {
+		return err
+	}
+
+	fromProductQuality.Quantity -= quantity
+	toProductQuality.Quantity += quantity
+
+	err = tx.WithContext(ctx).Select("quantity").Updates(&fromProductQuality).Error
+	if err != nil {
+		return err
+	}
+
+	err = tx.WithContext(ctx).Select("quantity").Updates(&toProductQuality).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

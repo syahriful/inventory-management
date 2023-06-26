@@ -44,3 +44,13 @@ type CustomerServiceContract interface {
 	Update(ctx context.Context, request *request.UpdateCustomerRequest) (*response.CustomerResponse, error)
 	Delete(ctx context.Context, code string) error
 }
+
+type TransactionServiceContract interface {
+	FindAll(ctx context.Context) ([]*response.TransactionResponse, error)
+	FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*response.TransactionResponse, error)
+	FindAllByCustomerCode(ctx context.Context, customerCode string) ([]*response.TransactionResponse, error)
+	FindByCode(ctx context.Context, code string) (*response.TransactionResponse, error)
+	Create(ctx context.Context, request *request.CreateTransactionRequest) (*response.TransactionResponse, error)
+	Update(ctx context.Context, request *request.UpdateTransactionRequest) (*response.TransactionResponse, error)
+	Delete(ctx context.Context, code string) error
+}

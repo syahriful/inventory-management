@@ -416,3 +416,151 @@
 [24-Jun-2023 15:19:27] | 200 | 107.891ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
 [24-Jun-2023 15:19:30] | 404 | 105.7037ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFHl | record not found
 [24-Jun-2023 15:19:33] | 200 | 105.2157ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[26-Jun-2023 09:19:42] | 200 | 130.7748ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 09:20:17] | 500 | 102.8485ms | 127.0.0.1 | GET | /api/transactions/5R6TZZ05MR | ERROR: trailing junk after numeric literal at or near "5R" (SQLSTATE 42601)
+[26-Jun-2023 09:20:47] | 200 | 127.2648ms | 127.0.0.1 | GET | /api/transactions/5R6TZZ05MR/supplier | -
+[26-Jun-2023 09:20:55] | 200 | 106.8573ms | 127.0.0.1 | GET | /api/transactions/5R6TZZ05MR/customer | -
+[26-Jun-2023 09:21:07] | 200 | 116.0618ms | 127.0.0.1 | GET | /api/transactions/0DFU2EU1BK/customer | -
+[26-Jun-2023 09:21:20] | 500 | 104.1112ms | 127.0.0.1 | GET | /api/transactions/FKKAJSNDD | ERROR: column "fkkajsndd" does not exist (SQLSTATE 42703)
+[26-Jun-2023 09:21:29] | 500 | 117.1756ms | 127.0.0.1 | GET | /api/transactions/0DFU2EU1BK | ERROR: trailing junk after numeric literal at or near "0D" (SQLSTATE 42601)
+[26-Jun-2023 09:21:49] | 500 | 13.0812ms | 127.0.0.1 | GET | /api/transactions/0DFU2EU1BK | ERROR: trailing junk after numeric literal at or near "0D" (SQLSTATE 42601)
+[26-Jun-2023 09:21:50] | 500 | 109.0659ms | 127.0.0.1 | GET | /api/transactions/0DFU2EU1BK | ERROR: trailing junk after numeric literal at or near "0D" (SQLSTATE 42601)
+[26-Jun-2023 09:21:53] | 500 | 106.5709ms | 127.0.0.1 | GET | /api/transactions/FKKAJSNDD | ERROR: column "fkkajsndd" does not exist (SQLSTATE 42703)
+[26-Jun-2023 09:22:43] | 200 | 131.6212ms | 127.0.0.1 | GET | /api/transactions/FKKAJSNDD | -
+[26-Jun-2023 09:28:34] | 200 | 124.5018ms | 127.0.0.1 | GET | /api/transactions/FKKAJSNDD | -
+[26-Jun-2023 09:33:50] | 200 | 125.129ms | 127.0.0.1 | GET | /api/transactions/FKKAJSNDD | -
+[26-Jun-2023 09:34:17] | 200 | 110.1133ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWK | -
+[26-Jun-2023 09:34:21] | 500 | 106.8981ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWKs | record not found
+[26-Jun-2023 09:34:28] | 500 | 104.9953ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWKs | record not found
+[26-Jun-2023 09:35:09] | 200 | 117.3511ms | 127.0.0.1 | GET | /api/transactions/5R6TZZ05MR/supplier | -
+[26-Jun-2023 09:35:11] | 200 | 116.6072ms | 127.0.0.1 | GET | /api/transactions/5R6TZsZ05MR/supplier | -
+[26-Jun-2023 09:35:20] | 200 | 110.7044ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWK | -
+[26-Jun-2023 09:35:23] | 404 | 105.1974ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWKs | record not found
+[26-Jun-2023 09:35:25] | 200 | 109.3117ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWK | -
+[26-Jun-2023 09:40:45] | 200 | 113.9985ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 09:54:11] | 200 | 115.7471ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 09:54:28] | 400 |      0s | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 09:54:38] | 400 | 190.5µs | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 09:56:39] | 400 |      0s | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:01:49] | 500 | 119.3635ms | 127.0.0.1 | POST | /api/transactions | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 10:02:15] | 500 | 108.4067ms | 127.0.0.1 | POST | /api/transactions | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 10:02:18] | 500 | 109.6927ms | 127.0.0.1 | POST | /api/transactions | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 10:06:12] | 201 | 128.5403ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:08:35] | 201 | 134.9487ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:08:58] | 201 | 122.7163ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:12:14] | 201 | 125.1774ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:12:31] | 201 | 111.1396ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:12:46] | 201 | 110.9026ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:09] | 201 | 125.8971ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:15] | 201 | 112.7ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:16] | 201 | 114.6455ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:28] | 201 | 111.064ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:43] | 201 | 111.1877ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:24:53] | 201 | 115.7351ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:25:05] | 201 | 120.9717ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:42:48] | 200 | 146.5319ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 10:42:53] | 404 | 107.922ms | 127.0.0.1 | GET | /api/transactions/JJDHSNWK | record not found
+[26-Jun-2023 10:43:00] | 200 | 122.2599ms | 127.0.0.1 | GET | /api/transactions/RDWWFS0RTM | -
+[26-Jun-2023 10:45:56] | 200 | 122.4842ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 10:46:38] | 201 | 111.815ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:46:40] | 201 | 117.2187ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:46:46] | 200 | 105.9932ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 10:47:04] | 405 | 782.6µs | 127.0.0.1 | DELETE | /api/transactions/7CINJD8PH2 | Method Not Allowed
+[26-Jun-2023 10:48:07] | 500 | 131.6341ms | 127.0.0.1 | DELETE | /api/transactions/7CINJD8PH2 | ERROR: trailing junk after numeric literal at or near "7C" (SQLSTATE 42601)
+[26-Jun-2023 10:48:29] | 500 | 134.3018ms | 127.0.0.1 | DELETE | /api/transactions/7CINJD8PH2 | ERROR: trailing junk after numeric literal at or near "7C" (SQLSTATE 42601)
+[26-Jun-2023 10:48:30] | 500 | 110.3886ms | 127.0.0.1 | DELETE | /api/transactions/7CINJD8PH2 | ERROR: trailing junk after numeric literal at or near "7C" (SQLSTATE 42601)
+[26-Jun-2023 10:49:49] | 200 | 136.8851ms | 127.0.0.1 | DELETE | /api/transactions/7CINJD8PH2 | -
+[26-Jun-2023 10:50:06] | 201 | 110.0321ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:50:19] | 200 | 115.2125ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 10:50:23] | 200 | 116.7069ms | 127.0.0.1 | DELETE | /api/transactions/T6IE7CECNP | -
+[26-Jun-2023 10:50:42] | 200 | 102.7749ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 10:50:47] | 200 | 121.2627ms | 127.0.0.1 | DELETE | /api/transactions/VLCE6LVE3H | -
+[26-Jun-2023 10:56:49] | 201 | 121.3077ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:57:02] | 201 | 115.9664ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:57:19] | 201 | 111.0441ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 10:58:03] | 200 | 125.7003ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 11:00:02] | 200 | 123.6149ms | 127.0.0.1 | GET | /api/product-qualities | -
+[26-Jun-2023 11:00:10] | 200 | 112.2191ms | 127.0.0.1 | GET | /api/product-qualities | -
+[26-Jun-2023 11:01:48] | 201 | 127.931ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 11:01:51] | 200 | 116.5244ms | 127.0.0.1 | GET | /api/product-qualities | -
+[26-Jun-2023 11:02:00] | 200 | 103.9901ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 11:05:47] | 405 | 523.2µs | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | Method Not Allowed
+[26-Jun-2023 11:07:02] | 500 | 131.5962ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_supplier_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 11:08:12] | 200 | 133.5224ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:09:41] | 200 | 141.0045ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:09:53] | 200 | 115.7804ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 11:10:08] | 200 | 117.3903ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:11:22] | 404 | 10.0366ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LKs | record not found
+[26-Jun-2023 11:11:25] | 200 | 121.3847ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:11:37] | 200 | 114.8691ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:11:38] | 200 | 14.3251ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:11:57] | 200 | 119.1973ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:16:20] | 500 | 130.4182ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 11:16:32] | 500 | 109.6229ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 11:16:33] | 500 | 8.8019ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 11:16:34] | 500 | 14.0733ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 11:17:39] | 200 | 138.8128ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | -
+[26-Jun-2023 11:17:42] | 404 | 107.1586ms | 127.0.0.1 | PATCH | /api/transactions/125KXU63LK | record not found
+[26-Jun-2023 11:18:54] | 200 | 133.9125ms | 127.0.0.1 | PATCH | /api/transactions/FP24GFKW00 | -
+[26-Jun-2023 11:18:55] | 200 | 13.0415ms | 127.0.0.1 | PATCH | /api/transactions/FP24GFKW00 | -
+[26-Jun-2023 11:18:56] | 200 | 20.7708ms | 127.0.0.1 | PATCH | /api/transactions/FP24GFKW00 | -
+[26-Jun-2023 11:19:04] | 200 | 116.4931ms | 127.0.0.1 | PATCH | /api/transactions/FP24GFKW00 | -
+[26-Jun-2023 11:19:28] | 200 | 119.3848ms | 127.0.0.1 | PATCH | /api/transactions/FP24GFKW00 | -
+[26-Jun-2023 11:19:40] | 201 | 112.5499ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 11:19:44] | 200 | 115.3504ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 11:56:59] | 201 | 29.7965ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:21:55] | 200 | 113.1911ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 12:26:02] | 201 | 22.7547ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:31:42] | 201 | 25.6215ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:31:55] | 500 | 111.1342ms | 127.0.0.1 | POST | /api/transactions | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 12:32:16] | 500 | 118.0083ms | 127.0.0.1 | POST | /api/transactions | ERROR: insert or update on table "transactions" violates foreign key constraint "transactions_customer_code_fkey" (SQLSTATE 23503)
+[26-Jun-2023 12:34:34] | 201 | 27.7511ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:36:09] | 201 | 29.9924ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:36:27] | 500 | 21.0338ms | 127.0.0.1 | POST | /api/transactions | ERROR: syntax error at or near "WHERE" (SQLSTATE 42601)
+[26-Jun-2023 12:36:35] | 500 | 112.5454ms | 127.0.0.1 | POST | /api/transactions | ERROR: syntax error at or near "WHERE" (SQLSTATE 42601)
+[26-Jun-2023 12:36:36] | 500 | 7.6388ms | 127.0.0.1 | POST | /api/transactions | ERROR: syntax error at or near "WHERE" (SQLSTATE 42601)
+[26-Jun-2023 12:43:55] | 201 | 24.5694ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:43:56] | 201 | 118.7327ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:44:05] | 201 | 112.9914ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:44:27] | 200 | 131.4154ms | 127.0.0.1 | DELETE | /api/transactions/3SLHPXBSEC | -
+[26-Jun-2023 12:44:38] | 200 | 123.5894ms | 127.0.0.1 | DELETE | /api/transactions/JXUTD7H5K8 | -
+[26-Jun-2023 12:44:47] | 201 | 114.7867ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 12:44:49] | 200 | 109.588ms | 127.0.0.1 | GET | /api/product-qualities | -
+[26-Jun-2023 12:45:14] | 200 | 127.0592ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | -
+[26-Jun-2023 12:45:35] | 200 | 104.1905ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 12:45:51] | 200 | 107.0316ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 12:45:58] | 200 | 129.6012ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 12:50:59] | 404 | 135.0365ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | record not found
+[26-Jun-2023 12:51:52] | 404 | 141.1859ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | record not found
+[26-Jun-2023 12:51:58] | 404 | 216.9207ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | record not found
+[26-Jun-2023 12:52:35] | 404 | 215.232ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | record not found
+[26-Jun-2023 12:56:25] | 200 | 147.6104ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 12:57:34] | 200 | 154.7194ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 12:58:27] | 200 | 149.5439ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 12:59:39] | 200 | 136.5291ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:01:44] | 200 | 156.9984ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:22:31] | 200 | 143.6215ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:22:42] | 201 | 126.9081ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 13:22:56] | 201 | 129.8514ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 13:29:38] | 200 | 117.214ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:29:43] | 200 | 130.7388ms | 127.0.0.1 | DELETE | /api/transactions/Y4CA6KM1J7 | -
+[26-Jun-2023 13:29:51] | 404 | 104.4219ms | 127.0.0.1 | DELETE | /api/transactions/Y4CA6KM1J7 | record not found
+[26-Jun-2023 13:29:53] | 200 | 121.6724ms | 127.0.0.1 | DELETE | /api/transactions/V0NK6ZPXTU | -
+[26-Jun-2023 13:30:02] | 200 | 109.6728ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:30:13] | 200 | 127.5822ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:30:25] | 200 | 120.3534ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
+[26-Jun-2023 13:30:27] | 200 | 102.9225ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:30:52] | 200 | 137.8392ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
+[26-Jun-2023 13:31:04] | 200 | 120.2842ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
+[26-Jun-2023 13:31:17] | 200 | 102.4274ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:31:28] | 200 | 121.5903ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:31:57] | 200 | 9.5908ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:32:23] | 200 | 124.0688ms | 127.0.0.1 | DELETE | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:33:06] | 400 | 435.5µs | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | -
+[26-Jun-2023 13:38:51] | 200 | 127.2862ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:38:59] | 201 | 126.0783ms | 127.0.0.1 | POST | /api/transactions | -
+[26-Jun-2023 13:39:18] | 200 | 121.4378ms | 127.0.0.1 | DELETE | /api/transactions/UYMJ3IN3X0 | -
+[26-Jun-2023 13:39:37] | 404 | 107.6682ms | 127.0.0.1 | PATCH | /api/transactions/9M3Q5JFWCR | record not found
+[26-Jun-2023 13:39:42] | 200 | 121.2925ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
+[26-Jun-2023 13:39:46] | 200 | 132.1791ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
+[26-Jun-2023 13:39:52] | 200 | 9.8352ms | 127.0.0.1 | GET | /api/transactions | -

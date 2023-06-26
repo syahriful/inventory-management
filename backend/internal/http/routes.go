@@ -60,6 +60,11 @@ func NewRoutes(db *gorm.DB, app *fiber.App) {
 	supplierService := service.NewSupplierService(supplierRepository)
 	supplierController := controller.NewSupplierController(supplierService)
 
+	transactionRepository := repository.NewTransactionRepository(db)
+	txRepository := repository.NewTxRepository(db, transactionRepository, productQualityRepository)
+	transactionService := service.NewTransactionService(transactionRepository, productQualityRepository, txRepository)
+	transactionController := controller.NewTransactionController(transactionService)
+
 	app.Get("/", WelcomeHandler)
 
 	prefix := app.Group("/api")
@@ -109,6 +114,17 @@ func NewRoutes(db *gorm.DB, app *fiber.App) {
 		users.Post("/", userController.Create)
 		users.Patch("/:id", userController.Update)
 		users.Delete("/:id", userController.Delete)
+	}
+
+	transactions := prefix.Group("/transactions")
+	{
+		transactions.Get("/", transactionController.FindAll)
+		transactions.Get("/:code", transactionController.FindByCode)
+		transactions.Post("/", transactionController.Create)
+		transactions.Delete("/:code", transactionController.Delete)
+		transactions.Patch("/:code", transactionController.Update)
+		transactions.Get("/:code/supplier", transactionController.FindAllSupplierCode)
+		transactions.Get("/:code/customer", transactionController.FindAllCustomerCode)
 	}
 
 	app.Get("*", NotFoundHandler)

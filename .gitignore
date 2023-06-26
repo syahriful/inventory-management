@@ -2,3 +2,4 @@
 .vscode
 .env
 /backend/application.exe
+tmp
