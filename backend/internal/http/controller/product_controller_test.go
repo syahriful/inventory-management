@@ -9,8 +9,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/stretchr/testify/assert"
 	"inventory-management/backend/internal/http/middleware"
-	"inventory-management/backend/internal/http/presenter/request"
-	"inventory-management/backend/internal/http/presenter/response"
+	request2 "inventory-management/backend/internal/http/request"
+	response "inventory-management/backend/internal/http/response"
 	service "inventory-management/backend/internal/service/mock"
 	"net/http"
 	"net/http/httptest"
@@ -173,7 +173,7 @@ func TestProductController_FindByCode(t *testing.T) {
 func TestProductController_Create(t *testing.T) {
 	testCases := []struct {
 		name           string
-		request        *request.CreateProductRequest
+		request        *request2.CreateProductRequest
 		expectedStatus string
 		expectedBody   *response.ProductResponse
 		expectedCode   int
@@ -181,11 +181,11 @@ func TestProductController_Create(t *testing.T) {
 	}{
 		{
 			name: "Create product with required fields",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.CreateProductQualityRequest{
+				ProductQualities: []*request2.CreateProductQualityRequest{
 					{
 						Quality:  "Very Fresh",
 						Price:    20000,
@@ -233,10 +233,10 @@ func TestProductController_Create(t *testing.T) {
 		},
 		{
 			name: "Create product with missing name field",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.CreateProductQualityRequest{
+				ProductQualities: []*request2.CreateProductQualityRequest{
 					{
 						Quality:  "Very Fresh",
 						Price:    20000,
@@ -258,10 +258,10 @@ func TestProductController_Create(t *testing.T) {
 		},
 		{
 			name: "Create product with missing unit mass acronym field",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.CreateProductQualityRequest{
+				ProductQualities: []*request2.CreateProductQualityRequest{
 					{
 						Quality:  "Very Fresh",
 						Price:    20000,
@@ -283,10 +283,10 @@ func TestProductController_Create(t *testing.T) {
 		},
 		{
 			name: "Create product with missing unit mass description field",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				Name:            "Shrimp",
 				UnitMassAcronym: "kg",
-				ProductQualities: []*request.CreateProductQualityRequest{
+				ProductQualities: []*request2.CreateProductQualityRequest{
 					{
 						Quality:  "Very Fresh",
 						Price:    20000,
@@ -308,7 +308,7 @@ func TestProductController_Create(t *testing.T) {
 		},
 		{
 			name: "Create product with missing product qualities field",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
@@ -320,11 +320,11 @@ func TestProductController_Create(t *testing.T) {
 		},
 		{
 			name: "Service getting an error",
-			request: &request.CreateProductRequest{
+			request: &request2.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.CreateProductQualityRequest{
+				ProductQualities: []*request2.CreateProductQualityRequest{
 					{
 						Quality:  "Very Fresh",
 						Price:    20000,
@@ -394,7 +394,7 @@ func TestProductController_Create(t *testing.T) {
 func TestProductController_Update(t *testing.T) {
 	testCases := []struct {
 		name           string
-		request        *request.UpdateProductRequest
+		request        *request2.UpdateProductRequest
 		expectedStatus string
 		expectedBody   *response.ProductResponse
 		expectedCode   int
@@ -402,12 +402,12 @@ func TestProductController_Update(t *testing.T) {
 	}{
 		{
 			name: "Update product with required fields",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.UpdateProductQualityRequest{
+				ProductQualities: []*request2.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Very Fresh",
@@ -457,11 +457,11 @@ func TestProductController_Update(t *testing.T) {
 		},
 		{
 			name: "Update product with missing name field",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.UpdateProductQualityRequest{
+				ProductQualities: []*request2.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Very Fresh",
@@ -485,11 +485,11 @@ func TestProductController_Update(t *testing.T) {
 		},
 		{
 			name: "Update product with missing unit mass acronym field",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.UpdateProductQualityRequest{
+				ProductQualities: []*request2.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Very Fresh",
@@ -513,11 +513,11 @@ func TestProductController_Update(t *testing.T) {
 		},
 		{
 			name: "Update product with missing unit mass description field",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:            "KKSJIDNA",
 				Name:            "Shrimp",
 				UnitMassAcronym: "kg",
-				ProductQualities: []*request.UpdateProductQualityRequest{
+				ProductQualities: []*request2.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Very Fresh",
@@ -541,7 +541,7 @@ func TestProductController_Update(t *testing.T) {
 		},
 		{
 			name: "Update product with missing product qualities field",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
@@ -554,12 +554,12 @@ func TestProductController_Update(t *testing.T) {
 		},
 		{
 			name: "Service getting an error",
-			request: &request.UpdateProductRequest{
+			request: &request2.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
-				ProductQualities: []*request.UpdateProductQualityRequest{
+				ProductQualities: []*request2.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Very Fresh",

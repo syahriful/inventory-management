@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"inventory-management/backend/internal/http/presenter/request"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/request"
+	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
 )
@@ -30,17 +30,7 @@ func (service *TransactionService) FindAll(ctx context.Context) ([]*response.Tra
 
 	var transactionResponses []*response.TransactionResponse
 	for _, transaction := range transactions {
-		transactionResponses = append(transactionResponses, &response.TransactionResponse{
-			ID:               transaction.ID,
-			Code:             transaction.Code,
-			ProductQualityID: transaction.ProductQualityID,
-			SupplierCode:     transaction.SupplierCode,
-			CustomerCode:     transaction.CustomerCode,
-			Description:      transaction.Description,
-			Quantity:         transaction.Quantity,
-			Type:             transaction.Type,
-			CreatedAt:        transaction.CreatedAt.String(),
-		})
+		transactionResponses = append(transactionResponses, transaction.ToResponse())
 	}
 
 	return transactionResponses, nil
@@ -54,17 +44,7 @@ func (service *TransactionService) FindAllBySupplierCode(ctx context.Context, su
 
 	var transactionResponses []*response.TransactionResponse
 	for _, transaction := range transactions {
-		transactionResponses = append(transactionResponses, &response.TransactionResponse{
-			ID:               transaction.ID,
-			Code:             transaction.Code,
-			ProductQualityID: transaction.ProductQualityID,
-			SupplierCode:     transaction.SupplierCode,
-			CustomerCode:     transaction.CustomerCode,
-			Description:      transaction.Description,
-			Quantity:         transaction.Quantity,
-			Type:             transaction.Type,
-			CreatedAt:        transaction.CreatedAt.String(),
-		})
+		transactionResponses = append(transactionResponses, transaction.ToResponse())
 	}
 
 	return transactionResponses, nil
@@ -78,17 +58,7 @@ func (service *TransactionService) FindAllByCustomerCode(ctx context.Context, cu
 
 	var transactionResponses []*response.TransactionResponse
 	for _, transaction := range transactions {
-		transactionResponses = append(transactionResponses, &response.TransactionResponse{
-			ID:               transaction.ID,
-			Code:             transaction.Code,
-			ProductQualityID: transaction.ProductQualityID,
-			SupplierCode:     transaction.SupplierCode,
-			CustomerCode:     transaction.CustomerCode,
-			Description:      transaction.Description,
-			Quantity:         transaction.Quantity,
-			Type:             transaction.Type,
-			CreatedAt:        transaction.CreatedAt.String(),
-		})
+		transactionResponses = append(transactionResponses, transaction.ToResponse())
 	}
 
 	return transactionResponses, nil
@@ -100,80 +70,24 @@ func (service *TransactionService) FindByCode(ctx context.Context, code string) 
 		return nil, err
 	}
 
-	var supplierResponse *response.SupplierResponse
-	if transaction.Supplier != nil {
-		supplierResponse = &response.SupplierResponse{
-			Code:    transaction.Supplier.Code,
-			Name:    transaction.Supplier.Name,
-			Address: transaction.Supplier.Address,
-			Phone:   transaction.Supplier.Phone,
-		}
-	}
-
-	var customerResponse *response.CustomerResponse
-	if transaction.Customer != nil {
-		customerResponse = &response.CustomerResponse{
-			Code: transaction.Customer.Code,
-			Name: transaction.Customer.Name,
-		}
-	}
-
-	var productQualityResponse *response.ProductQualityResponse
-	productQualityResponse = &response.ProductQualityResponse{
-		ID:          transaction.ProductQuality.ID,
-		ProductCode: transaction.ProductQuality.ProductCode,
-		Quality:     transaction.ProductQuality.Quality,
-		Price:       transaction.ProductQuality.Price,
-		Quantity:    transaction.ProductQuality.Quantity,
-		Type:        transaction.ProductQuality.Type,
-		Product: &response.ProductResponse{
-			Code:                transaction.ProductQuality.Product.Code,
-			Name:                transaction.ProductQuality.Product.Name,
-			UnitMassAcronym:     transaction.ProductQuality.Product.UnitMassAcronym,
-			UnitMassDescription: transaction.ProductQuality.Product.UnitMassDescription,
-		},
-	}
-
-	return &response.TransactionResponse{
-		ID:               transaction.ID,
-		Code:             transaction.Code,
-		ProductQualityID: transaction.ProductQualityID,
-		ProductQuality:   productQualityResponse,
-		SupplierCode:     transaction.SupplierCode,
-		Supplier:         supplierResponse,
-		CustomerCode:     transaction.CustomerCode,
-		Customer:         customerResponse,
-		Description:      transaction.Description,
-		Quantity:         transaction.Quantity,
-		Type:             transaction.Type,
-		CreatedAt:        transaction.CreatedAt.String(),
-	}, nil
+	return transaction.ToResponseWithAssociations(), nil
 }
 
 func (service *TransactionService) Create(ctx context.Context, request *request.CreateTransactionRequest) (*response.TransactionResponse, error) {
-	transaction, err := service.TxRepository.Create(ctx, &model.Transaction{
-		ProductQualityID: request.ProductQualityID,
-		SupplierCode:     request.SupplierCode,
-		CustomerCode:     request.CustomerCode,
-		Description:      request.Description,
-		Quantity:         request.Quantity,
-		Type:             request.Type,
-	})
+	var transactionRequest model.Transaction
+	transactionRequest.ProductQualityID = request.ProductQualityID
+	transactionRequest.SupplierCode = request.SupplierCode
+	transactionRequest.CustomerCode = request.CustomerCode
+	transactionRequest.Description = request.Description
+	transactionRequest.Quantity = request.Quantity
+	transactionRequest.Type = request.Type
+
+	transaction, err := service.TxRepository.Create(ctx, &transactionRequest)
 	if err != nil {
 		return nil, err
 	}
 
-	return &response.TransactionResponse{
-		ID:               transaction.ID,
-		Code:             transaction.Code,
-		ProductQualityID: transaction.ProductQualityID,
-		SupplierCode:     transaction.SupplierCode,
-		CustomerCode:     transaction.CustomerCode,
-		Description:      transaction.Description,
-		Quantity:         transaction.Quantity,
-		Type:             transaction.Type,
-		CreatedAt:        transaction.CreatedAt.String(),
-	}, nil
+	return transaction.ToResponse(), nil
 }
 
 func (service *TransactionService) Update(ctx context.Context, request *request.UpdateTransactionRequest) (*response.TransactionResponse, error) {
@@ -185,22 +99,13 @@ func (service *TransactionService) Update(ctx context.Context, request *request.
 	transaction.SupplierCode = request.SupplierCode
 	transaction.CustomerCode = request.CustomerCode
 	transaction.Description = request.Description
+
 	err = service.TxRepository.Update(ctx, request.Quantity, transaction)
 	if err != nil {
 		return nil, err
 	}
 
-	return &response.TransactionResponse{
-		ID:               transaction.ID,
-		Code:             transaction.Code,
-		ProductQualityID: transaction.ProductQualityID,
-		SupplierCode:     transaction.SupplierCode,
-		CustomerCode:     transaction.CustomerCode,
-		Description:      transaction.Description,
-		Quantity:         transaction.Quantity,
-		Type:             transaction.Type,
-		CreatedAt:        transaction.CreatedAt.String(),
-	}, nil
+	return transaction.ToResponse(), nil
 }
 
 func (service *TransactionService) Delete(ctx context.Context, code string) error {

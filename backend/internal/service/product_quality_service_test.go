@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/stretchr/testify/assert"
-	"inventory-management/backend/internal/http/presenter/response"
+	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	repository "inventory-management/backend/internal/repository/mock"
 	"testing"

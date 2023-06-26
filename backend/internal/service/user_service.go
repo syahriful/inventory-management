@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	"errors"
-	"inventory-management/backend/internal/http/presenter/request"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/request"
+	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
 )
@@ -69,10 +69,11 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 		return nil, errors.New(response.UsernameExists)
 	}
 
-	user, err := service.UserRepository.Create(ctx, &model.User{
-		Name:     request.Name,
-		Username: request.Username,
-	})
+	var userRequest model.User
+	userRequest.Name = request.Name
+	userRequest.Username = request.Username
+
+	user, err := service.UserRepository.Create(ctx, &userRequest)
 	if err != nil {
 		return nil, err
 	}

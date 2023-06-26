@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"inventory-management/backend/internal/http/presenter/response"
+	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/repository"
 	"sync"
 )
@@ -27,21 +27,14 @@ func (service *ProductQualityService) FindAll(ctx context.Context) ([]*response.
 
 	var productQualityResponses []*response.ProductQualityResponse
 	for _, productQuality := range productQualities {
-		productQualityResponses = append(productQualityResponses, &response.ProductQualityResponse{
-			ID:          productQuality.ID,
-			ProductCode: productQuality.ProductCode,
-			Quality:     productQuality.Quality,
-			Price:       productQuality.Price,
-			Quantity:    productQuality.Quantity,
-			Type:        productQuality.Type,
-		})
+		productQualityResponses = append(productQualityResponses, productQuality.ToResponse())
 	}
 
 	return productQualityResponses, nil
 }
 
 func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error) {
-	var productResponse response.ProductResponse
+	var productResponse *response.ProductResponse
 	var productQualityResponses []*response.ProductQualityResponse
 	var wg sync.WaitGroup
 	var mutex sync.Mutex
@@ -58,13 +51,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 			return
 		}
 
-		productResponse.ID = product.ID
-		productResponse.Code = product.Code
-		productResponse.Name = product.Name
-		productResponse.UnitMassAcronym = product.UnitMassAcronym
-		productResponse.UnitMassDescription = product.UnitMassDescription
-		productResponse.CreatedAt = product.CreatedAt.String()
-		productResponse.UpdatedAt = product.UpdatedAt.String()
+		productResponse = product.ToResponse()
 	}()
 
 	go func() {
@@ -78,14 +65,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 		}
 
 		for _, productQuality := range productQualities {
-			productQualityResponses = append(productQualityResponses, &response.ProductQualityResponse{
-				ID:          productQuality.ID,
-				ProductCode: productQuality.ProductCode,
-				Quality:     productQuality.Quality,
-				Price:       productQuality.Price,
-				Quantity:    productQuality.Quantity,
-				Type:        productQuality.Type,
-			})
+			productQualityResponses = append(productQualityResponses, productQuality.ToResponse())
 		}
 	}()
 	wg.Wait()
@@ -94,7 +74,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 	}
 
 	return &response.ProductQualityWithOwnProductResponse{
-		Product:          &productResponse,
+		Product:          productResponse,
 		ProductQualities: productQualityResponses,
 	}, nil
 }

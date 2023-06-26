@@ -3,7 +3,7 @@ package util
 import (
 	"fmt"
 	"github.com/go-playground/validator/v10"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/response"
 	"reflect"
 )
 

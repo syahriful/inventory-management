@@ -1,9 +1,9 @@
 package response
 
 type ProductResponse struct {
-	ID                  int64                     `json:"id,omitempty"`
-	Code                string                    `json:"code,omitempty"`
-	Name                string                    `json:"name,omitempty"`
+	ID                  int64                     `json:"id"`
+	Code                string                    `json:"code"`
+	Name                string                    `json:"name"`
 	UnitMassAcronym     string                    `json:"unit_mass_acronym,omitempty"`
 	UnitMassDescription string                    `json:"unit_mass_description,omitempty"`
 	CreatedAt           string                    `json:"created_at,omitempty"`

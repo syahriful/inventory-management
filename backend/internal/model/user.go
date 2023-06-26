@@ -5,7 +5,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"inventory-management/backend/internal/http/presenter/response"
+	response "inventory-management/backend/internal/http/response"
 	"time"
 )
 

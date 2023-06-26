@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"inventory-management/backend/internal/http/presenter/request"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/request"
+	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
 )
@@ -26,15 +26,7 @@ func (service *SupplierService) FindAll(ctx context.Context) ([]*response.Suppli
 
 	var supplierResponses []*response.SupplierResponse
 	for _, supplier := range suppliers {
-		supplierResponses = append(supplierResponses, &response.SupplierResponse{
-			ID:        supplier.ID,
-			Code:      supplier.Code,
-			Name:      supplier.Name,
-			Address:   supplier.Address,
-			Phone:     supplier.Phone,
-			CreatedAt: supplier.CreatedAt.String(),
-			UpdatedAt: supplier.UpdatedAt.String(),
-		})
+		supplierResponses = append(supplierResponses, supplier.ToResponse())
 	}
 
 	return supplierResponses, nil
@@ -46,61 +38,21 @@ func (service *SupplierService) FindByCode(ctx context.Context, code string) (*r
 		return nil, err
 	}
 
-	var transactionResponses []*response.TransactionResponse
-	for _, transaction := range supplier.Transactions {
-		var productQualityResponse response.ProductQualityResponse
-		productQualityResponse.ID = transaction.ProductQuality.ID
-		productQualityResponse.Quality = transaction.ProductQuality.Quality
-		productQualityResponse.Price = transaction.ProductQuality.Price
-		productQualityResponse.Product = &response.ProductResponse{
-			Code: transaction.ProductQuality.Product.Code,
-			Name: transaction.ProductQuality.Product.Name,
-		}
-
-		transactionResponses = append(transactionResponses, &response.TransactionResponse{
-			ID:               transaction.ID,
-			Code:             transaction.Code,
-			ProductQuality:   &productQualityResponse,
-			ProductQualityID: transaction.ProductQualityID,
-			SupplierCode:     transaction.SupplierCode,
-			Description:      transaction.Description,
-			Quantity:         transaction.Quantity,
-			Type:             transaction.Type,
-			CreatedAt:        transaction.CreatedAt.String(),
-		})
-	}
-
-	return &response.SupplierResponse{
-		ID:           supplier.ID,
-		Code:         supplier.Code,
-		Name:         supplier.Name,
-		Address:      supplier.Address,
-		Phone:        supplier.Phone,
-		CreatedAt:    supplier.CreatedAt.String(),
-		UpdatedAt:    supplier.UpdatedAt.String(),
-		Transactions: transactionResponses,
-	}, nil
+	return supplier.ToResponseWithAssociations(), nil
 }
 
 func (service *SupplierService) Create(ctx context.Context, request *request.CreateSupplierRequest) (*response.SupplierResponse, error) {
-	supplier, err := service.SupplierRepository.Create(ctx, &model.Supplier{
-		Name:    request.Name,
-		Address: request.Address,
-		Phone:   request.Phone,
-	})
+	var supplierRequest model.Supplier
+	supplierRequest.Name = request.Name
+	supplierRequest.Address = request.Address
+	supplierRequest.Phone = request.Phone
+
+	supplier, err := service.SupplierRepository.Create(ctx, &supplierRequest)
 	if err != nil {
 		return nil, err
 	}
 
-	return &response.SupplierResponse{
-		ID:        supplier.ID,
-		Code:      supplier.Code,
-		Name:      supplier.Name,
-		Address:   supplier.Address,
-		Phone:     supplier.Phone,
-		CreatedAt: supplier.CreatedAt.String(),
-		UpdatedAt: supplier.UpdatedAt.String(),
-	}, nil
+	return supplier.ToResponse(), nil
 }
 
 func (service *SupplierService) Update(ctx context.Context, request *request.UpdateSupplierRequest) (*response.SupplierResponse, error) {
@@ -112,20 +64,13 @@ func (service *SupplierService) Update(ctx context.Context, request *request.Upd
 	checkSupplier.Name = request.Name
 	checkSupplier.Address = request.Address
 	checkSupplier.Phone = request.Phone
+
 	supplier, err := service.SupplierRepository.Update(ctx, checkSupplier)
 	if err != nil {
 		return nil, err
 	}
 
-	return &response.SupplierResponse{
-		ID:        supplier.ID,
-		Code:      supplier.Code,
-		Name:      supplier.Name,
-		Address:   supplier.Address,
-		Phone:     supplier.Phone,
-		CreatedAt: supplier.CreatedAt.String(),
-		UpdatedAt: supplier.UpdatedAt.String(),
-	}, nil
+	return supplier.ToResponse(), nil
 }
 
 func (service *SupplierService) Delete(ctx context.Context, code string) error {

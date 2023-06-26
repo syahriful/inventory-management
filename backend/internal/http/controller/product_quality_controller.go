@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/service"
 )
 

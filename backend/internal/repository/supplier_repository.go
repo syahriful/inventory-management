@@ -29,10 +29,8 @@ func (repository *SupplierRepository) FindAll(ctx context.Context) ([]*model.Sup
 func (repository *SupplierRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Supplier, error) {
 	var supplier model.Supplier
 	err := repository.DB.WithContext(ctx).Preload("Transactions").Preload("Transactions.ProductQuality", func(tx *gorm.DB) *gorm.DB {
-		return tx.Select("id", "product_code", "quality", "price")
-	}).Preload("Transactions.ProductQuality.Product", func(tx *gorm.DB) *gorm.DB {
-		return tx.Select("code", "name")
-	}).Where("code = ?", code).First(&supplier).Error
+		return tx.Select("id", "product_code", "quality", "quantity", "price")
+	}).Preload("Transactions.ProductQuality.Product").Where("code = ?", code).First(&supplier).Error
 	if err != nil {
 		return nil, err
 	}

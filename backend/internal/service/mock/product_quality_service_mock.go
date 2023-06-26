@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"github.com/stretchr/testify/mock"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/response"
 )
 
 type ProductQualityServiceMock struct {

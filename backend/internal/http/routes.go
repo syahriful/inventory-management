@@ -9,7 +9,7 @@ import (
 	"inventory-management/backend/cmd/config"
 	"inventory-management/backend/internal/http/controller"
 	"inventory-management/backend/internal/http/middleware"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/repository"
 	"inventory-management/backend/internal/service"
 	"os"

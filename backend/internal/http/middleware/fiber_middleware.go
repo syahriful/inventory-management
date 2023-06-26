@@ -12,7 +12,7 @@ import (
 	jwtware "github.com/gofiber/jwt/v3"
 	"github.com/golang-jwt/jwt/v4"
 	"inventory-management/backend/cmd/config"
-	"inventory-management/backend/internal/http/presenter/response"
+	"inventory-management/backend/internal/http/response"
 	"os"
 	"time"
 )
