@@ -3,13 +3,10 @@ package service
 import (
 	"context"
 	"errors"
-	"github.com/golang-jwt/jwt/v4"
 	"inventory-management/backend/internal/http/presenter/request"
 	"inventory-management/backend/internal/http/presenter/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
-	"inventory-management/backend/util"
-	"time"
 )
 
 type UserService struct {
@@ -30,13 +27,7 @@ func (service *UserService) FindAll(ctx context.Context) ([]*response.UserRespon
 
 	var userResponses []*response.UserResponse
 	for _, user := range users {
-		userResponses = append(userResponses, &response.UserResponse{
-			ID:        user.ID,
-			Name:      user.Name,
-			Username:  user.Username,
-			CreatedAt: user.CreatedAt.String(),
-			UpdatedAt: user.UpdatedAt.String(),
-		})
+		userResponses = append(userResponses, user.ToResponse())
 	}
 
 	return userResponses, nil
@@ -48,13 +39,7 @@ func (service *UserService) FindByID(ctx context.Context, id int64) (*response.U
 		return nil, err
 	}
 
-	return &response.UserResponse{
-		ID:        user.ID,
-		Name:      user.Name,
-		Username:  user.Username,
-		CreatedAt: user.CreatedAt.String(),
-		UpdatedAt: user.UpdatedAt.String(),
-	}, nil
+	return user.ToResponse(), nil
 }
 
 func (service *UserService) VerifyLogin(ctx context.Context, request *request.LoginUserRequest) (*response.UserLoginResponse, error) {
@@ -63,17 +48,12 @@ func (service *UserService) VerifyLogin(ctx context.Context, request *request.Lo
 		return nil, err
 	}
 
-	err = util.VerifyPassword(user.Password, request.Password)
+	err = user.VerifyPassword(request.Password)
 	if err != nil {
 		return nil, err
 	}
 
-	myClaims := jwt.Claims(jwt.MapClaims{
-		"username": user.Username,
-		"exp":      time.Now().Add(time.Hour * 72).Unix(),
-	})
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, myClaims)
-	token, err := claims.SignedString([]byte("secret"))
+	token, err := user.GenerateTokenJWT()
 	if err != nil {
 		return nil, err
 	}
@@ -84,12 +64,7 @@ func (service *UserService) VerifyLogin(ctx context.Context, request *request.Lo
 }
 
 func (service *UserService) Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error) {
-	passwordHashed, err := util.HashPassword(request.Password)
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = service.UserRepository.FindByUsername(ctx, request.Username)
+	_, err := service.UserRepository.FindByUsername(ctx, request.Username)
 	if err == nil {
 		return nil, errors.New(response.UsernameExists)
 	}
@@ -97,19 +72,12 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 	user, err := service.UserRepository.Create(ctx, &model.User{
 		Name:     request.Name,
 		Username: request.Username,
-		Password: passwordHashed,
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	return &response.UserResponse{
-		ID:        user.ID,
-		Name:      user.Name,
-		Username:  user.Username,
-		CreatedAt: user.CreatedAt.String(),
-		UpdatedAt: user.UpdatedAt.String(),
-	}, nil
+	return user.ToResponse(), nil
 }
 
 func (service *UserService) Update(ctx context.Context, request *request.UpdateUserRequest) (*response.UserResponse, error) {
@@ -120,7 +88,7 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 
 	newPassword := checkUser.Password
 	if request.Password != "" {
-		passwordHashed, err := util.HashPassword(request.Password)
+		passwordHashed, err := checkUser.HashPassword(request.Password)
 		if err != nil {
 			return nil, err
 		}
@@ -135,13 +103,7 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 		return nil, err
 	}
 
-	return &response.UserResponse{
-		ID:        user.ID,
-		Name:      user.Name,
-		Username:  user.Username,
-		CreatedAt: user.CreatedAt.String(),
-		UpdatedAt: user.UpdatedAt.String(),
-	}, nil
+	return user.ToResponse(), nil
 }
 
 func (service *UserService) Delete(ctx context.Context, id int64) error {

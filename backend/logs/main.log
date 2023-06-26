@@ -569,3 +569,20 @@
 [26-Jun-2023 14:02:13] | 200 | 115.6493ms | 127.0.0.1 | GET | /api/customers | -
 [26-Jun-2023 14:02:14] | 200 | 110.4093ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -
 [26-Jun-2023 14:02:18] | 404 | 102.5486ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK2 | record not found
+[26-Jun-2023 14:07:52] | 200 | 116.5999ms | 127.0.0.1 | GET | /api/users | -
+[26-Jun-2023 14:07:55] | 404 | 115.1756ms | 127.0.0.1 | GET | /api/users/5 | record not found
+[26-Jun-2023 14:08:00] | 200 | 105.1718ms | 127.0.0.1 | GET | /api/users/1 | -
+[26-Jun-2023 14:08:04] | 200 | 110.7378ms | 127.0.0.1 | GET | /api/users/2 | -
+[26-Jun-2023 14:21:54] | 200 | 118.6352ms | 127.0.0.1 | GET | /api/users/2 | -
+[26-Jun-2023 14:21:56] | 200 | 114.9071ms | 127.0.0.1 | GET | /api/users | -
+[26-Jun-2023 14:22:00] | 200 | 159.0709ms | 127.0.0.1 | POST | /api/login | -
+[26-Jun-2023 14:22:04] | 404 | 115.0541ms | 127.0.0.1 | POST | /api/login | record not found
+[26-Jun-2023 14:22:08] | 200 | 159.3059ms | 127.0.0.1 | POST | /api/login | -
+[26-Jun-2023 14:22:10] | 400 | 156.9014ms | 127.0.0.1 | POST | /api/login | invalid password
+[26-Jun-2023 14:22:16] | 500 | 106.1341ms | 127.0.0.1 | POST | /api/register | username already exist
+[26-Jun-2023 14:22:33] | 201 | 158.7752ms | 127.0.0.1 | POST | /api/register | -
+[26-Jun-2023 14:22:47] | 200 | 112.9565ms | 127.0.0.1 | PATCH | /api/users/3 | -
+[26-Jun-2023 14:22:55] | 200 | 118.1872ms | 127.0.0.1 | PATCH | /api/users/3 | -
+[26-Jun-2023 14:23:06] | 200 | 169.2958ms | 127.0.0.1 | PATCH | /api/users/3 | -
+[26-Jun-2023 14:23:14] | 400 | 168.1506ms | 127.0.0.1 | POST | /api/login | invalid password
+[26-Jun-2023 14:23:17] | 200 | 157.4649ms | 127.0.0.1 | POST | /api/login | -
