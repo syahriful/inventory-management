@@ -72,7 +72,8 @@ func TestProductQualityController_FindAll(t *testing.T) {
 			var svc service.ProductQualityServiceMock
 			svc.On("FindAll", ctx).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductQualityController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductQualityController(&svc, route)
 			app.Get("/api/product-qualities", ctrl.FindAll)
 
 			req := httptest.NewRequest(http.MethodGet, "/api/product-qualities", nil)
@@ -160,7 +161,8 @@ func TestProductQualityController_FindAllByProductCode(t *testing.T) {
 			var svc service.ProductQualityServiceMock
 			svc.On("FindAllByProductCode", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductQualityController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductQualityController(&svc, route)
 			app.Get("/api/product-qualities/:code", ctrl.FindAllByProductCode)
 
 			url := fmt.Sprintf("/api/product-qualities/%s", tc.request)
@@ -227,7 +229,8 @@ func TestProductQualityController_Delete(t *testing.T) {
 			var svc service.ProductQualityServiceMock
 			svc.On("Delete", ctx, tc.request).Return(tc.expectedError)
 
-			ctrl := NewProductQualityController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductQualityController(&svc, route)
 			app.Delete("/api/product-qualities/:id", ctrl.Delete)
 
 			url := fmt.Sprintf("/api/product-qualities/%d", tc.request)

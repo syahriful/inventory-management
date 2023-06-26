@@ -12,10 +12,21 @@ type ProductController struct {
 	ProductService service.ProductServiceContract
 }
 
-func NewProductController(productService service.ProductServiceContract) *ProductController {
-	return &ProductController{
+func NewProductController(productService service.ProductServiceContract, route fiber.Router) ProductController {
+	controller := ProductController{
 		ProductService: productService,
 	}
+
+	product := route.Group("/products")
+	{
+		product.Get("/", controller.FindAll)
+		product.Get("/:code", controller.FindByCode)
+		product.Post("/", controller.Create)
+		product.Patch("/:code", controller.Update)
+		product.Delete("/:code", controller.Delete)
+	}
+
+	return controller
 }
 
 func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {

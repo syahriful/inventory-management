@@ -13,10 +13,15 @@ type AuthController struct {
 	UserService service.UserServiceContract
 }
 
-func NewAuthController(userService service.UserServiceContract) *AuthController {
-	return &AuthController{
+func NewAuthController(userService service.UserServiceContract, route fiber.Router) AuthController {
+	controller := AuthController{
 		UserService: userService,
 	}
+
+	route.Post("/login", controller.Login)
+	route.Post("/register", controller.Register)
+
+	return controller
 }
 
 func (controller *AuthController) Login(ctx *fiber.Ctx) error {

@@ -73,7 +73,8 @@ func TestCustomerController_FindAll(t *testing.T) {
 			var svc service.CustomerServiceMock
 			svc.On("FindAll", ctx).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewCustomerController(&svc)
+			route := app.Group("/api")
+			ctrl := NewCustomerController(&svc, route)
 			app.Get("/api/customers", ctrl.FindAll)
 
 			req := httptest.NewRequest(http.MethodGet, "/api/customers", nil)
@@ -142,7 +143,8 @@ func TestCustomerController_FindByCode(t *testing.T) {
 			var svc service.CustomerServiceMock
 			svc.On("FindByCode", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewCustomerController(&svc)
+			route := app.Group("/api")
+			ctrl := NewCustomerController(&svc, route)
 			app.Get("/api/customers/:code", ctrl.FindByCode)
 
 			url := fmt.Sprintf("/api/customers/%s", tc.request)
@@ -216,7 +218,8 @@ func TestCustomerController_Create(t *testing.T) {
 			var svc service.CustomerServiceMock
 			svc.On("Create", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewCustomerController(&svc)
+			route := app.Group("/api")
+			ctrl := NewCustomerController(&svc, route)
 			app.Post("/api/customers", ctrl.Create)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -309,7 +312,8 @@ func TestCustomerController_Update(t *testing.T) {
 			var svc service.CustomerServiceMock
 			svc.On("Update", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewCustomerController(&svc)
+			route := app.Group("/api")
+			ctrl := NewCustomerController(&svc, route)
 			app.Patch("/api/customers/:code", ctrl.Update)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -385,7 +389,8 @@ func TestCustomerController_Delete(t *testing.T) {
 			var svc service.CustomerServiceMock
 			svc.On("Delete", ctx, tc.request).Return(tc.expectedError)
 
-			ctrl := NewCustomerController(&svc)
+			route := app.Group("/api")
+			ctrl := NewCustomerController(&svc, route)
 			app.Delete("/api/customers/:code", ctrl.Delete)
 
 			url := fmt.Sprintf("/api/customers/%s", tc.request)

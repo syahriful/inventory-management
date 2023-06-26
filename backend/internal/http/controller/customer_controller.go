@@ -13,10 +13,21 @@ type CustomerController struct {
 	CustomerService service.CustomerServiceContract
 }
 
-func NewCustomerController(customerService service.CustomerServiceContract) *CustomerController {
-	return &CustomerController{
+func NewCustomerController(customerService service.CustomerServiceContract, route fiber.Router) CustomerController {
+	controller := CustomerController{
 		CustomerService: customerService,
 	}
+
+	customer := route.Group("/customers")
+	{
+		customer.Get("/", controller.FindAll)
+		customer.Get("/:code", controller.FindByCode)
+		customer.Post("/", controller.Create)
+		customer.Patch("/:code", controller.Update)
+		customer.Delete("/:code", controller.Delete)
+	}
+
+	return controller
 }
 
 func (controller *CustomerController) FindAll(ctx *fiber.Ctx) error {

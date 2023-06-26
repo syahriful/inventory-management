@@ -13,10 +13,23 @@ type TransactionController struct {
 	TransactionService service.TransactionServiceContract
 }
 
-func NewTransactionController(transactionService service.TransactionServiceContract) *TransactionController {
-	return &TransactionController{
+func NewTransactionController(transactionService service.TransactionServiceContract, route fiber.Router) TransactionController {
+	controller := TransactionController{
 		TransactionService: transactionService,
 	}
+
+	transaction := route.Group("/transactions")
+	{
+		transaction.Get("/", controller.FindAll)
+		transaction.Get("/:code", controller.FindByCode)
+		transaction.Post("/", controller.Create)
+		transaction.Delete("/:code", controller.Delete)
+		transaction.Patch("/:code", controller.Update)
+		transaction.Get("/:code/supplier", controller.FindAllSupplierCode)
+		transaction.Get("/:code/customer", controller.FindAllCustomerCode)
+	}
+
+	return controller
 }
 
 func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {

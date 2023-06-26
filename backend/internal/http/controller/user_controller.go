@@ -12,10 +12,21 @@ type UserController struct {
 	UserService service.UserServiceContract
 }
 
-func NewUserController(userService service.UserServiceContract) UserController {
-	return UserController{
+func NewUserController(userService service.UserServiceContract, route fiber.Router) UserController {
+	controller := UserController{
 		UserService: userService,
 	}
+
+	user := route.Group("/users")
+	{
+		user.Get("/", controller.FindAll)
+		user.Get("/:id", controller.FindByID)
+		user.Post("/", controller.Create)
+		user.Patch("/:id", controller.Update)
+		user.Delete("/:id", controller.Delete)
+	}
+
+	return controller
 }
 
 func (controller *UserController) FindAll(ctx *fiber.Ctx) error {

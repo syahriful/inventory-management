@@ -73,7 +73,8 @@ func TestUserController_FindAll(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("FindAll", ctx).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewUserController(&svc)
+			route := app.Group("/api")
+			ctrl := NewUserController(&svc, route)
 			app.Get("/api/users", ctrl.FindAll)
 
 			req := httptest.NewRequest(http.MethodGet, "/api/users", nil)
@@ -150,7 +151,8 @@ func TestUserController_FindByID(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("FindByID", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewUserController(&svc)
+			route := app.Group("/api")
+			ctrl := NewUserController(&svc, route)
 			app.Get("/api/users/:id", ctrl.FindByID)
 
 			url := fmt.Sprintf("/api/users/%d", tc.request)
@@ -256,7 +258,8 @@ func TestUserController_Create(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("Create", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewUserController(&svc)
+			route := app.Group("/api")
+			ctrl := NewUserController(&svc, route)
 			app.Post("/api/users", ctrl.Create)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -374,7 +377,8 @@ func TestUserController_Update(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("Update", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewUserController(&svc)
+			route := app.Group("/api")
+			ctrl := NewUserController(&svc, route)
 			app.Patch("/api/users/:id", ctrl.Update)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -460,7 +464,8 @@ func TestUserController_Delete(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("Delete", ctx, tc.request).Return(tc.expectedError)
 
-			ctrl := NewUserController(&svc)
+			route := app.Group("/api")
+			ctrl := NewUserController(&svc, route)
 			app.Delete("/api/users/:id", ctrl.Delete)
 
 			url := fmt.Sprintf("/api/users/%d", tc.request)

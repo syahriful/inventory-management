@@ -92,7 +92,8 @@ func TestAuthController_Login(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("VerifyLogin", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewAuthController(&svc)
+			route := app.Group("/api")
+			ctrl := NewAuthController(&svc, route)
 			app.Post("/api/login", ctrl.Login)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -210,7 +211,8 @@ func TestAuthController_Register(t *testing.T) {
 			var svc service.UserServiceMock
 			svc.On("Create", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewAuthController(&svc)
+			route := app.Group("/api")
+			ctrl := NewAuthController(&svc, route)
 			app.Post("/api/register", ctrl.Register)
 
 			byteRequest, err := json.Marshal(tc.request)

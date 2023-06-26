@@ -77,7 +77,8 @@ func TestProductController_FindAll(t *testing.T) {
 			var svc service.ProductServiceMock
 			svc.On("FindAll", ctx).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductController(&svc, route)
 			app.Get("/api/products", ctrl.FindAll)
 
 			req := httptest.NewRequest(http.MethodGet, "/api/products", nil)
@@ -148,7 +149,8 @@ func TestProductController_FindByCode(t *testing.T) {
 			var svc service.ProductServiceMock
 			svc.On("FindByCode", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductController(&svc, route)
 			app.Get("/api/products/:code", ctrl.FindByCode)
 
 			url := fmt.Sprintf("/api/products/%s", tc.request)
@@ -353,7 +355,8 @@ func TestProductController_Create(t *testing.T) {
 			var svc service.ProductServiceMock
 			svc.On("Create", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductController(&svc, route)
 			app.Post("/api/products", ctrl.Create)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -589,7 +592,8 @@ func TestProductController_Update(t *testing.T) {
 			var svc service.ProductServiceMock
 			svc.On("Update", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
-			ctrl := NewProductController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductController(&svc, route)
 			app.Patch("/api/products/:code", ctrl.Update)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -665,7 +669,8 @@ func TestProductController_Delete(t *testing.T) {
 			var svc service.ProductServiceMock
 			svc.On("Delete", ctx, tc.request).Return(tc.expectedError)
 
-			ctrl := NewProductController(&svc)
+			route := app.Group("/api")
+			ctrl := NewProductController(&svc, route)
 			app.Delete("/api/products/:code", ctrl.Delete)
 
 			url := fmt.Sprintf("/api/products/%s", tc.request)

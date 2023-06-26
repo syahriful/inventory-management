@@ -13,10 +13,21 @@ type SupplierController struct {
 	SupplierService service.SupplierServiceContract
 }
 
-func NewSupplierController(supplierService service.SupplierServiceContract) *SupplierController {
-	return &SupplierController{
+func NewSupplierController(supplierService service.SupplierServiceContract, route fiber.Router) SupplierController {
+	controller := SupplierController{
 		SupplierService: supplierService,
 	}
+
+	supplier := route.Group("/suppliers")
+	{
+		supplier.Get("/", controller.FindAll)
+		supplier.Get("/:code", controller.FindByCode)
+		supplier.Post("/", controller.Create)
+		supplier.Patch("/:code", controller.Update)
+		supplier.Delete("/:code", controller.Delete)
+	}
+
+	return controller
 }
 
 func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {

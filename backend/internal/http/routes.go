@@ -39,93 +39,37 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 }
 
 func NewRoutes(db *gorm.DB, app *fiber.App) {
+	// Init repositories
 	userRepository := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepository)
-	userController := controller.NewUserController(userService)
-	authController := controller.NewAuthController(userService)
-
+	transactionRepository := repository.NewTransactionRepository(db)
 	customerRepository := repository.NewCustomerRepository(db)
-	customerService := service.NewCustomerService(customerRepository)
-	customerController := controller.NewCustomerController(customerService)
-
 	productQualityRepository := repository.NewProductQualityRepository(db)
 	productRepository := repository.NewProductRepository(db)
-	productQualityService := service.NewProductQualityService(productQualityRepository, productRepository)
-	productQualityController := controller.NewProductQualityController(productQualityService)
-
-	productService := service.NewProductService(productRepository)
-	productController := controller.NewProductController(productService)
-
 	supplierRepository := repository.NewSupplierRepository(db)
-	supplierService := service.NewSupplierService(supplierRepository)
-	supplierController := controller.NewSupplierController(supplierService)
-
-	transactionRepository := repository.NewTransactionRepository(db)
 	txRepository := repository.NewTxRepository(db, transactionRepository, productQualityRepository)
-	transactionService := service.NewTransactionService(transactionRepository, productQualityRepository, txRepository)
-	transactionController := controller.NewTransactionController(transactionService)
 
+	// Init services
+	userService := service.NewUserService(userRepository)
+	customerService := service.NewCustomerService(customerRepository)
+	productQualityService := service.NewProductQualityService(productQualityRepository, productRepository)
+	productService := service.NewProductService(productRepository)
+	supplierService := service.NewSupplierService(supplierRepository)
+	transactionService := service.NewTransactionService(transactionRepository, productQualityRepository, txRepository)
+
+	// Init controllers and routes
+	prefix := app.Group("/api")
 	app.Get("/", WelcomeHandler)
 
-	prefix := app.Group("/api")
-	prefix.Post("/login", authController.Login)
-	prefix.Post("/register", authController.Register)
+	controller.NewAuthController(userService, prefix)
 
 	app.Use(middleware.NewJWTMiddleware())
 
-	customerRoute := prefix.Group("/customers")
-	{
-		customerRoute.Get("/", customerController.FindAll)
-		customerRoute.Get("/:code", customerController.FindByCode)
-		customerRoute.Post("/", customerController.Create)
-		customerRoute.Patch("/:code", customerController.Update)
-		customerRoute.Delete("/:code", customerController.Delete)
-	}
-
-	productQualities := prefix.Group("/product-qualities")
-	{
-		productQualities.Get("/", productQualityController.FindAll)
-		productQualities.Get("/:code", productQualityController.FindAllByProductCode)
-		productQualities.Delete("/:id", productQualityController.Delete)
-	}
-
-	products := prefix.Group("/products")
-	{
-		products.Get("/", productController.FindAll)
-		products.Get("/:code", productController.FindByCode)
-		products.Post("/", productController.Create)
-		products.Patch("/:code", productController.Update)
-		products.Delete("/:code", productController.Delete)
-	}
-
-	suppliers := prefix.Group("/suppliers")
-	{
-		suppliers.Get("/", supplierController.FindAll)
-		suppliers.Get("/:code", supplierController.FindByCode)
-		suppliers.Post("/", supplierController.Create)
-		suppliers.Patch("/:code", supplierController.Update)
-		suppliers.Delete("/:code", supplierController.Delete)
-	}
-
-	users := prefix.Group("/users")
-	{
-		users.Get("/", userController.FindAll)
-		users.Get("/:id", userController.FindByID)
-		users.Post("/", userController.Create)
-		users.Patch("/:id", userController.Update)
-		users.Delete("/:id", userController.Delete)
-	}
-
-	transactions := prefix.Group("/transactions")
-	{
-		transactions.Get("/", transactionController.FindAll)
-		transactions.Get("/:code", transactionController.FindByCode)
-		transactions.Post("/", transactionController.Create)
-		transactions.Delete("/:code", transactionController.Delete)
-		transactions.Patch("/:code", transactionController.Update)
-		transactions.Get("/:code/supplier", transactionController.FindAllSupplierCode)
-		transactions.Get("/:code/customer", transactionController.FindAllCustomerCode)
-	}
+	controller.NewUserController(userService, prefix)
+	controller.NewCustomerController(customerService, prefix)
+	controller.NewProductQualityController(productQualityService, prefix)
+	controller.NewProductController(productService, prefix)
+	controller.NewSupplierController(supplierService, prefix)
+	controller.NewTransactionController(transactionService, prefix)
 
 	app.Get("*", NotFoundHandler)
 }

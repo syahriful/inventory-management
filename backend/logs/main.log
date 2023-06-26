@@ -564,3 +564,8 @@
 [26-Jun-2023 13:39:42] | 200 | 121.2925ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
 [26-Jun-2023 13:39:46] | 200 | 132.1791ms | 127.0.0.1 | PATCH | /api/transactions/UGF3JVBO8F | -
 [26-Jun-2023 13:39:52] | 200 | 9.8352ms | 127.0.0.1 | GET | /api/transactions | -
+[26-Jun-2023 13:44:06] | 200 | 173.6337ms | 127.0.0.1 | POST | /api/login | -
+[26-Jun-2023 14:02:10] | 200 | 128.688ms | 127.0.0.1 | GET | /api/customers | -
+[26-Jun-2023 14:02:13] | 200 | 115.6493ms | 127.0.0.1 | GET | /api/customers | -
+[26-Jun-2023 14:02:14] | 200 | 110.4093ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -
+[26-Jun-2023 14:02:18] | 404 | 102.5486ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK2 | record not found

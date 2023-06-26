@@ -10,10 +10,19 @@ type ProductQualityController struct {
 	ProductQualityService service.ProductQualityServiceContract
 }
 
-func NewProductQualityController(productQualityService service.ProductQualityServiceContract) *ProductQualityController {
-	return &ProductQualityController{
+func NewProductQualityController(productQualityService service.ProductQualityServiceContract, route fiber.Router) ProductQualityController {
+	controller := ProductQualityController{
 		ProductQualityService: productQualityService,
 	}
+
+	productQuality := route.Group("/product-qualities")
+	{
+		productQuality.Get("/", controller.FindAll)
+		productQuality.Get("/:code", controller.FindAllByProductCode)
+		productQuality.Delete("/:id", controller.Delete)
+	}
+
+	return controller
 }
 
 func (controller *ProductQualityController) FindAll(ctx *fiber.Ctx) error {
