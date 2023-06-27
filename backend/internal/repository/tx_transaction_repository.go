@@ -20,7 +20,7 @@ func NewTxRepository(db *gorm.DB, transactionRepository TransactionRepositoryCon
 	}
 }
 
-func (repository *TxTransactionRepository) Create(ctx context.Context, transaction *model.Transaction) (*model.Transaction, error) {
+func (repository *TxTransactionRepository) Create(ctx context.Context, transaction *model.Transaction, realQuantity float64) (*model.Transaction, error) {
 	var createdTransaction *model.Transaction
 	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		trx, err := repository.TransactionRepository.Create(ctx, transaction, tx)
@@ -29,14 +29,14 @@ func (repository *TxTransactionRepository) Create(ctx context.Context, transacti
 		}
 
 		if transaction.Type == "IN" {
-			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
+			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, realQuantity, tx)
 			if err != nil {
 				return err
 			}
 		}
 
 		if transaction.Type == "OUT" {
-			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
+			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, realQuantity, tx)
 			if err != nil {
 				return err
 			}
@@ -53,7 +53,7 @@ func (repository *TxTransactionRepository) Create(ctx context.Context, transacti
 	return createdTransaction, nil
 }
 
-func (repository *TxTransactionRepository) Update(ctx context.Context, requestQuantity float64, transaction *model.Transaction) error {
+func (repository *TxTransactionRepository) Update(ctx context.Context, increaseStock float64, requestQuantity float64, transaction *model.Transaction) error {
 	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		// decrease by current quantity
 		err := repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
@@ -68,7 +68,7 @@ func (repository *TxTransactionRepository) Update(ctx context.Context, requestQu
 		}
 
 		// increase by request quantity
-		err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, requestQuantity, tx)
+		err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, increaseStock, tx)
 		if err != nil {
 			return err
 		}

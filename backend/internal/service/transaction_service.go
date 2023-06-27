@@ -6,6 +6,7 @@ import (
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
+	"inventory-management/backend/util"
 )
 
 type TransactionService struct {
@@ -74,15 +75,27 @@ func (service *TransactionService) FindByCode(ctx context.Context, code string) 
 }
 
 func (service *TransactionService) Create(ctx context.Context, request *request.CreateTransactionRequest) (*response.TransactionResponse, error) {
+	productQuality, err := service.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID)
+	if err != nil {
+		return nil, err
+	}
+
+	quantity, err := util.CalculateUnitOfMass(productQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
+	if err != nil {
+		return nil, err
+	}
+
 	var transactionRequest model.Transaction
 	transactionRequest.ProductQualityID = request.ProductQualityID
+	transactionRequest.ProductQualityIDTransferred = request.ProductQualityIDTransferred
 	transactionRequest.SupplierCode = request.SupplierCode
 	transactionRequest.CustomerCode = request.CustomerCode
 	transactionRequest.Description = request.Description
 	transactionRequest.Quantity = request.Quantity
 	transactionRequest.Type = request.Type
+	transactionRequest.UnitMassAcronym = request.UnitMassAcronym
 
-	transaction, err := service.TxRepository.Create(ctx, &transactionRequest)
+	transaction, err := service.TxRepository.Create(ctx, &transactionRequest, quantity)
 	if err != nil {
 		return nil, err
 	}
@@ -96,11 +109,29 @@ func (service *TransactionService) Update(ctx context.Context, request *request.
 		return nil, err
 	}
 
-	transaction.SupplierCode = request.SupplierCode
-	transaction.CustomerCode = request.CustomerCode
-	transaction.Description = request.Description
+	transactionQuantity, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, transaction.UnitMassAcronym, transaction.Quantity)
+	if err != nil {
+		return nil, err
+	}
 
-	err = service.TxRepository.Update(ctx, request.Quantity, transaction)
+	if request.CustomerCode != nil {
+		transaction.CustomerCode = request.CustomerCode
+	}
+
+	if request.SupplierCode != nil {
+		transaction.SupplierCode = request.SupplierCode
+	}
+
+	transaction.Description = request.Description
+	transaction.UnitMassAcronym = request.UnitMassAcronym
+	transaction.Quantity = transactionQuantity
+
+	increaseStock, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
+	if err != nil {
+		return nil, err
+	}
+
+	err = service.TxRepository.Update(ctx, increaseStock, request.Quantity, transaction)
 	if err != nil {
 		return nil, err
 	}

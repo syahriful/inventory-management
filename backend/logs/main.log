@@ -671,3 +671,71 @@
 [27-Jun-2023 08:20:01] | 200 | 119.156ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH/product | -
 [27-Jun-2023 08:20:05] | 200 | 109.7902ms | 127.0.0.1 | GET | /api/product-qualities/45 | -
 [27-Jun-2023 08:20:34] | 200 | 123.5808ms | 127.0.0.1 | GET | /api/product-qualities/45 | -
+[27-Jun-2023 10:11:21] | 404 | 120.0423ms | 127.0.0.1 | GET | /api/product-qualities/45 | record not found
+[27-Jun-2023 10:11:25] | 404 | 123.1495ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH/product | record not found
+[27-Jun-2023 10:11:27] | 200 | 105.7277ms | 127.0.0.1 | GET | /api/product-qualities | -
+[27-Jun-2023 10:11:32] | 500 | 447.5µs | 127.0.0.1 | GET | /api/transactions | invalid field found for struct inventory-management/backend/internal/model.Transaction's field ProductQualityTransferred: define a valid foreign key for relations or implement the Valuer/Scanner interface
+[27-Jun-2023 10:12:12] | 200 | 126.9532ms | 127.0.0.1 | GET | /api/transactions | -
+[27-Jun-2023 10:12:24] | 200 | 106.9991ms | 127.0.0.1 | GET | /api/customers | -
+[27-Jun-2023 10:12:27] | 200 | 107.1279ms | 127.0.0.1 | GET | /api/suppliers | -
+[27-Jun-2023 10:12:33] | 200 | 109.4157ms | 127.0.0.1 | GET | /api/products | -
+[27-Jun-2023 10:12:39] | 200 | 103.7281ms | 127.0.0.1 | GET | /api/users | -
+[27-Jun-2023 10:13:24] | 201 | 178.7151ms | 127.0.0.1 | POST | /api/users | -
+[27-Jun-2023 10:13:30] | 200 | 110.5459ms | 127.0.0.1 | GET | /api/users | -
+[27-Jun-2023 10:13:34] | 404 | 107.1153ms | 127.0.0.1 | POST | /api/login | record not found
+[27-Jun-2023 10:13:37] | 404 | 102.6589ms | 127.0.0.1 | POST | /api/login | record not found
+[27-Jun-2023 10:13:43] | 400 | 155.9976ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:13:52] | 400 | 162.8586ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:14:21] | 400 | 153.9212ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:15:14] | 400 | 65.473ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:15:45] | 201 | 162.9511ms | 127.0.0.1 | POST | /api/register | -
+[27-Jun-2023 10:15:50] | 400 | 167.1693ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:15:56] | 400 | 164.1815ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:16:17] | 400 | 176.384ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:16:19] | 400 | 162.8876ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:16:42] | 400 | 171.4513ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:18:06] | 201 | 179.0279ms | 127.0.0.1 | POST | /api/register | -
+[27-Jun-2023 10:18:08] | 400 | 154.509ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:20:02] | 400 | 176.9985ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:20:03] | 400 | 156.0125ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:23:02] | 201 | 188.1654ms | 127.0.0.1 | POST | /api/register | -
+[27-Jun-2023 10:23:06] | 400 | 157.7709ms | 127.0.0.1 | POST | /api/login | invalid password
+[27-Jun-2023 10:23:48] | 404 | 126.8471ms | 127.0.0.1 | POST | /api/login | record not found
+[27-Jun-2023 10:23:51] | 201 | 168.6365ms | 127.0.0.1 | POST | /api/register | -
+[27-Jun-2023 10:23:52] | 200 | 155.662ms | 127.0.0.1 | POST | /api/login | -
+[27-Jun-2023 10:24:17] | 201 | 180.446ms | 127.0.0.1 | POST | /api/register | -
+[27-Jun-2023 10:24:19] | 200 | 161.9202ms | 127.0.0.1 | POST | /api/login | -
+[27-Jun-2023 10:24:20] | 200 | 157.098ms | 127.0.0.1 | POST | /api/login | -
+[27-Jun-2023 10:24:22] | 201 | 160.0493ms | 127.0.0.1 | POST | /api/users | -
+[27-Jun-2023 10:24:26] | 200 | 159.1847ms | 127.0.0.1 | POST | /api/login | -
+[27-Jun-2023 10:27:07] | 201 | 27.2443ms | 127.0.0.1 | POST | /api/products | -
+[27-Jun-2023 10:27:22] | 201 | 119.8693ms | 127.0.0.1 | POST | /api/suppliers | -
+[27-Jun-2023 10:27:25] | 400 | 784.6µs | 127.0.0.1 | POST | /api/customers | -
+[27-Jun-2023 10:27:37] | 201 | 109.0609ms | 127.0.0.1 | POST | /api/customers | -
+[27-Jun-2023 10:27:42] | 200 | 116.9577ms | 127.0.0.1 | GET | /api/customers | -
+[27-Jun-2023 10:27:51] | 200 | 108.4513ms | 127.0.0.1 | GET | /api/suppliers | -
+[27-Jun-2023 10:27:53] | 200 | 106.6988ms | 127.0.0.1 | GET | /api/customers | -
+[27-Jun-2023 10:29:56] | 200 | 123.954ms | 127.0.0.1 | GET | /api/product-qualities | -
+[27-Jun-2023 10:31:22] | 200 | 120.5204ms | 127.0.0.1 | GET | /api/products | -
+[27-Jun-2023 10:38:53] | 201 | 137.7153ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:41:25] | 201 | 146.8004ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:43:05] | 201 | 129.683ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:46:43] | 201 | 138.4078ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:48:44] | 201 | 129.2387ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:48:56] | 201 | 128.716ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 10:52:46] | 201 | 137.4965ms | 127.0.0.1 | POST | /api/transactions | -
+[27-Jun-2023 11:11:33] | 200 | 121.4123ms | 127.0.0.1 | GET | /api/customers | -
+[27-Jun-2023 11:11:39] | 200 | 107.215ms | 127.0.0.1 | GET | /api/product-qualities | -
+[27-Jun-2023 11:11:51] | 200 | 117.3757ms | 127.0.0.1 | GET | /api/transactions | -
+[27-Jun-2023 11:12:19] | 200 | 103.7224ms | 127.0.0.1 | GET | /api/suppliers | -
+[27-Jun-2023 11:12:55] | 200 | 149.2794ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:16:16] | 200 | 140.4982ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:16:25] | 200 | 120.9123ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:16:44] | 200 | 121.1163ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:17:21] | 200 | 143.9062ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:03] | 200 | 149.0707ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:12] | 200 | 125.1376ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:12] | 200 | 21.1002ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:22] | 200 | 130.9965ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:32] | 200 | 127.5455ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -
+[27-Jun-2023 11:27:43] | 200 | 121.3339ms | 127.0.0.1 | PATCH | /api/transactions/TL6KMOZ7U7 | -

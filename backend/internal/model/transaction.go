@@ -8,21 +8,29 @@ import (
 )
 
 type Transaction struct {
-	ID               int64
-	Code             string
-	ProductQualityID int64
-	ProductQuality   *ProductQuality
-	SupplierCode     *string
-	Supplier         *Supplier `gorm:"foreignKey:SupplierCode;references:Code"`
-	CustomerCode     *string
-	Customer         *Customer `gorm:"foreignKey:CustomerCode;references:Code"`
-	Description      *string
-	Quantity         float64
-	Type             string
-	CreatedAt        time.Time
+	ID                          int64
+	Code                        string
+	ProductQualityID            int64
+	ProductQuality              *ProductQuality `gorm:"foreignKey:ProductQualityID;references:ID"`
+	ProductQualityIDTransferred *int64
+	ProductQualityTransferred   *ProductQuality `gorm:"foreignKey:ProductQualityIDTransferred;references:ID"`
+	SupplierCode                *string
+	Supplier                    *Supplier `gorm:"foreignKey:SupplierCode;references:Code"`
+	CustomerCode                *string
+	Customer                    *Customer `gorm:"foreignKey:CustomerCode;references:Code"`
+	Description                 *string
+	Quantity                    float64
+	Type                        string
+	UnitMassAcronym             string
+	CreatedAt                   time.Time
+	UpdatedAt                   time.Time
 }
 
 func (t *Transaction) setNullable() {
+	if t.ProductQualityIDTransferred == nil || *t.ProductQualityIDTransferred == 0 {
+		t.ProductQualityIDTransferred = nil
+	}
+
 	if t.SupplierCode == nil || *t.SupplierCode == "" {
 		t.SupplierCode = nil
 	}
@@ -51,44 +59,47 @@ func (t *Transaction) BeforeUpdate(tx *gorm.DB) error {
 
 func (t *Transaction) ToResponse() *response.TransactionResponse {
 	return &response.TransactionResponse{
-		ID:               t.ID,
-		Code:             t.Code,
-		ProductQualityID: t.ProductQualityID,
-		SupplierCode:     t.SupplierCode,
-		CustomerCode:     t.CustomerCode,
-		Description:      t.Description,
-		Quantity:         t.Quantity,
-		Type:             t.Type,
-		CreatedAt:        t.CreatedAt.String(),
+		ID:                          t.ID,
+		Code:                        t.Code,
+		ProductQualityID:            t.ProductQualityID,
+		ProductQualityIDTransferred: t.ProductQualityIDTransferred,
+		SupplierCode:                t.SupplierCode,
+		CustomerCode:                t.CustomerCode,
+		Description:                 t.Description,
+		Quantity:                    t.Quantity,
+		Type:                        t.Type,
+		UnitMassAcronym:             t.UnitMassAcronym,
+		CreatedAt:                   t.CreatedAt.String(),
+		UpdatedAt:                   t.UpdatedAt.String(),
 	}
 }
 
 func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse {
-	var supplierResponse *response.SupplierResponse
-	if t.Supplier != nil {
-		supplierResponse = t.Supplier.ToResponse()
-	}
-
-	var customerResponse *response.CustomerResponse
-	if t.Customer != nil {
-		customerResponse = t.Customer.ToResponse()
-	}
-
-	var productQualityResponse *response.ProductQualityResponse
-	productQualityResponse = t.ProductQuality.ToResponseWithAssociations()
+	//var supplierResponse *response.SupplierResponse
+	//if t.Supplier != nil {
+	//	supplierResponse = t.Supplier.ToResponse()
+	//}
+	//
+	//var customerResponse *response.CustomerResponse
+	//if t.Customer != nil {
+	//	customerResponse = t.Customer.ToResponse()
+	//}
 
 	return &response.TransactionResponse{
-		ID:               t.ID,
-		Code:             t.Code,
-		ProductQualityID: t.ProductQualityID,
-		ProductQuality:   productQualityResponse,
-		SupplierCode:     t.SupplierCode,
-		Supplier:         supplierResponse,
-		CustomerCode:     t.CustomerCode,
-		Customer:         customerResponse,
-		Description:      t.Description,
-		Quantity:         t.Quantity,
-		Type:             t.Type,
-		CreatedAt:        t.CreatedAt.String(),
+		ID:                          t.ID,
+		Code:                        t.Code,
+		ProductQualityID:            t.ProductQualityID,
+		ProductQuality:              t.ProductQuality.ToResponseWithAssociations(),
+		ProductQualityIDTransferred: t.ProductQualityIDTransferred,
+		ProductQualityTransferred:   t.ProductQualityTransferred.ToResponseWithAssociations(),
+		SupplierCode:                t.SupplierCode,
+		Supplier:                    t.Supplier.ToResponse(),
+		CustomerCode:                t.CustomerCode,
+		Customer:                    t.Customer.ToResponse(),
+		Description:                 t.Description,
+		Quantity:                    t.Quantity,
+		Type:                        t.Type,
+		CreatedAt:                   t.CreatedAt.String(),
+		UpdatedAt:                   t.UpdatedAt.String(),
 	}
 }
