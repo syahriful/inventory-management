@@ -79,6 +79,15 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 	}, nil
 }
 
+func (service *ProductQualityService) FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error) {
+	productQuality, err := service.ProductQualityRepository.FindByIDWithAssociations(ctx, id)
+	if err != nil {
+		return nil, err
+	}
+
+	return productQuality.ToResponseWithAssociations(), nil
+}
+
 func (service *ProductQualityService) Delete(ctx context.Context, id int64) error {
 	checkProductQuality, err := service.ProductQualityRepository.FindByID(ctx, id)
 	if err != nil {

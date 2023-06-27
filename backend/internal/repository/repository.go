@@ -27,6 +27,7 @@ type ProductQualityRepositoryContract interface {
 	FindAll(ctx context.Context) ([]*model.ProductQuality, error)
 	FindAllByProductCode(ctx context.Context, productCode string) ([]*model.ProductQuality, error)
 	FindByID(ctx context.Context, id int64) (*model.ProductQuality, error)
+	FindByIDWithAssociations(ctx context.Context, id int64) (*model.ProductQuality, error)
 	Delete(ctx context.Context, id int64) error
 	IncreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error
 	DecreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error

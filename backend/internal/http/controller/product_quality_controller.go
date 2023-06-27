@@ -18,7 +18,8 @@ func NewProductQualityController(productQualityService service.ProductQualitySer
 	productQuality := route.Group("/product-qualities")
 	{
 		productQuality.Get("/", controller.FindAll)
-		productQuality.Get("/:code", controller.FindAllByProductCode)
+		productQuality.Get("/:id", controller.FindByID)
+		productQuality.Get("/:code/product", controller.FindAllByProductCode)
 		productQuality.Delete("/:id", controller.Delete)
 	}
 
@@ -45,6 +46,23 @@ func (controller *ProductQualityController) FindAllByProductCode(ctx *fiber.Ctx)
 	}
 
 	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", productQualities)
+}
+
+func (controller *ProductQualityController) FindByID(ctx *fiber.Ctx) error {
+	id, err := ctx.ParamsInt("id")
+	if err != nil {
+		return fiber.NewError(fiber.StatusBadRequest, err.Error())
+	}
+
+	productQuality, err := controller.ProductQualityService.FindByID(ctx.UserContext(), int64(id))
+	if err != nil {
+		if err.Error() == response.NotFound {
+			return fiber.NewError(fiber.StatusNotFound, err.Error())
+		}
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", productQuality)
 }
 
 func (controller *ProductQualityController) Delete(ctx *fiber.Ctx) error {

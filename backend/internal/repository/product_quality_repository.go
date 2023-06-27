@@ -46,6 +46,16 @@ func (repository *ProductQualityRepository) FindByID(ctx context.Context, id int
 	return &productQuality, nil
 }
 
+func (repository *ProductQualityRepository) FindByIDWithAssociations(ctx context.Context, id int64) (*model.ProductQuality, error) {
+	var productQuality model.ProductQuality
+	err := repository.DB.WithContext(ctx).Preload("Product").First(&productQuality, id).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &productQuality, nil
+}
+
 func (repository *ProductQualityRepository) Delete(ctx context.Context, id int64) error {
 	var productQuality model.ProductQuality
 	err := repository.DB.WithContext(ctx).Delete(&productQuality, id).Error

@@ -26,6 +26,7 @@ type ProductServiceContract interface {
 type ProductQualityServiceContract interface {
 	FindAll(ctx context.Context) ([]*response.ProductQualityResponse, error)
 	FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error)
+	FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error)
 	Delete(ctx context.Context, id int64) error
 }
 

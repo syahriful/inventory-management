@@ -664,3 +664,10 @@
 [26-Jun-2023 17:32:10] | 200 | 110.9245ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -
 [26-Jun-2023 17:32:20] | 200 | 121.9545ms | 127.0.0.1 | GET | /api/suppliers/5R6TZZ05MR | -
 [26-Jun-2023 17:32:27] | 200 | 107.7315ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | -
+[27-Jun-2023 08:14:13] | 200 | 120.8641ms | 127.0.0.1 | GET | /api/product-qualities | -
+[27-Jun-2023 08:19:15] | 404 | 128.9095ms | 127.0.0.1 | GET | /api/product-qualities/1 | record not found
+[27-Jun-2023 08:19:19] | 200 | 108.2083ms | 127.0.0.1 | GET | /api/product-qualities/45 | -
+[27-Jun-2023 08:19:32] | 400 | 119.6µs | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH | failed to convert: strconv.Atoi: parsing "YCXM532UFH": invalid syntax
+[27-Jun-2023 08:20:01] | 200 | 119.156ms | 127.0.0.1 | GET | /api/product-qualities/YCXM532UFH/product | -
+[27-Jun-2023 08:20:05] | 200 | 109.7902ms | 127.0.0.1 | GET | /api/product-qualities/45 | -
+[27-Jun-2023 08:20:34] | 200 | 123.5808ms | 127.0.0.1 | GET | /api/product-qualities/45 | -
