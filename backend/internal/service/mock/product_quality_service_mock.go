@@ -28,6 +28,15 @@ func (m *ProductQualityServiceMock) FindAllByProductCode(ctx context.Context, pr
 	return args.Get(0).(*response.ProductQualityWithOwnProductResponse), args.Error(1)
 }
 
+func (m *ProductQualityServiceMock) FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error) {
+	args := m.Called(ctx, id)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+
+	return args.Get(0).(*response.ProductQualityResponse), args.Error(1)
+}
+
 func (m *ProductQualityServiceMock) Delete(ctx context.Context, id int64) error {
 	args := m.Called(ctx, id)
 	return args.Error(0)

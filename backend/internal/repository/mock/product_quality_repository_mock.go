@@ -53,6 +53,15 @@ func (mock *ProductQualityRepositoryMock) FindByID(ctx context.Context, id int64
 	return args.Get(0).(*model.ProductQuality), args.Error(1)
 }
 
+func (mock *ProductQualityRepositoryMock) FindByIDWithAssociations(ctx context.Context, id int64) (*model.ProductQuality, error) {
+	args := mock.Called(ctx, id)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+
+	return args.Get(0).(*model.ProductQuality), args.Error(1)
+}
+
 func (mock *ProductQualityRepositoryMock) Delete(ctx context.Context, id int64) error {
 	args := mock.Called(ctx, id)
 	return args.Error(0)

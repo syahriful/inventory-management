@@ -163,9 +163,9 @@ func TestProductQualityController_FindAllByProductCode(t *testing.T) {
 
 			route := app.Group("/api")
 			ctrl := NewProductQualityController(&svc, route)
-			app.Get("/api/product-qualities/:code", ctrl.FindAllByProductCode)
+			app.Get("/api/product-qualities/:code/product", ctrl.FindAllByProductCode)
 
-			url := fmt.Sprintf("/api/product-qualities/%s", tc.request)
+			url := fmt.Sprintf("/api/product-qualities/%s/product", tc.request)
 			req := httptest.NewRequest(http.MethodGet, url, nil)
 			req.Header.Set("Content-Type", fiber.MIMEApplicationJSON)
 
