@@ -72,6 +72,7 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 	var userRequest model.User
 	userRequest.Name = request.Name
 	userRequest.Username = request.Username
+	userRequest.Password = request.Password
 
 	user, err := service.UserRepository.Create(ctx, &userRequest)
 	if err != nil {
