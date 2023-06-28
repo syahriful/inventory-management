@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"inventory-management/backend/internal/http/request"
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
@@ -87,7 +88,6 @@ func (service *TransactionService) Create(ctx context.Context, request *request.
 
 	var transactionRequest model.Transaction
 	transactionRequest.ProductQualityID = request.ProductQualityID
-	transactionRequest.ProductQualityIDTransferred = request.ProductQualityIDTransferred
 	transactionRequest.SupplierCode = request.SupplierCode
 	transactionRequest.CustomerCode = request.CustomerCode
 	transactionRequest.Description = request.Description
@@ -107,6 +107,10 @@ func (service *TransactionService) Update(ctx context.Context, request *request.
 	transaction, err := service.TransactionRepository.FindByCode(ctx, request.Code)
 	if err != nil {
 		return nil, err
+	}
+
+	if transaction.Type == "TRANSFER" {
+		return nil, errors.New(response.ErrorUpdateTransactionTypeTransfer)
 	}
 
 	transactionQuantity, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, transaction.UnitMassAcronym, transaction.Quantity)
@@ -146,6 +150,15 @@ func (service *TransactionService) Delete(ctx context.Context, code string) erro
 	}
 
 	err = service.TxRepository.Delete(ctx, transaction)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (service *TransactionService) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) error {
+	err := service.TxRepository.TransferStock(ctx, request)
 	if err != nil {
 		return err
 	}

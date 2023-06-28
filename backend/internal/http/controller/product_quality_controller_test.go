@@ -137,10 +137,10 @@ func TestProductQualityController_FindAllByProductCode(t *testing.T) {
 		{
 			name:           "ProductQuality doesnt exists with given Code",
 			request:        "KKSJIDNA",
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedBody:   nil,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name:           "Service getting an error",
@@ -209,10 +209,10 @@ func TestProductQualityController_FindByID(t *testing.T) {
 		{
 			name:           "ProductQuality doesnt exists with given ID",
 			request:        1,
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedBody:   nil,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name:           "Service getting an error",
@@ -272,9 +272,9 @@ func TestProductQualityController_Delete(t *testing.T) {
 		{
 			name:           "ProductQuality doesnt exists with given ID when deleting data",
 			request:        1,
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name:           "Service getting an error",

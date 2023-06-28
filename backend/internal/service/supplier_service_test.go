@@ -125,8 +125,8 @@ func TestSupplierService_FindByCode(t *testing.T) {
 			request:                             "WDWDARFSYH",
 			expectedSupplierRepoFindByCode:      nil,
 			expectedSvc:                         nil,
-			expectedSupplierRepoFindByCodeError: errors.New(response.NotFound),
-			expectedSvcError:                    errors.New(response.NotFound),
+			expectedSupplierRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -265,8 +265,8 @@ func TestSupplierService_Update(t *testing.T) {
 			expectedSupplierRepoUpdate:          nil,
 			expectedSvc:                         nil,
 			expectedSupplierRepoUpdateError:     errors.New("getting an error"),
-			expectedSupplierRepoFindByCodeError: errors.New(response.NotFound),
-			expectedSvcError:                    errors.New(response.NotFound),
+			expectedSupplierRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -322,8 +322,8 @@ func TestSupplierService_Delete(t *testing.T) {
 			request:                             "WDWDARFSYH",
 			expectedSupplierRepoFindByCode:      nil,
 			expectedSupplierRepoDeleteError:     errors.New("getting an error"),
-			expectedSvcError:                    errors.New(response.NotFound),
-			expectedSupplierRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
+			expectedSupplierRepoFindByCodeError: errors.New(response.ErrorNotFound),
 		},
 	}
 

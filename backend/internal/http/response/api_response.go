@@ -6,10 +6,13 @@ import (
 )
 
 var (
-	NotFound        = "record not found"
-	InvalidPassword = "invalid password"
-	UsernameExists  = "username already exist"
-	ErrorValidation = "There are inaccuracies in the validation process"
+	ErrorNotFound                      = "record not found"
+	ErrorInvalidPassword               = "invalid password"
+	ErrorUsernameExists                = "username already exist"
+	ErrorValidation                    = "There are inaccuracies in the validation process"
+	ErrorTransferStockDifferentProduct = "Transfer stock must be the same product"
+	ErrorStockNotEnough                = "Stock is not enough"
+	ErrorUpdateTransactionTypeTransfer = "Transaction type cannot be changed in transfer process"
 )
 
 type ApiResponse struct {

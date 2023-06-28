@@ -113,8 +113,8 @@ func TestCustomerService_FindByCode(t *testing.T) {
 			request:                             "WDWDARFSYH",
 			expectedCustomerRepoFindByCode:      nil,
 			expectedSvc:                         nil,
-			expectedCustomerRepoFindByCodeError: errors.New(response.NotFound),
-			expectedSvcError:                    errors.New(response.NotFound),
+			expectedCustomerRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -237,8 +237,8 @@ func TestCustomerService_Update(t *testing.T) {
 			expectedCustomerRepoUpdate:          nil,
 			expectedSvc:                         nil,
 			expectedCustomerRepoUpdateError:     errors.New("getting an error"),
-			expectedCustomerRepoFindByCodeError: errors.New(response.NotFound),
-			expectedSvcError:                    errors.New(response.NotFound),
+			expectedCustomerRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -292,8 +292,8 @@ func TestCustomerService_Delete(t *testing.T) {
 			request:                             "WDWDARFSYH",
 			expectedCustomerRepoFindByCode:      nil,
 			expectedCustomerRepoDeleteError:     errors.New("getting an error"),
-			expectedSvcError:                    errors.New(response.NotFound),
-			expectedCustomerRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
+			expectedCustomerRepoFindByCodeError: errors.New(response.ErrorNotFound),
 		},
 	}
 

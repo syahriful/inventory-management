@@ -43,7 +43,7 @@ func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 	supplier, err := controller.SupplierService.FindByCode(ctx.UserContext(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -84,7 +84,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 	supplierRequest.Code = code
 	supplier, err := controller.SupplierService.Update(ctx.UserContext(), &supplierRequest)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -97,7 +97,7 @@ func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 	err := controller.SupplierService.Delete(ctx.UserContext(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

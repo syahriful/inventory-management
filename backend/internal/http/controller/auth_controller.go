@@ -36,10 +36,10 @@ func (controller *AuthController) Login(ctx *fiber.Ctx) error {
 
 	userResponse, err := controller.UserService.VerifyLogin(ctx.UserContext(), &loginUserRequest)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
-		if err.Error() == response.InvalidPassword {
+		if err.Error() == response.ErrorInvalidPassword {
 			return fiber.NewError(fiber.StatusBadRequest, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

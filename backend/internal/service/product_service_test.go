@@ -5,7 +5,7 @@ import (
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	request2 "inventory-management/backend/internal/http/request"
+	request "inventory-management/backend/internal/http/request"
 	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	repository "inventory-management/backend/internal/repository/mock"
@@ -125,8 +125,8 @@ func TestProductService_FindByCode(t *testing.T) {
 			request:                            "KKDJALS",
 			expectedProductRepoFindByCode:      nil,
 			expectedSvc:                        nil,
-			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
-			expectedSvcError:                   errors.New(response.NotFound),
+			expectedProductRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                   errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -151,7 +151,7 @@ func TestProductService_FindByCode(t *testing.T) {
 func TestProductService_Create(t *testing.T) {
 	testCases := []struct {
 		name                           string
-		request                        *request2.CreateProductRequest
+		request                        *request.CreateProductRequest
 		expectedProductRepoCreate      *model.Product
 		expectedProductRepoCreateError error
 		expectedSvc                    *response.ProductResponse
@@ -159,7 +159,7 @@ func TestProductService_Create(t *testing.T) {
 	}{
 		{
 			name: "Create product with required fields",
-			request: &request2.CreateProductRequest{
+			request: &request.CreateProductRequest{
 				Name:                "Shark",
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
@@ -206,7 +206,7 @@ func TestProductService_Create(t *testing.T) {
 func TestProductService_Update(t *testing.T) {
 	testCases := []struct {
 		name                               string
-		request                            *request2.UpdateProductRequest
+		request                            *request.UpdateProductRequest
 		requestProductRepoFindByCode       string
 		expectedProductRepoFindByCode      *model.Product
 		expectedProductRepoFindByCodeError error
@@ -217,12 +217,12 @@ func TestProductService_Update(t *testing.T) {
 	}{
 		{
 			name: "Update product with required fields",
-			request: &request2.UpdateProductRequest{
+			request: &request.UpdateProductRequest{
 				Code:                "KKJANSM",
 				Name:                "Shrimp",
 				UnitMassAcronym:     "g",
 				UnitMassDescription: "gram",
-				ProductQualities: []*request2.UpdateProductQualityRequest{
+				ProductQualities: []*request.UpdateProductQualityRequest{
 					{
 						ID:       1,
 						Quality:  "Fresh",
@@ -280,7 +280,7 @@ func TestProductService_Update(t *testing.T) {
 		},
 		{
 			name: "Product doesnt exists with given Code when updating data",
-			request: &request2.UpdateProductRequest{
+			request: &request.UpdateProductRequest{
 				Code:                "KKDJALS",
 				Name:                "Shark",
 				UnitMassAcronym:     "kg",
@@ -291,8 +291,8 @@ func TestProductService_Update(t *testing.T) {
 			expectedProductRepoUpdate:          nil,
 			expectedSvc:                        nil,
 			expectedProductRepoUpdateError:     errors.New("getting an error"),
-			expectedSvcError:                   errors.New(response.NotFound),
-			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                   errors.New(response.ErrorNotFound),
+			expectedProductRepoFindByCodeError: errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -348,8 +348,8 @@ func TestProductService_Delete(t *testing.T) {
 			request:                            "KKDJALS",
 			expectedProductRepoFindByCode:      nil,
 			expectedProductRepoDeleteError:     errors.New("getting an error"),
-			expectedSvcError:                   errors.New(response.NotFound),
-			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
+			expectedSvcError:                   errors.New(response.ErrorNotFound),
+			expectedProductRepoFindByCodeError: errors.New(response.ErrorNotFound),
 		},
 	}
 

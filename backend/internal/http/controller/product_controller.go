@@ -43,7 +43,7 @@ func (controller *ProductController) FindByCode(ctx *fiber.Ctx) error {
 
 	product, err := controller.ProductService.FindByCode(ctx.UserContext(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -84,7 +84,7 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 	productRequest.Code = code
 	product, err := controller.ProductService.Update(ctx.UserContext(), &productRequest)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -97,7 +97,7 @@ func (controller *ProductController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 	err := controller.ProductService.Delete(ctx.UserContext(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

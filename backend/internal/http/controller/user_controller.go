@@ -46,7 +46,7 @@ func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
 
 	user, err := controller.UserService.FindByID(ctx.UserContext(), int64(id))
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -91,7 +91,7 @@ func (controller *UserController) Update(ctx *fiber.Ctx) error {
 	userRequest.ID = int64(id)
 	user, err := controller.UserService.Update(ctx.UserContext(), &userRequest)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
@@ -108,7 +108,7 @@ func (controller *UserController) Delete(ctx *fiber.Ctx) error {
 
 	err = controller.UserService.Delete(ctx.UserContext(), int64(id))
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(fiber.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

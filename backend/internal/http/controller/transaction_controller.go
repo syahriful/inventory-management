@@ -27,6 +27,7 @@ func NewTransactionController(transactionService service.TransactionServiceContr
 		transaction.Patch("/:code", controller.Update)
 		transaction.Get("/:code/supplier", controller.FindAllSupplierCode)
 		transaction.Get("/:code/customer", controller.FindAllCustomerCode)
+		transaction.Post("/transfer", controller.TransferStock)
 	}
 
 	return controller
@@ -45,7 +46,7 @@ func (controller *TransactionController) FindAllSupplierCode(ctx *fiber.Ctx) err
 	code := ctx.Params("code")
 	transactions, err := controller.TransactionService.FindAllBySupplierCode(ctx.Context(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
@@ -58,7 +59,7 @@ func (controller *TransactionController) FindAllCustomerCode(ctx *fiber.Ctx) err
 	code := ctx.Params("code")
 	transactions, err := controller.TransactionService.FindAllByCustomerCode(ctx.Context(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
@@ -71,7 +72,7 @@ func (controller *TransactionController) FindByCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 	transaction, err := controller.TransactionService.FindByCode(ctx.Context(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
@@ -116,8 +117,11 @@ func (controller *TransactionController) Update(ctx *fiber.Ctx) error {
 	transactionRequest.Code = code
 	transaction, err := controller.TransactionService.Update(ctx.UserContext(), &transactionRequest)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
+		}
+		if err.Error() == response.ErrorUpdateTransactionTypeTransfer {
+			return fiber.NewError(http.StatusBadRequest, err.Error())
 		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
@@ -129,11 +133,41 @@ func (controller *TransactionController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
 	err := controller.TransactionService.Delete(ctx.Context(), code)
 	if err != nil {
-		if err.Error() == response.NotFound {
+		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
 		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
 	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil)
+}
+
+func (controller *TransactionController) TransferStock(ctx *fiber.Ctx) error {
+	var transferStockRequest request.TransferStockTransactionRequest
+	err := ctx.BodyParser(&transferStockRequest)
+	if err != nil {
+		return fiber.NewError(http.StatusBadRequest, err.Error())
+	}
+
+	errValidation := util.ValidateStruct(transferStockRequest)
+	if errValidation != nil {
+		return response.ReturnErrorValidation(ctx, errValidation)
+	}
+
+	if transferStockRequest.ProductQualityIDTransferred == transferStockRequest.ProductQualityID {
+		return fiber.NewError(http.StatusBadRequest, "product quality id transferred and received cannot be the same")
+	}
+
+	err = controller.TransactionService.TransferStock(ctx.UserContext(), &transferStockRequest)
+	if err != nil {
+		if err.Error() == response.ErrorNotFound {
+			return fiber.NewError(http.StatusNotFound, err.Error())
+		}
+		if err.Error() == response.ErrorTransferStockDifferentProduct || err.Error() == response.ErrorStockNotEnough {
+			return fiber.NewError(http.StatusBadRequest, err.Error())
+		}
+		return fiber.NewError(http.StatusInternalServerError, err.Error())
+	}
+
+	return response.ReturnJSON(ctx, http.StatusOK, "transferred", nil)
 }

@@ -166,9 +166,9 @@ func TestProductQualityService_FindAllByProductCode(t *testing.T) {
 			expectedProductRepoFindByCode: nil,
 			expectedProductQualityRepoFindAllByProductCode: nil,
 			expectedSvc:                        nil,
-			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
-			expectedProductQualityRepoFindAllByProductCodeError: errors.New(response.NotFound),
-			expectedSvcError: errors.New(response.NotFound),
+			expectedProductRepoFindByCodeError: errors.New(response.ErrorNotFound),
+			expectedProductQualityRepoFindAllByProductCodeError: errors.New(response.ErrorNotFound),
+			expectedSvcError: errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -243,9 +243,9 @@ func TestProductQualityService_FindByID(t *testing.T) {
 			name:                                    "Product quality doesnt exists with given ID",
 			request:                                 1,
 			expectedProductQualityRepoFindByID:      nil,
-			expectedProductQualityRepoFindByIDError: errors.New(response.NotFound),
+			expectedProductQualityRepoFindByIDError: errors.New(response.ErrorNotFound),
 			expectedSvc:                             nil,
-			expectedSvcError:                        errors.New(response.NotFound),
+			expectedSvcError:                        errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -297,8 +297,8 @@ func TestProductQualityService_Delete(t *testing.T) {
 			request:                                 1,
 			expectedProductQualityRepoFindByID:      nil,
 			expectedProductQualityRepoDeleteError:   errors.New("getting an error"),
-			expectedProductQualityRepoFindByIDError: errors.New(response.NotFound),
-			expectedSvcError:                        errors.New(response.NotFound),
+			expectedProductQualityRepoFindByIDError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                        errors.New(response.ErrorNotFound),
 		},
 	}
 

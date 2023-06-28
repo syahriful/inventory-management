@@ -117,8 +117,8 @@ func TestUserService_FindByID(t *testing.T) {
 			request:                       1,
 			expectedUserRepoFindByID:      nil,
 			expectedSvc:                   nil,
-			expectedUserRepoFindByIDError: errors.New(response.NotFound),
-			expectedSvcError:              errors.New(response.NotFound),
+			expectedUserRepoFindByIDError: errors.New(response.ErrorNotFound),
+			expectedSvcError:              errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -176,8 +176,8 @@ func TestUserService_VerifyLogin(t *testing.T) {
 			},
 			expectedUserRepoFindByUsername:      nil,
 			expectedSvc:                         nil,
-			expectedUserRepoFindByUsernameError: errors.New(response.NotFound),
-			expectedSvcError:                    errors.New(response.NotFound),
+			expectedUserRepoFindByUsernameError: errors.New(response.ErrorNotFound),
+			expectedSvcError:                    errors.New(response.ErrorNotFound),
 		},
 		{
 			name: "Password doesnt match with given password input",
@@ -193,7 +193,7 @@ func TestUserService_VerifyLogin(t *testing.T) {
 			},
 			expectedSvc:                         nil,
 			expectedUserRepoFindByUsernameError: nil,
-			expectedSvcError:                    errors.New(response.InvalidPassword),
+			expectedSvcError:                    errors.New(response.ErrorInvalidPassword),
 		},
 	}
 
@@ -259,7 +259,7 @@ func TestUserService_Create(t *testing.T) {
 			},
 			expectedUserRepoCreateError:         nil,
 			expectedSvcError:                    nil,
-			expectedUserRepoFindByUsernameError: errors.New(response.NotFound),
+			expectedUserRepoFindByUsernameError: errors.New(response.ErrorNotFound),
 		},
 		{
 			name: "Create user with given the exists username",
@@ -282,7 +282,7 @@ func TestUserService_Create(t *testing.T) {
 			expectedUserRepoCreate:              nil,
 			expectedSvc:                         nil,
 			expectedUserRepoCreateError:         errors.New("getting an error"),
-			expectedSvcError:                    errors.New(response.UsernameExists),
+			expectedSvcError:                    errors.New(response.ErrorUsernameExists),
 			expectedUserRepoFindByUsernameError: nil,
 		},
 	}
@@ -364,8 +364,8 @@ func TestUserService_Update(t *testing.T) {
 			expectedUserRepoUpdate:        nil,
 			expectedSvc:                   nil,
 			expectedUserRepoUpdateError:   errors.New("getting an error"),
-			expectedSvcError:              errors.New(response.NotFound),
-			expectedUserRepoFindByIDError: errors.New(response.NotFound),
+			expectedSvcError:              errors.New(response.ErrorNotFound),
+			expectedUserRepoFindByIDError: errors.New(response.ErrorNotFound),
 		},
 	}
 
@@ -418,8 +418,8 @@ func TestUserService_Delete(t *testing.T) {
 			request:                       1,
 			expectedUserRepoFindByID:      nil,
 			expectedUserRepoDeleteError:   errors.New("getting an error"),
-			expectedSvcError:              errors.New(response.NotFound),
-			expectedUserRepoFindByIDError: errors.New(response.NotFound),
+			expectedSvcError:              errors.New(response.ErrorNotFound),
+			expectedUserRepoFindByIDError: errors.New(response.ErrorNotFound),
 		},
 	}
 

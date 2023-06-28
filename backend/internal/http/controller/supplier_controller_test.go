@@ -125,10 +125,10 @@ func TestSupplierController_FindByCode(t *testing.T) {
 		{
 			name:           "Supplier doesnt exists with given Code",
 			request:        "KKSJIDNA",
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedBody:   nil,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name:           "Service getting an error",
@@ -436,9 +436,9 @@ func TestSupplierController_Delete(t *testing.T) {
 		{
 			name:           "Supplier doesnt exists with given Code when deleting data",
 			request:        "KKSJIDNA",
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name:           "Service getting an error",

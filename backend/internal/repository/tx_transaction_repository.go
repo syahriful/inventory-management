@@ -2,7 +2,10 @@ package repository
 
 import (
 	"context"
+	"errors"
 	"gorm.io/gorm"
+	"inventory-management/backend/internal/http/request"
+	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 )
 
@@ -89,6 +92,18 @@ func (repository *TxTransactionRepository) Delete(ctx context.Context, transacti
 			return err
 		}
 
+		if transaction.Type == "TRANSFER" {
+			err := repository.ProductQualityRepository.DecreaseStock(ctx, *transaction.ProductQualityIDTransferred, transaction.Quantity, tx)
+			if err != nil {
+				return err
+			}
+
+			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
+			if err != nil {
+				return err
+			}
+		}
+
 		if transaction.Type == "IN" {
 			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
 			if err != nil {
@@ -101,6 +116,58 @@ func (repository *TxTransactionRepository) Delete(ctx context.Context, transacti
 			if err != nil {
 				return err
 			}
+		}
+
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (repository *TxTransactionRepository) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) error {
+	err := repository.DB.Transaction(func(tx *gorm.DB) error {
+		fromQuality, err := repository.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID)
+		if err != nil {
+			return err
+		}
+
+		toQuality, err := repository.ProductQualityRepository.FindByID(ctx, request.ProductQualityIDTransferred)
+		if err != nil {
+			return err
+		}
+
+		if fromQuality.ProductCode != toQuality.ProductCode {
+			return errors.New(response.ErrorTransferStockDifferentProduct)
+		}
+
+		if fromQuality.Quantity < request.Quantity {
+			return errors.New(response.ErrorStockNotEnough)
+		}
+
+		err = repository.ProductQualityRepository.DecreaseStock(ctx, fromQuality.ID, request.Quantity, tx)
+		if err != nil {
+			return err
+		}
+
+		err = repository.ProductQualityRepository.IncreaseStock(ctx, toQuality.ID, request.Quantity, tx)
+		if err != nil {
+			return err
+		}
+
+		var transactionRequest model.Transaction
+		transactionRequest.ProductQualityID = request.ProductQualityID
+		transactionRequest.ProductQualityIDTransferred = &request.ProductQualityIDTransferred
+		transactionRequest.Description = request.Description
+		transactionRequest.Quantity = request.Quantity
+		transactionRequest.Type = "TRANSFER"
+		transactionRequest.UnitMassAcronym = fromQuality.Product.UnitMassAcronym
+
+		_, err = repository.TransactionRepository.Create(ctx, &transactionRequest, tx)
+		if err != nil {
+			return err
 		}
 
 		return nil

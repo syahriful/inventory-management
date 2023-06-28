@@ -66,7 +66,7 @@ func (service *UserService) VerifyLogin(ctx context.Context, request *request.Lo
 func (service *UserService) Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error) {
 	_, err := service.UserRepository.FindByUsername(ctx, request.Username)
 	if err == nil {
-		return nil, errors.New(response.UsernameExists)
+		return nil, errors.New(response.ErrorUsernameExists)
 	}
 
 	var userRequest model.User

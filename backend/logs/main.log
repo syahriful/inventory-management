@@ -775,3 +775,28 @@
 [28-Jun-2023 09:10:37] | 200 | 118.2713ms | 127.0.0.1 | GET | /api/customers/NTAQZSJE23 | -
 [28-Jun-2023 09:10:42] | 200 | 109.2932ms | 127.0.0.1 | GET | /api/suppliers | -
 [28-Jun-2023 09:10:46] | 200 | 114.4888ms | 127.0.0.1 | GET | /api/suppliers/JDXNNFFH5G | -
+[28-Jun-2023 09:14:51] | 404 | 112.9295ms | 127.0.0.1 | GET | /api/product-qualities/45 | record not found
+[28-Jun-2023 09:14:54] | 200 | 109.5253ms | 127.0.0.1 | GET | /api/product-qualities | -
+[28-Jun-2023 09:15:01] | 200 | 110.4687ms | 127.0.0.1 | GET | /api/product-qualities/1 | -
+[28-Jun-2023 09:15:07] | 200 |      0s | 127.0.0.1 | GET | / | -
+[28-Jun-2023 09:53:55] | 405 | 507.3µs | 127.0.0.1 | POST | /api/transactions/transfer | Method Not Allowed
+[28-Jun-2023 09:54:09] | 400 | 542.1µs | 127.0.0.1 | POST | /api/transactions/transfer | product quality id transferred and received cannot be the same
+[28-Jun-2023 09:56:40] | 500 | 129.4626ms | 127.0.0.1 | POST | /api/transactions/transfer | Transfer stock must be the same product
+[28-Jun-2023 09:58:21] | 400 | 125.5064ms | 127.0.0.1 | POST | /api/transactions/transfer | Transfer stock must be the same product
+[28-Jun-2023 09:58:23] | 400 | 225.036ms | 127.0.0.1 | POST | /api/transactions/transfer | Transfer stock must be the same product
+[28-Jun-2023 10:01:07] | 400 | 122.168ms | 127.0.0.1 | POST | /api/transactions/transfer | Stock is not enough
+[28-Jun-2023 10:01:13] | 400 | 219.1648ms | 127.0.0.1 | POST | /api/transactions/transfer | Stock is not enough
+[28-Jun-2023 10:01:21] | 200 | 233.9156ms | 127.0.0.1 | POST | /api/transactions/transfer | -
+[28-Jun-2023 10:14:29] | 400 | 153.7647ms | 127.0.0.1 | POST | /api/transactions/transfer | Stock is not enough
+[28-Jun-2023 10:14:47] | 201 | 132.8498ms | 127.0.0.1 | POST | /api/transactions | -
+[28-Jun-2023 10:15:02] | 201 | 118.5753ms | 127.0.0.1 | POST | /api/transactions | -
+[28-Jun-2023 10:15:19] | 200 | 231.195ms | 127.0.0.1 | POST | /api/transactions/transfer | -
+[28-Jun-2023 10:15:55] | 200 | 136.7687ms | 127.0.0.1 | POST | /api/transactions/transfer | -
+[28-Jun-2023 10:16:29] | 400 | 220.1822ms | 127.0.0.1 | POST | /api/transactions/transfer | Transfer stock must be the same product
+[28-Jun-2023 10:16:39] | 400 | 215.9555ms | 127.0.0.1 | POST | /api/transactions/transfer | Transfer stock must be the same product
+[28-Jun-2023 10:16:51] | 200 | 228.9044ms | 127.0.0.1 | POST | /api/transactions/transfer | -
+[28-Jun-2023 10:23:10] | 200 | 116.0674ms | 127.0.0.1 | GET | /api/transactions | -
+[28-Jun-2023 10:23:27] | 200 | 139.6772ms | 127.0.0.1 | DELETE | /api/transactions/JD5Y0DAE0J | -
+[28-Jun-2023 10:30:13] | 500 | 124.9831ms | 127.0.0.1 | PATCH | /api/transactions/V32WBB5Q96 | Transaction type cannot be changed in transfer process
+[28-Jun-2023 10:30:47] | 400 | 131.3983ms | 127.0.0.1 | PATCH | /api/transactions/V32WBB5Q96 | Transaction type cannot be changed in transfer process
+[28-Jun-2023 10:30:48] | 400 | 115.9408ms | 127.0.0.1 | PATCH | /api/transactions/V32WBB5Q96 | Transaction type cannot be changed in transfer process

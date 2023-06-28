@@ -65,10 +65,10 @@ func TestAuthController_Login(t *testing.T) {
 				Username: "wdyarfn",
 				Password: "12345678910",
 			},
-			expectedStatus: response.NotFound,
+			expectedStatus: response.ErrorNotFound,
 			expectedBody:   nil,
 			expectedCode:   http.StatusNotFound,
-			expectedError:  errors.New(response.NotFound),
+			expectedError:  errors.New(response.ErrorNotFound),
 		},
 		{
 			name: "Password doesnt match with given password input",
@@ -76,10 +76,10 @@ func TestAuthController_Login(t *testing.T) {
 				Username: "wdyarfn",
 				Password: "12345678910",
 			},
-			expectedStatus: response.InvalidPassword,
+			expectedStatus: response.ErrorInvalidPassword,
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
-			expectedError:  errors.New(response.InvalidPassword),
+			expectedError:  errors.New(response.ErrorInvalidPassword),
 		},
 	}
 
