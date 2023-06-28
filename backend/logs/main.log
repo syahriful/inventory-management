@@ -752,3 +752,26 @@
 [27-Jun-2023 11:36:36] | 200 | 117.384ms | 127.0.0.1 | GET | /api/products | -
 [27-Jun-2023 11:37:20] | 200 | 253.6473ms | 127.0.0.1 | PATCH | /api/products/M5EWN1GHO6 | -
 [27-Jun-2023 11:37:33] | 200 | 115.5993ms | 127.0.0.1 | PATCH | /api/products/M5EWN1GHO6 | -
+[28-Jun-2023 08:41:08] | 400 |      0s | 127.0.0.1 | POST | /api/users | -
+[28-Jun-2023 09:01:31] | 404 | 154.9061ms | 127.0.0.1 | GET | /api/products/YCXM532UFH | record not found
+[28-Jun-2023 09:01:34] | 200 | 111.3011ms | 127.0.0.1 | GET | /api/products | -
+[28-Jun-2023 09:01:38] | 200 | 108.2708ms | 127.0.0.1 | GET | /api/products/JS8V37O3U5 | -
+[28-Jun-2023 09:02:00] | 200 | 128.4413ms | 127.0.0.1 | GET | /api/products/JS8V37O3U5 | -
+[28-Jun-2023 09:02:02] | 200 | 108.827ms | 127.0.0.1 | GET | /api/products/JS8V37O3U5 | -
+[28-Jun-2023 09:02:43] | 200 | 122.2538ms | 127.0.0.1 | GET | /api/transactions/5R6TZZ05MR/supplier | -
+[28-Jun-2023 09:02:46] | 200 | 114.5724ms | 127.0.0.1 | GET | /api/transactions/0DFU2EU1BK/customer | -
+[28-Jun-2023 09:02:49] | 200 | 105.3696ms | 127.0.0.1 | GET | /api/transactions | -
+[28-Jun-2023 09:02:55] | 200 | 113.9856ms | 127.0.0.1 | GET | /api/transactions/TA5YQ196W6/customer | -
+[28-Jun-2023 09:03:10] | 200 | 113.5123ms | 127.0.0.1 | GET | /api/transactions/JDXNNFFH5G/supplier | -
+[28-Jun-2023 09:03:32] | 404 | 107.9685ms | 127.0.0.1 | GET | /api/transactions/UGF3JVBO8F | record not found
+[28-Jun-2023 09:03:37] | 200 | 101.9057ms | 127.0.0.1 | GET | /api/transactions | -
+[28-Jun-2023 09:04:07] | 404 | 104.3293ms | 127.0.0.1 | GET | /api/transactions/TA5YQ196W6s | record not found
+[28-Jun-2023 09:04:12] | 200 | 114.045ms | 127.0.0.1 | GET | /api/transactions | -
+[28-Jun-2023 09:05:18] | 200 | 126.1629ms | 127.0.0.1 | GET | /api/transactions/TL6KMOZ7U7 | -
+[28-Jun-2023 09:07:56] | 200 | 121.7424ms | 127.0.0.1 | GET | /api/transactions/TL6KMOZ7U7 | -
+[28-Jun-2023 09:10:22] | 200 | 122.0729ms | 127.0.0.1 | GET | /api/transactions/TL6KMOZ7U7 | -
+[28-Jun-2023 09:10:29] | 404 | 104.4501ms | 127.0.0.1 | GET | /api/customers/0DFU2EU1BK | record not found
+[28-Jun-2023 09:10:32] | 200 | 108.1762ms | 127.0.0.1 | GET | /api/customers | -
+[28-Jun-2023 09:10:37] | 200 | 118.2713ms | 127.0.0.1 | GET | /api/customers/NTAQZSJE23 | -
+[28-Jun-2023 09:10:42] | 200 | 109.2932ms | 127.0.0.1 | GET | /api/suppliers | -
+[28-Jun-2023 09:10:46] | 200 | 114.4888ms | 127.0.0.1 | GET | /api/suppliers/JDXNNFFH5G | -

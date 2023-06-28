@@ -167,7 +167,7 @@ func TestProductQualityService_FindAllByProductCode(t *testing.T) {
 			expectedProductQualityRepoFindAllByProductCode: nil,
 			expectedSvc:                        nil,
 			expectedProductRepoFindByCodeError: errors.New(response.NotFound),
-			expectedProductQualityRepoFindAllByProductCodeError: errors.New("product quality doesnt exists"),
+			expectedProductQualityRepoFindAllByProductCodeError: errors.New(response.NotFound),
 			expectedSvcError: errors.New(response.NotFound),
 		},
 	}
@@ -182,6 +182,82 @@ func TestProductQualityService_FindAllByProductCode(t *testing.T) {
 			repoPQ.On("FindAllByProductCode", ctx, tc.request).Return(tc.expectedProductQualityRepoFindAllByProductCode, tc.expectedProductQualityRepoFindAllByProductCodeError)
 			svc := NewProductQualityService(&repoPQ, &repP)
 			result, err := svc.FindAllByProductCode(ctx, tc.request)
+			if tc.expectedSvcError != nil {
+				assert.Error(t, err)
+				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())
+			}
+
+			assert.Equal(t, tc.expectedSvc, result)
+		})
+	}
+}
+
+func TestProductQualityService_FindByID(t *testing.T) {
+	testCases := []struct {
+		name                                    string
+		request                                 int64
+		expectedProductQualityRepoFindByID      *model.ProductQuality
+		expectedProductQualityRepoFindByIDError error
+		expectedSvc                             *response.ProductQualityResponse
+		expectedSvcError                        error
+	}{
+		{
+			name:    "Product quality exists with given ID",
+			request: 1,
+			expectedProductQualityRepoFindByID: &model.ProductQuality{
+				ID:          1,
+				ProductCode: "KKDJALS",
+				Quality:     "Very Fresh",
+				Price:       250000,
+				Quantity:    5.5,
+				Type:        "Increase",
+				Product: &model.Product{
+					ID:                  1,
+					Code:                "KKDJALS",
+					Name:                "Shrimp",
+					UnitMassAcronym:     "g",
+					UnitMassDescription: "gram",
+				},
+			},
+			expectedSvc: &response.ProductQualityResponse{
+				ID:          1,
+				ProductCode: "KKDJALS",
+				Quality:     "Very Fresh",
+				Price:       250000,
+				Quantity:    5.5,
+				Type:        "Increase",
+				Product: &response.ProductResponse{
+					ID:                  1,
+					Code:                "KKDJALS",
+					Name:                "Shrimp",
+					UnitMassAcronym:     "g",
+					UnitMassDescription: "gram",
+					CreatedAt:           "0001-01-01 00:00:00 +0000 UTC",
+					UpdatedAt:           "0001-01-01 00:00:00 +0000 UTC",
+				},
+			},
+			expectedProductQualityRepoFindByIDError: nil,
+			expectedSvcError:                        nil,
+		},
+		{
+			name:                                    "Product quality doesnt exists with given ID",
+			request:                                 1,
+			expectedProductQualityRepoFindByID:      nil,
+			expectedProductQualityRepoFindByIDError: errors.New(response.NotFound),
+			expectedSvc:                             nil,
+			expectedSvcError:                        errors.New(response.NotFound),
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			ctx := context.Background()
+
+			var repoPQ repository.ProductQualityRepositoryMock
+			var repP repository.ProductRepositoryMock
+			repoPQ.On("FindByIDWithAssociations", ctx, tc.request).Return(tc.expectedProductQualityRepoFindByID, tc.expectedProductQualityRepoFindByIDError)
+			svc := NewProductQualityService(&repoPQ, &repP)
+			result, err := svc.FindByID(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
 				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())

@@ -39,14 +39,7 @@ func (p *Product) ToResponse() *response.ProductResponse {
 func (p *Product) ToResponseWithAssociations() *response.ProductResponse {
 	var productQualities []*response.ProductQualityResponse
 	for _, productQuality := range p.ProductQualities {
-		productQualities = append(productQualities, &response.ProductQualityResponse{
-			ID:          productQuality.ID,
-			ProductCode: productQuality.ProductCode,
-			Quality:     productQuality.Quality,
-			Price:       productQuality.Price,
-			Quantity:    productQuality.Quantity,
-			Type:        productQuality.Type,
-		})
+		productQualities = append(productQualities, productQuality.ToResponse())
 	}
 
 	return &response.ProductResponse{

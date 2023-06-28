@@ -75,15 +75,20 @@ func (t *Transaction) ToResponse() *response.TransactionResponse {
 }
 
 func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse {
-	//var supplierResponse *response.SupplierResponse
-	//if t.Supplier != nil {
-	//	supplierResponse = t.Supplier.ToResponse()
-	//}
-	//
-	//var customerResponse *response.CustomerResponse
-	//if t.Customer != nil {
-	//	customerResponse = t.Customer.ToResponse()
-	//}
+	var supplierResponse *response.SupplierResponse
+	if t.Supplier != nil {
+		supplierResponse = t.Supplier.ToResponse()
+	}
+
+	var customerResponse *response.CustomerResponse
+	if t.Customer != nil {
+		customerResponse = t.Customer.ToResponse()
+	}
+
+	var productQualityTransferredResponse *response.ProductQualityResponse
+	if t.ProductQualityTransferred != nil {
+		productQualityTransferredResponse = t.ProductQualityTransferred.ToResponse()
+	}
 
 	return &response.TransactionResponse{
 		ID:                          t.ID,
@@ -91,11 +96,11 @@ func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse
 		ProductQualityID:            t.ProductQualityID,
 		ProductQuality:              t.ProductQuality.ToResponseWithAssociations(),
 		ProductQualityIDTransferred: t.ProductQualityIDTransferred,
-		ProductQualityTransferred:   t.ProductQualityTransferred.ToResponseWithAssociations(),
+		ProductQualityTransferred:   productQualityTransferredResponse,
 		SupplierCode:                t.SupplierCode,
-		Supplier:                    t.Supplier.ToResponse(),
+		Supplier:                    supplierResponse,
 		CustomerCode:                t.CustomerCode,
-		Customer:                    t.Customer.ToResponse(),
+		Customer:                    customerResponse,
 		Description:                 t.Description,
 		Quantity:                    t.Quantity,
 		Type:                        t.Type,

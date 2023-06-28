@@ -182,6 +182,78 @@ func TestProductQualityController_FindAllByProductCode(t *testing.T) {
 	}
 }
 
+func TestProductQualityController_FindByID(t *testing.T) {
+	testCases := []struct {
+		name           string
+		request        int64
+		expectedStatus string
+		expectedBody   *response.ProductQualityResponse
+		expectedCode   int
+		expectedError  error
+	}{
+		{
+			name:           "ProductQuality exists with given ID",
+			request:        1,
+			expectedStatus: "OK",
+			expectedBody: &response.ProductQualityResponse{
+				ID:          1,
+				ProductCode: "KKSJIDNA",
+				Quality:     "Very Fresh",
+				Price:       25000,
+				Quantity:    5.5,
+				Type:        "increase",
+			},
+			expectedCode:  http.StatusOK,
+			expectedError: nil,
+		},
+		{
+			name:           "ProductQuality doesnt exists with given ID",
+			request:        1,
+			expectedStatus: response.NotFound,
+			expectedBody:   nil,
+			expectedCode:   http.StatusNotFound,
+			expectedError:  errors.New(response.NotFound),
+		},
+		{
+			name:           "Service getting an error",
+			request:        1,
+			expectedStatus: "getting an error",
+			expectedBody:   nil,
+			expectedCode:   http.StatusInternalServerError,
+			expectedError:  errors.New("getting an error"),
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			app := fiber.New(middleware.FiberConfig())
+
+			ctx := context.Background()
+
+			var svc service.ProductQualityServiceMock
+			svc.On("FindByID", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
+
+			route := app.Group("/api")
+			ctrl := NewProductQualityController(&svc, route)
+			app.Get("/api/product-qualities/:id", ctrl.FindByID)
+
+			url := fmt.Sprintf("/api/product-qualities/%d", tc.request)
+			req := httptest.NewRequest(http.MethodGet, url, nil)
+			req.Header.Set("Content-Type", fiber.MIMEApplicationJSON)
+
+			res, err := app.Test(req, -1)
+			assert.Nil(t, err)
+
+			var responseBody response.ApiResponse
+			err = json.NewDecoder(res.Body).Decode(&responseBody)
+			assert.Nil(t, err)
+
+			assert.Equal(t, responseBody.Code, tc.expectedCode)
+			assert.Contains(t, responseBody.Status, tc.expectedStatus)
+		})
+	}
+}
+
 func TestProductQualityController_Delete(t *testing.T) {
 	testCases := []struct {
 		name           string
