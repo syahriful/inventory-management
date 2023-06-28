@@ -33,7 +33,7 @@ func (repository *ProductService) FindAll(ctx context.Context) ([]*response.Prod
 }
 
 func (repository *ProductService) FindByCode(ctx context.Context, code string) (*response.ProductResponse, error) {
-	product, err := repository.ProductRepository.FindByCode(ctx, code)
+	product, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 		productQualities = append(productQualities, &productQualityRequest)
 	}
 
-	checkProduct, err := repository.ProductRepository.FindByCode(ctx, request.Code)
+	checkProduct, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, request.Code)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 }
 
 func (repository *ProductService) Delete(ctx context.Context, code string) error {
-	checkProduct, err := repository.ProductRepository.FindByCode(ctx, code)
+	checkProduct, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return err
 	}

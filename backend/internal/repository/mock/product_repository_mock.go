@@ -19,7 +19,7 @@ func (mock *ProductRepositoryMock) FindAll(ctx context.Context) ([]*model.Produc
 	return args.Get(0).([]*model.Product), args.Error(1)
 }
 
-func (mock *ProductRepositoryMock) FindByCode(ctx context.Context, code string) (*model.Product, error) {
+func (mock *ProductRepositoryMock) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Product, error) {
 	args := mock.Called(ctx, code)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)

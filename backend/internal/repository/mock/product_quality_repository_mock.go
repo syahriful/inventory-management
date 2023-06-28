@@ -21,11 +21,6 @@ func (mock *ProductQualityRepositoryMock) DecreaseStock(ctx context.Context, id 
 	return args.Error(1)
 }
 
-func (mock *ProductQualityRepositoryMock) TransferStock(ctx context.Context, fromID int64, toID int64, quantity float64, tx *gorm.DB) error {
-	args := mock.Called(ctx, fromID, toID, quantity, tx)
-	return args.Error(1)
-}
-
 func (mock *ProductQualityRepositoryMock) FindAll(ctx context.Context) ([]*model.ProductQuality, error) {
 	args := mock.Called(ctx)
 	if args.Get(0) == nil {

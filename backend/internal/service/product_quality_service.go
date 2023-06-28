@@ -43,7 +43,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		product, errorProduct := service.ProductRepository.FindByCode(ctx, productCode)
+		product, errorProduct := service.ProductRepository.FindByCodeWithAssociations(ctx, productCode)
 		if errorProduct != nil {
 			mutex.Lock()
 			err = errorProduct

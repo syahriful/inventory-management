@@ -135,7 +135,7 @@ func TestProductService_FindByCode(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.ProductRepositoryMock
-			repo.On("FindByCode", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
+			repo.On("FindByCodeWithAssociations", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
 			svc := NewProductService(&repo)
 			result, err := svc.FindByCode(ctx, tc.request)
 			if tc.expectedSvcError != nil {
@@ -301,7 +301,7 @@ func TestProductService_Update(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.ProductRepositoryMock
-			repo.On("FindByCode", ctx, tc.requestProductRepoFindByCode).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
+			repo.On("FindByCodeWithAssociations", ctx, tc.requestProductRepoFindByCode).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
 			repo.On("Update", ctx, mock.Anything).Return(tc.expectedProductRepoUpdate, tc.expectedProductRepoUpdateError)
 			svc := NewProductService(&repo)
 			result, err := svc.Update(ctx, tc.request)
@@ -358,7 +358,7 @@ func TestProductService_Delete(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.ProductRepositoryMock
-			repo.On("FindByCode", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
+			repo.On("FindByCodeWithAssociations", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
 			repo.On("Delete", ctx, tc.request).Return(tc.expectedProductRepoDeleteError)
 			svc := NewProductService(&repo)
 			err := svc.Delete(ctx, tc.request)

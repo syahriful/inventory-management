@@ -178,7 +178,7 @@ func TestProductQualityService_FindAllByProductCode(t *testing.T) {
 
 			var repoPQ repository.ProductQualityRepositoryMock
 			var repP repository.ProductRepositoryMock
-			repP.On("FindByCode", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
+			repP.On("FindByCodeWithAssociations", ctx, tc.request).Return(tc.expectedProductRepoFindByCode, tc.expectedProductRepoFindByCodeError)
 			repoPQ.On("FindAllByProductCode", ctx, tc.request).Return(tc.expectedProductQualityRepoFindAllByProductCode, tc.expectedProductQualityRepoFindAllByProductCodeError)
 			svc := NewProductQualityService(&repoPQ, &repP)
 			result, err := svc.FindAllByProductCode(ctx, tc.request)

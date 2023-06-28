@@ -47,7 +47,7 @@ func (repository *TransactionRepository) FindAllByCustomerCode(ctx context.Conte
 	return transactions, nil
 }
 
-func (repository *TransactionRepository) FindByCode(ctx context.Context, code string) (*model.Transaction, error) {
+func (repository *TransactionRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Transaction, error) {
 	var transaction model.Transaction
 	err := repository.DB.WithContext(ctx).Preload(clause.Associations).Preload("ProductQuality.Product").Where("code = ?", code).First(&transaction).Error
 	if err != nil {

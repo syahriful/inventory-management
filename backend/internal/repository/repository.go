@@ -17,7 +17,7 @@ type UserRepositoryContract interface {
 
 type ProductRepositoryContract interface {
 	FindAll(ctx context.Context) ([]*model.Product, error)
-	FindByCode(ctx context.Context, code string) (*model.Product, error)
+	FindByCodeWithAssociations(ctx context.Context, code string) (*model.Product, error)
 	Create(ctx context.Context, product *model.Product) (*model.Product, error)
 	Update(ctx context.Context, product *model.Product) (*model.Product, error)
 	Delete(ctx context.Context, code string) error
@@ -31,7 +31,6 @@ type ProductQualityRepositoryContract interface {
 	Delete(ctx context.Context, id int64) error
 	IncreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error
 	DecreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error
-	TransferStock(ctx context.Context, fromID int64, toID int64, quantity float64, tx *gorm.DB) error
 }
 
 type SupplierRepositoryContract interface {
@@ -56,7 +55,7 @@ type TransactionRepositoryContract interface {
 	FindAll(ctx context.Context) ([]*model.Transaction, error)
 	FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*model.Transaction, error)
 	FindAllByCustomerCode(ctx context.Context, customerCode string) ([]*model.Transaction, error)
-	FindByCode(ctx context.Context, code string) (*model.Transaction, error)
+	FindByCodeWithAssociations(ctx context.Context, code string) (*model.Transaction, error)
 	Create(ctx context.Context, transaction *model.Transaction, tx *gorm.DB) (*model.Transaction, error)
 	Update(ctx context.Context, transaction *model.Transaction, tx *gorm.DB) (*model.Transaction, error)
 	Delete(ctx context.Context, code string, tx *gorm.DB) error

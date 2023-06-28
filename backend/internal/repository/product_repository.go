@@ -26,7 +26,7 @@ func (repository *ProductRepository) FindAll(ctx context.Context) ([]*model.Prod
 	return products, nil
 }
 
-func (repository *ProductRepository) FindByCode(ctx context.Context, code string) (*model.Product, error) {
+func (repository *ProductRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Product, error) {
 	var product model.Product
 	err := repository.DB.WithContext(ctx).Preload("ProductQualities").Where("code = ?", code).First(&product).Error
 	if err != nil {

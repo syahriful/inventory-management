@@ -67,7 +67,7 @@ func (service *TransactionService) FindAllByCustomerCode(ctx context.Context, cu
 }
 
 func (service *TransactionService) FindByCode(ctx context.Context, code string) (*response.TransactionResponse, error) {
-	transaction, err := service.TransactionRepository.FindByCode(ctx, code)
+	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (service *TransactionService) Create(ctx context.Context, request *request.
 }
 
 func (service *TransactionService) Update(ctx context.Context, request *request.UpdateTransactionRequest) (*response.TransactionResponse, error) {
-	transaction, err := service.TransactionRepository.FindByCode(ctx, request.Code)
+	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, request.Code)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +144,7 @@ func (service *TransactionService) Update(ctx context.Context, request *request.
 }
 
 func (service *TransactionService) Delete(ctx context.Context, code string) error {
-	transaction, err := service.TransactionRepository.FindByCode(ctx, code)
+	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return err
 	}
