@@ -17,7 +17,11 @@ func NewTransactionRepository(db *gorm.DB) TransactionRepositoryContract {
 	}
 }
 
-func (repository *TransactionRepository) FindAll(ctx context.Context) ([]*model.Transaction, error) {
+func (repository *TransactionRepository) FindAll(ctx context.Context, tx *gorm.DB) ([]*model.Transaction, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var transactions []*model.Transaction
 	err := repository.DB.WithContext(ctx).Find(&transactions).Error
 	if err != nil {
@@ -27,7 +31,11 @@ func (repository *TransactionRepository) FindAll(ctx context.Context) ([]*model.
 	return transactions, nil
 }
 
-func (repository *TransactionRepository) FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*model.Transaction, error) {
+func (repository *TransactionRepository) FindAllBySupplierCode(ctx context.Context, supplierCode string, tx *gorm.DB) ([]*model.Transaction, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var transactions []*model.Transaction
 	err := repository.DB.WithContext(ctx).Where("supplier_code = ?", supplierCode).Find(&transactions).Error
 	if err != nil {
@@ -37,7 +45,11 @@ func (repository *TransactionRepository) FindAllBySupplierCode(ctx context.Conte
 	return transactions, nil
 }
 
-func (repository *TransactionRepository) FindAllByCustomerCode(ctx context.Context, customerCode string) ([]*model.Transaction, error) {
+func (repository *TransactionRepository) FindAllByCustomerCode(ctx context.Context, customerCode string, tx *gorm.DB) ([]*model.Transaction, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var transactions []*model.Transaction
 	err := repository.DB.WithContext(ctx).Where("customer_code = ?", customerCode).Find(&transactions).Error
 	if err != nil {
@@ -47,7 +59,11 @@ func (repository *TransactionRepository) FindAllByCustomerCode(ctx context.Conte
 	return transactions, nil
 }
 
-func (repository *TransactionRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Transaction, error) {
+func (repository *TransactionRepository) FindByCodeWithAssociations(ctx context.Context, code string, tx *gorm.DB) (*model.Transaction, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var transaction model.Transaction
 	err := repository.DB.WithContext(ctx).Preload(clause.Associations).Preload("ProductQuality.Product").Where("code = ?", code).First(&transaction).Error
 	if err != nil {
@@ -57,8 +73,26 @@ func (repository *TransactionRepository) FindByCodeWithAssociations(ctx context.
 	return &transaction, nil
 }
 
+func (repository *TransactionRepository) FindByCode(ctx context.Context, code string, tx *gorm.DB) (*model.Transaction, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
+	var transaction model.Transaction
+	err := repository.DB.WithContext(ctx).Where("code = ?", code).First(&transaction).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &transaction, nil
+}
+
 func (repository *TransactionRepository) Create(ctx context.Context, transaction *model.Transaction, tx *gorm.DB) (*model.Transaction, error) {
-	err := tx.WithContext(ctx).Omit(clause.Associations).Create(&transaction).Error
+	if tx != nil {
+		repository.DB = tx
+	}
+
+	err := repository.DB.WithContext(ctx).Omit(clause.Associations).Create(&transaction).Error
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +101,11 @@ func (repository *TransactionRepository) Create(ctx context.Context, transaction
 }
 
 func (repository *TransactionRepository) Update(ctx context.Context, transaction *model.Transaction, tx *gorm.DB) (*model.Transaction, error) {
-	err := tx.WithContext(ctx).Omit(clause.Associations).Where("code = ?", transaction.Code).Updates(&transaction).Error
+	if tx != nil {
+		repository.DB = tx
+	}
+
+	err := repository.DB.WithContext(ctx).Omit(clause.Associations).Where("code = ?", transaction.Code).Updates(&transaction).Error
 	if err != nil {
 		return nil, err
 	}
@@ -76,8 +114,12 @@ func (repository *TransactionRepository) Update(ctx context.Context, transaction
 }
 
 func (repository *TransactionRepository) Delete(ctx context.Context, code string, tx *gorm.DB) error {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var transaction model.Transaction
-	err := tx.WithContext(ctx).Where("code = ?", code).Delete(&transaction).Error
+	err := repository.DB.WithContext(ctx).Where("code = ?", code).Delete(&transaction).Error
 	if err != nil {
 		return err
 	}

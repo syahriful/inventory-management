@@ -7,6 +7,7 @@ import (
 	"inventory-management/backend/internal/http/request"
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
+	"inventory-management/backend/util"
 )
 
 type TxTransactionRepository struct {
@@ -23,23 +24,42 @@ func NewTxRepository(db *gorm.DB, transactionRepository TransactionRepositoryCon
 	}
 }
 
-func (repository *TxTransactionRepository) Create(ctx context.Context, transaction *model.Transaction, realQuantity float64) (*model.Transaction, error) {
+func (repository *TxTransactionRepository) Create(ctx context.Context, request *request.CreateTransactionRequest) (*model.Transaction, error) {
 	var createdTransaction *model.Transaction
 	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		trx, err := repository.TransactionRepository.Create(ctx, transaction, tx)
+		productQuality, err := repository.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID, tx)
 		if err != nil {
 			return err
 		}
 
-		if transaction.Type == "IN" {
-			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, realQuantity, tx)
+		quantity, err := util.CalculateUnitOfMass(productQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
+		if err != nil {
+			return err
+		}
+
+		var transactionRequest model.Transaction
+		transactionRequest.ProductQualityID = request.ProductQualityID
+		transactionRequest.SupplierCode = request.SupplierCode
+		transactionRequest.CustomerCode = request.CustomerCode
+		transactionRequest.Description = request.Description
+		transactionRequest.Quantity = request.Quantity
+		transactionRequest.Type = request.Type
+		transactionRequest.UnitMassAcronym = request.UnitMassAcronym
+
+		trx, err := repository.TransactionRepository.Create(ctx, &transactionRequest, tx)
+		if err != nil {
+			return err
+		}
+
+		if transactionRequest.Type == "IN" {
+			err = repository.ProductQualityRepository.IncreaseStock(ctx, transactionRequest.ProductQualityID, quantity, tx)
 			if err != nil {
 				return err
 			}
 		}
 
-		if transaction.Type == "OUT" {
-			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, realQuantity, tx)
+		if transactionRequest.Type == "OUT" {
+			err = repository.ProductQualityRepository.DecreaseStock(ctx, transactionRequest.ProductQualityID, quantity, tx)
 			if err != nil {
 				return err
 			}
@@ -56,15 +76,47 @@ func (repository *TxTransactionRepository) Create(ctx context.Context, transacti
 	return createdTransaction, nil
 }
 
-func (repository *TxTransactionRepository) Update(ctx context.Context, increaseStock float64, requestQuantity float64, transaction *model.Transaction) error {
+func (repository *TxTransactionRepository) Update(ctx context.Context, request *request.UpdateTransactionRequest) (*model.Transaction, error) {
+	var updatedTransaction *model.Transaction
 	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		// decrease by current quantity
-		err := repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
+		transaction, err := repository.TransactionRepository.FindByCodeWithAssociations(ctx, request.Code, tx)
 		if err != nil {
 			return err
 		}
 
-		transaction.Quantity = requestQuantity
+		if transaction.Type == "TRANSFER" {
+			return errors.New(response.ErrorUpdateTransactionTypeTransfer)
+		}
+
+		if request.CustomerCode != nil {
+			transaction.CustomerCode = request.CustomerCode
+		}
+
+		if request.SupplierCode != nil {
+			transaction.SupplierCode = request.SupplierCode
+		}
+
+		transactionQuantity, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, transaction.UnitMassAcronym, transaction.Quantity)
+		if err != nil {
+			return err
+		}
+
+		transaction.Description = request.Description
+		transaction.UnitMassAcronym = request.UnitMassAcronym
+		transaction.Quantity = transactionQuantity
+
+		increaseStock, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
+		if err != nil {
+			return err
+		}
+
+		// decrease by current quantity
+		err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
+		if err != nil {
+			return err
+		}
+
+		transaction.Quantity = request.Quantity
 		_, err = repository.TransactionRepository.Update(ctx, transaction, tx)
 		if err != nil {
 			return err
@@ -76,65 +128,25 @@ func (repository *TxTransactionRepository) Update(ctx context.Context, increaseS
 			return err
 		}
 
-		return nil
-	})
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (repository *TxTransactionRepository) Delete(ctx context.Context, transaction *model.Transaction) error {
-	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
-		err := repository.TransactionRepository.Delete(ctx, transaction.Code, tx)
-		if err != nil {
-			return err
-		}
-
-		if transaction.Type == "TRANSFER" {
-			err := repository.ProductQualityRepository.DecreaseStock(ctx, *transaction.ProductQualityIDTransferred, transaction.Quantity, tx)
-			if err != nil {
-				return err
-			}
-
-			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
-			if err != nil {
-				return err
-			}
-		}
-
-		if transaction.Type == "IN" {
-			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
-			if err != nil {
-				return err
-			}
-		}
-
-		if transaction.Type == "OUT" {
-			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, transaction.Quantity, tx)
-			if err != nil {
-				return err
-			}
-		}
+		updatedTransaction = transaction
 
 		return nil
 	})
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return updatedTransaction, nil
 }
-
-func (repository *TxTransactionRepository) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) error {
+func (repository *TxTransactionRepository) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) (*model.Transaction, error) {
+	var transaction *model.Transaction
 	err := repository.DB.Transaction(func(tx *gorm.DB) error {
-		fromQuality, err := repository.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID)
+		fromQuality, err := repository.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID, tx)
 		if err != nil {
 			return err
 		}
 
-		toQuality, err := repository.ProductQualityRepository.FindByID(ctx, request.ProductQualityIDTransferred)
+		toQuality, err := repository.ProductQualityRepository.FindByID(ctx, request.ProductQualityIDTransferred, tx)
 		if err != nil {
 			return err
 		}
@@ -165,9 +177,61 @@ func (repository *TxTransactionRepository) TransferStock(ctx context.Context, re
 		transactionRequest.Type = "TRANSFER"
 		transactionRequest.UnitMassAcronym = fromQuality.Product.UnitMassAcronym
 
-		_, err = repository.TransactionRepository.Create(ctx, &transactionRequest, tx)
+		transaction, err = repository.TransactionRepository.Create(ctx, &transactionRequest, tx)
 		if err != nil {
 			return err
+		}
+
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return transaction, nil
+}
+
+func (repository *TxTransactionRepository) Delete(ctx context.Context, code string) error {
+	err := repository.DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
+		transaction, err := repository.TransactionRepository.FindByCodeWithAssociations(ctx, code, tx)
+		if err != nil {
+			return err
+		}
+
+		err = repository.TransactionRepository.Delete(ctx, transaction.Code, tx)
+		if err != nil {
+			return err
+		}
+
+		quantityAfterCalculated, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, transaction.UnitMassAcronym, transaction.Quantity)
+		if err != nil {
+			return err
+		}
+
+		if transaction.Type == "TRANSFER" {
+			err := repository.ProductQualityRepository.DecreaseStock(ctx, *transaction.ProductQualityIDTransferred, quantityAfterCalculated, tx)
+			if err != nil {
+				return err
+			}
+
+			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, quantityAfterCalculated, tx)
+			if err != nil {
+				return err
+			}
+		}
+
+		if transaction.Type == "IN" {
+			err = repository.ProductQualityRepository.DecreaseStock(ctx, transaction.ProductQualityID, quantityAfterCalculated, tx)
+			if err != nil {
+				return err
+			}
+		}
+
+		if transaction.Type == "OUT" {
+			err = repository.ProductQualityRepository.IncreaseStock(ctx, transaction.ProductQualityID, quantityAfterCalculated, tx)
+			if err != nil {
+				return err
+			}
 		}
 
 		return nil

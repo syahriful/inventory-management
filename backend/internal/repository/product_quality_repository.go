@@ -16,7 +16,11 @@ func NewProductQualityRepository(db *gorm.DB) ProductQualityRepositoryContract {
 	}
 }
 
-func (repository *ProductQualityRepository) FindAll(ctx context.Context) ([]*model.ProductQuality, error) {
+func (repository *ProductQualityRepository) FindAll(ctx context.Context, tx *gorm.DB) ([]*model.ProductQuality, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQualities []*model.ProductQuality
 	err := repository.DB.WithContext(ctx).Find(&productQualities).Error
 	if err != nil {
@@ -26,7 +30,11 @@ func (repository *ProductQualityRepository) FindAll(ctx context.Context) ([]*mod
 	return productQualities, nil
 }
 
-func (repository *ProductQualityRepository) FindAllByProductCode(ctx context.Context, productCode string) ([]*model.ProductQuality, error) {
+func (repository *ProductQualityRepository) FindAllByProductCode(ctx context.Context, productCode string, tx *gorm.DB) ([]*model.ProductQuality, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQualities []*model.ProductQuality
 	err := repository.DB.WithContext(ctx).Where("product_code = ?", productCode).Find(&productQualities).Error
 	if err != nil {
@@ -36,7 +44,11 @@ func (repository *ProductQualityRepository) FindAllByProductCode(ctx context.Con
 	return productQualities, nil
 }
 
-func (repository *ProductQualityRepository) FindByID(ctx context.Context, id int64) (*model.ProductQuality, error) {
+func (repository *ProductQualityRepository) FindByID(ctx context.Context, id int64, tx *gorm.DB) (*model.ProductQuality, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQuality model.ProductQuality
 	err := repository.DB.WithContext(ctx).First(&productQuality, id).Error
 	if err != nil {
@@ -46,7 +58,11 @@ func (repository *ProductQualityRepository) FindByID(ctx context.Context, id int
 	return &productQuality, nil
 }
 
-func (repository *ProductQualityRepository) FindByIDWithAssociations(ctx context.Context, id int64) (*model.ProductQuality, error) {
+func (repository *ProductQualityRepository) FindByIDWithAssociations(ctx context.Context, id int64, tx *gorm.DB) (*model.ProductQuality, error) {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQuality model.ProductQuality
 	err := repository.DB.WithContext(ctx).Preload("Product").First(&productQuality, id).Error
 	if err != nil {
@@ -56,7 +72,11 @@ func (repository *ProductQualityRepository) FindByIDWithAssociations(ctx context
 	return &productQuality, nil
 }
 
-func (repository *ProductQualityRepository) Delete(ctx context.Context, id int64) error {
+func (repository *ProductQualityRepository) Delete(ctx context.Context, id int64, tx *gorm.DB) error {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQuality model.ProductQuality
 	err := repository.DB.WithContext(ctx).Delete(&productQuality, id).Error
 	if err != nil {
@@ -67,14 +87,18 @@ func (repository *ProductQualityRepository) Delete(ctx context.Context, id int64
 }
 
 func (repository *ProductQualityRepository) IncreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQuality model.ProductQuality
-	err := tx.WithContext(ctx).First(&productQuality, id).Error
+	err := repository.DB.WithContext(ctx).First(&productQuality, id).Error
 	if err != nil {
 		return err
 	}
 
 	productQuality.Quantity += quantity
-	err = tx.WithContext(ctx).Select("quantity").Updates(&productQuality).Error
+	err = repository.DB.WithContext(ctx).Select("quantity").Updates(&productQuality).Error
 	if err != nil {
 		return err
 	}
@@ -83,8 +107,12 @@ func (repository *ProductQualityRepository) IncreaseStock(ctx context.Context, i
 }
 
 func (repository *ProductQualityRepository) DecreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error {
+	if tx != nil {
+		repository.DB = tx
+	}
+
 	var productQuality model.ProductQuality
-	err := tx.WithContext(ctx).First(&productQuality, id).Error
+	err := repository.DB.WithContext(ctx).First(&productQuality, id).Error
 	if err != nil {
 		return err
 	}

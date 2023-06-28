@@ -9,10 +9,10 @@ var (
 	ErrorNotFound                      = "record not found"
 	ErrorInvalidPassword               = "invalid password"
 	ErrorUsernameExists                = "username already exist"
-	ErrorValidation                    = "There are inaccuracies in the validation process"
-	ErrorTransferStockDifferentProduct = "Transfer stock must be the same product"
-	ErrorStockNotEnough                = "Stock is not enough"
-	ErrorUpdateTransactionTypeTransfer = "Transaction type cannot be changed in transfer process"
+	ErrorValidation                    = "there are inaccuracies in the validation process"
+	ErrorTransferStockDifferentProduct = "transfer stock must be the same product"
+	ErrorStockNotEnough                = "stock is not enough"
+	ErrorUpdateTransactionTypeTransfer = "transaction type cannot be changed in transfer process"
 )
 
 type ApiResponse struct {

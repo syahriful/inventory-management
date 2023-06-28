@@ -2,30 +2,27 @@ package service
 
 import (
 	"context"
-	"errors"
 	"inventory-management/backend/internal/http/request"
 	"inventory-management/backend/internal/http/response"
-	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
-	"inventory-management/backend/util"
 )
 
 type TransactionService struct {
 	TransactionRepository    repository.TransactionRepositoryContract
 	ProductQualityRepository repository.ProductQualityRepositoryContract
-	TxRepository             repository.TxTransactionRepositoryContract
+	TxTransactionRepository  repository.TxTransactionRepositoryContract
 }
 
-func NewTransactionService(transactionRepository repository.TransactionRepositoryContract, productQualityRepository repository.ProductQualityRepositoryContract, txRepository repository.TxTransactionRepositoryContract) TransactionServiceContract {
+func NewTransactionService(transactionRepository repository.TransactionRepositoryContract, productQualityRepository repository.ProductQualityRepositoryContract, txTransactionRepository repository.TxTransactionRepositoryContract) TransactionServiceContract {
 	return &TransactionService{
 		TransactionRepository:    transactionRepository,
 		ProductQualityRepository: productQualityRepository,
-		TxRepository:             txRepository,
+		TxTransactionRepository:  txTransactionRepository,
 	}
 }
 
 func (service *TransactionService) FindAll(ctx context.Context) ([]*response.TransactionResponse, error) {
-	transactions, err := service.TransactionRepository.FindAll(ctx)
+	transactions, err := service.TransactionRepository.FindAll(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +36,7 @@ func (service *TransactionService) FindAll(ctx context.Context) ([]*response.Tra
 }
 
 func (service *TransactionService) FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*response.TransactionResponse, error) {
-	transactions, err := service.TransactionRepository.FindAllBySupplierCode(ctx, supplierCode)
+	transactions, err := service.TransactionRepository.FindAllBySupplierCode(ctx, supplierCode, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -53,7 +50,7 @@ func (service *TransactionService) FindAllBySupplierCode(ctx context.Context, su
 }
 
 func (service *TransactionService) FindAllByCustomerCode(ctx context.Context, customerCode string) ([]*response.TransactionResponse, error) {
-	transactions, err := service.TransactionRepository.FindAllByCustomerCode(ctx, customerCode)
+	transactions, err := service.TransactionRepository.FindAllByCustomerCode(ctx, customerCode, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +64,7 @@ func (service *TransactionService) FindAllByCustomerCode(ctx context.Context, cu
 }
 
 func (service *TransactionService) FindByCode(ctx context.Context, code string) (*response.TransactionResponse, error) {
-	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, code)
+	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, code, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -76,26 +73,7 @@ func (service *TransactionService) FindByCode(ctx context.Context, code string) 
 }
 
 func (service *TransactionService) Create(ctx context.Context, request *request.CreateTransactionRequest) (*response.TransactionResponse, error) {
-	productQuality, err := service.ProductQualityRepository.FindByIDWithAssociations(ctx, request.ProductQualityID)
-	if err != nil {
-		return nil, err
-	}
-
-	quantity, err := util.CalculateUnitOfMass(productQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
-	if err != nil {
-		return nil, err
-	}
-
-	var transactionRequest model.Transaction
-	transactionRequest.ProductQualityID = request.ProductQualityID
-	transactionRequest.SupplierCode = request.SupplierCode
-	transactionRequest.CustomerCode = request.CustomerCode
-	transactionRequest.Description = request.Description
-	transactionRequest.Quantity = request.Quantity
-	transactionRequest.Type = request.Type
-	transactionRequest.UnitMassAcronym = request.UnitMassAcronym
-
-	transaction, err := service.TxRepository.Create(ctx, &transactionRequest, quantity)
+	transaction, err := service.TxTransactionRepository.Create(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -104,38 +82,16 @@ func (service *TransactionService) Create(ctx context.Context, request *request.
 }
 
 func (service *TransactionService) Update(ctx context.Context, request *request.UpdateTransactionRequest) (*response.TransactionResponse, error) {
-	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, request.Code)
+	transaction, err := service.TxTransactionRepository.Update(ctx, request)
 	if err != nil {
 		return nil, err
 	}
 
-	if transaction.Type == "TRANSFER" {
-		return nil, errors.New(response.ErrorUpdateTransactionTypeTransfer)
-	}
+	return transaction.ToResponse(), nil
+}
 
-	transactionQuantity, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, transaction.UnitMassAcronym, transaction.Quantity)
-	if err != nil {
-		return nil, err
-	}
-
-	if request.CustomerCode != nil {
-		transaction.CustomerCode = request.CustomerCode
-	}
-
-	if request.SupplierCode != nil {
-		transaction.SupplierCode = request.SupplierCode
-	}
-
-	transaction.Description = request.Description
-	transaction.UnitMassAcronym = request.UnitMassAcronym
-	transaction.Quantity = transactionQuantity
-
-	increaseStock, err := util.CalculateUnitOfMass(transaction.ProductQuality.Product.UnitMassAcronym, request.UnitMassAcronym, request.Quantity)
-	if err != nil {
-		return nil, err
-	}
-
-	err = service.TxRepository.Update(ctx, increaseStock, request.Quantity, transaction)
+func (service *TransactionService) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) (*response.TransactionResponse, error) {
+	transaction, err := service.TxTransactionRepository.TransferStock(ctx, request)
 	if err != nil {
 		return nil, err
 	}
@@ -144,21 +100,7 @@ func (service *TransactionService) Update(ctx context.Context, request *request.
 }
 
 func (service *TransactionService) Delete(ctx context.Context, code string) error {
-	transaction, err := service.TransactionRepository.FindByCodeWithAssociations(ctx, code)
-	if err != nil {
-		return err
-	}
-
-	err = service.TxRepository.Delete(ctx, transaction)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (service *TransactionService) TransferStock(ctx context.Context, request *request.TransferStockTransactionRequest) error {
-	err := service.TxRepository.TransferStock(ctx, request)
+	err := service.TxTransactionRepository.Delete(ctx, code)
 	if err != nil {
 		return err
 	}

@@ -20,7 +20,7 @@ func NewProductQualityService(productQualityRepository repository.ProductQuality
 }
 
 func (service *ProductQualityService) FindAll(ctx context.Context) ([]*response.ProductQualityResponse, error) {
-	productQualities, err := service.ProductQualityRepository.FindAll(ctx)
+	productQualities, err := service.ProductQualityRepository.FindAll(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 
 	go func() {
 		defer wg.Done()
-		productQualities, errorProduct := service.ProductQualityRepository.FindAllByProductCode(ctx, productCode)
+		productQualities, errorProduct := service.ProductQualityRepository.FindAllByProductCode(ctx, productCode, nil)
 		if errorProduct != nil {
 			mutex.Lock()
 			err = errorProduct
@@ -80,7 +80,7 @@ func (service *ProductQualityService) FindAllByProductCode(ctx context.Context, 
 }
 
 func (service *ProductQualityService) FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error) {
-	productQuality, err := service.ProductQualityRepository.FindByIDWithAssociations(ctx, id)
+	productQuality, err := service.ProductQualityRepository.FindByIDWithAssociations(ctx, id, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -89,12 +89,12 @@ func (service *ProductQualityService) FindByID(ctx context.Context, id int64) (*
 }
 
 func (service *ProductQualityService) Delete(ctx context.Context, id int64) error {
-	checkProductQuality, err := service.ProductQualityRepository.FindByID(ctx, id)
+	checkProductQuality, err := service.ProductQualityRepository.FindByID(ctx, id, nil)
 	if err != nil {
 		return err
 	}
 
-	err = service.ProductQualityRepository.Delete(ctx, checkProductQuality.ID)
+	err = service.ProductQualityRepository.Delete(ctx, checkProductQuality.ID, nil)
 	if err != nil {
 		return err
 	}

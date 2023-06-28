@@ -158,7 +158,7 @@ func (controller *TransactionController) TransferStock(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusBadRequest, "product quality id transferred and received cannot be the same")
 	}
 
-	err = controller.TransactionService.TransferStock(ctx.UserContext(), &transferStockRequest)
+	transaction, err := controller.TransactionService.TransferStock(ctx.UserContext(), &transferStockRequest)
 	if err != nil {
 		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
@@ -169,5 +169,5 @@ func (controller *TransactionController) TransferStock(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "transferred", nil)
+	return response.ReturnJSON(ctx, http.StatusCreated, "transferred", transaction)
 }
