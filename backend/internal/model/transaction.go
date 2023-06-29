@@ -87,7 +87,7 @@ func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse
 
 	var productQualityTransferredResponse *response.ProductQualityResponse
 	if t.ProductQualityTransferred != nil {
-		productQualityTransferredResponse = t.ProductQualityTransferred.ToResponse()
+		productQualityTransferredResponse = t.ProductQualityTransferred.ToResponseWithAssociations()
 	}
 
 	return &response.TransactionResponse{
@@ -104,6 +104,7 @@ func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse
 		Description:                 t.Description,
 		Quantity:                    t.Quantity,
 		Type:                        t.Type,
+		UnitMassAcronym:             t.UnitMassAcronym,
 		CreatedAt:                   t.CreatedAt.String(),
 		UpdatedAt:                   t.UpdatedAt.String(),
 	}

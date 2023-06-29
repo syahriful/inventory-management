@@ -65,7 +65,7 @@ func (repository *TransactionRepository) FindByCodeWithAssociations(ctx context.
 	}
 
 	var transaction model.Transaction
-	err := repository.DB.WithContext(ctx).Preload(clause.Associations).Preload("ProductQuality.Product").Where("code = ?", code).First(&transaction).Error
+	err := repository.DB.WithContext(ctx).Preload(clause.Associations).Preload("ProductQuality.Product").Preload("ProductQualityTransferred.Product").Where("code = ?", code).First(&transaction).Error
 	if err != nil {
 		return nil, err
 	}

@@ -9,3 +9,6 @@ table:
 
 test:
 	cd backend && go test -v ./... | { grep -v 'no test files'; true; }
+
+bench:
+	cd backend && go test -bench=. ./... | { grep -v 'no test files'; true; }

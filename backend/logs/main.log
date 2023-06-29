@@ -835,3 +835,18 @@
 [28-Jun-2023 16:03:18] | 201 | 125.5969ms | 127.0.0.1 | POST | /api/transactions/transfer | -
 [28-Jun-2023 16:16:16] | 200 | 127.5058ms | 127.0.0.1 | GET | /api/transactions | -
 [28-Jun-2023 16:16:20] | 404 | 115.2865ms | 127.0.0.1 | GET | /api/transactions/TL6KMOZ7U7 | record not found
+[28-Jun-2023 16:54:11] | 500 | 20.4323ms | 127.0.0.1 | POST | /api/transactions/transfer | conn busy
+[28-Jun-2023 16:55:42] | 500 | 15.8395ms | 127.0.0.1 | POST | /api/transactions/transfer | conn busy
+[28-Jun-2023 16:55:43] | 500 | 113.9863ms | 127.0.0.1 | POST | /api/transactions/transfer | conn busy
+[28-Jun-2023 16:55:48] | 200 | 106.5715ms | 127.0.0.1 | GET | /api/transactions | -
+[28-Jun-2023 16:57:04] | 400 | 26.6402ms | 127.0.0.1 | POST | /api/transactions/transfer | stock is not enough
+[28-Jun-2023 16:58:13] | 400 | 16.2387ms | 127.0.0.1 | POST | /api/transactions/transfer | stock is not enough
+[28-Jun-2023 16:58:19] | 201 | 133.5095ms | 127.0.0.1 | POST | /api/transactions/transfer | -
+[29-Jun-2023 11:32:35] | 200 | 131.4619ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:34:47] | 200 | 125.6618ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:36:21] | 200 | 130.1989ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:37:17] | 200 | 134.9729ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:39:50] | 200 | 129.6215ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:40:08] | 200 | 123.9363ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
+[29-Jun-2023 11:40:20] | 200 | 128.6931ms | 127.0.0.1 | GET | /api/transactions/C7ASKD1XV4 | -
+[29-Jun-2023 11:42:06] | 200 | 121.327ms | 127.0.0.1 | GET | /api/transactions/C7ASKD1XV4 | -

@@ -25,3 +25,19 @@ func TestGenerateRandomString(t *testing.T) {
 		}
 	})
 }
+
+func TestToPointerString(t *testing.T) {
+	t.Run("Convert string to pointer string", func(t *testing.T) {
+		pointerString := ToPointerString("test")
+		if *pointerString != "test" {
+			t.Errorf("The value of pointer string is not 'test'")
+		}
+	})
+
+	t.Run("Convert empty string to pointer string", func(t *testing.T) {
+		pointerString := ToPointerString("")
+		if *pointerString != "" {
+			t.Errorf("The value of pointer string is not ''")
+		}
+	})
+}

@@ -40,5 +40,5 @@ func (mock *TxTransactionRepositoryMock) Update(ctx context.Context, request *re
 
 func (mock *TxTransactionRepositoryMock) Delete(ctx context.Context, code string) error {
 	args := mock.Called(ctx, code)
-	return args.Error(1)
+	return args.Error(0)
 }

@@ -18,3 +18,7 @@ func GenerateRandomString(length int) (string, error) {
 
 	return string(randomBytes), nil
 }
+
+func ToPointerString(value string) *string {
+	return &value
+}
