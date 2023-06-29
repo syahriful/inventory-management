@@ -25,8 +25,8 @@ func NewTransactionController(transactionService service.TransactionServiceContr
 		transaction.Post("/", controller.Create)
 		transaction.Delete("/:code", controller.Delete)
 		transaction.Patch("/:code", controller.Update)
-		transaction.Get("/:code/supplier", controller.FindAllSupplierCode)
-		transaction.Get("/:code/customer", controller.FindAllCustomerCode)
+		transaction.Get("/:code/supplier", controller.FindAllBySupplierCode)
+		transaction.Get("/:code/customer", controller.FindAllByCustomerCode)
 		transaction.Post("/transfer", controller.TransferStock)
 	}
 
@@ -34,7 +34,7 @@ func NewTransactionController(transactionService service.TransactionServiceContr
 }
 
 func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {
-	transactions, err := controller.TransactionService.FindAll(ctx.Context())
+	transactions, err := controller.TransactionService.FindAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
@@ -42,9 +42,9 @@ func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {
 	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions)
 }
 
-func (controller *TransactionController) FindAllSupplierCode(ctx *fiber.Ctx) error {
+func (controller *TransactionController) FindAllBySupplierCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	transactions, err := controller.TransactionService.FindAllBySupplierCode(ctx.Context(), code)
+	transactions, err := controller.TransactionService.FindAllBySupplierCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
@@ -55,9 +55,9 @@ func (controller *TransactionController) FindAllSupplierCode(ctx *fiber.Ctx) err
 	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions)
 }
 
-func (controller *TransactionController) FindAllCustomerCode(ctx *fiber.Ctx) error {
+func (controller *TransactionController) FindAllByCustomerCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	transactions, err := controller.TransactionService.FindAllByCustomerCode(ctx.Context(), code)
+	transactions, err := controller.TransactionService.FindAllByCustomerCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
@@ -70,7 +70,7 @@ func (controller *TransactionController) FindAllCustomerCode(ctx *fiber.Ctx) err
 
 func (controller *TransactionController) FindByCode(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	transaction, err := controller.TransactionService.FindByCode(ctx.Context(), code)
+	transaction, err := controller.TransactionService.FindByCode(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())
@@ -95,6 +95,9 @@ func (controller *TransactionController) Create(ctx *fiber.Ctx) error {
 
 	transaction, err := controller.TransactionService.Create(ctx.UserContext(), &transactionRequest)
 	if err != nil {
+		if err.Error() == response.ErrorNotFound {
+			return fiber.NewError(http.StatusNotFound, err.Error())
+		}
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
@@ -131,7 +134,7 @@ func (controller *TransactionController) Update(ctx *fiber.Ctx) error {
 
 func (controller *TransactionController) Delete(ctx *fiber.Ctx) error {
 	code := ctx.Params("code")
-	err := controller.TransactionService.Delete(ctx.Context(), code)
+	err := controller.TransactionService.Delete(ctx.UserContext(), code)
 	if err != nil {
 		if err.Error() == response.ErrorNotFound {
 			return fiber.NewError(http.StatusNotFound, err.Error())

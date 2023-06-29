@@ -850,3 +850,10 @@
 [29-Jun-2023 11:40:08] | 200 | 123.9363ms | 127.0.0.1 | GET | /api/transactions/96O5KANH2U | -
 [29-Jun-2023 11:40:20] | 200 | 128.6931ms | 127.0.0.1 | GET | /api/transactions/C7ASKD1XV4 | -
 [29-Jun-2023 11:42:06] | 200 | 121.327ms | 127.0.0.1 | GET | /api/transactions/C7ASKD1XV4 | -
+[29-Jun-2023 20:07:20] | 500 | 30.798ms | 127.0.0.1 | POST | /api/transactions | record not found
+[29-Jun-2023 20:07:39] | 404 | 20.9807ms | 127.0.0.1 | POST | /api/transactions | record not found
+[29-Jun-2023 20:27:47] | 404 | 23.5784ms | 127.0.0.1 | POST | /api/transactions | record not found
+[29-Jun-2023 20:27:49] | 201 | 133.398ms | 127.0.0.1 | POST | /api/transactions | -
+[29-Jun-2023 20:28:02] | 400 |  89.8µs | 127.0.0.1 | POST | /api/transactions | -
+[29-Jun-2023 20:30:33] | 400 | 871.7µs | 127.0.0.1 | POST | /api/transactions | -
+[29-Jun-2023 20:31:56] | 400 |      0s | 127.0.0.1 | POST | /api/transactions | -

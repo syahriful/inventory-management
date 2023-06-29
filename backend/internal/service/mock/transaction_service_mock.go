@@ -76,5 +76,5 @@ func (mock *TransactionServiceMock) TransferStock(ctx context.Context, request *
 
 func (mock *TransactionServiceMock) Delete(ctx context.Context, code string) error {
 	args := mock.Called(ctx, code)
-	return args.Error(1)
+	return args.Error(0)
 }
