@@ -190,12 +190,32 @@ func TestCustomerController_Create(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name:           "Create customer with missing name field",
+			name:           "[missing] Create customer with missing name field",
 			request:        &request.CreateCustomerRequest{},
 			expectedStatus: response.ErrorValidation,
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create customer with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.CreateCustomerRequest{
+				Name: "Wi",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create customer with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.CreateCustomerRequest{
+				Name: "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -232,7 +252,7 @@ func TestCustomerController_Create(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)
@@ -281,7 +301,7 @@ func TestCustomerController_Update(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Update customer with missing name field",
+			name: "[missing] Update customer with missing name field",
 			request: &request.UpdateCustomerRequest{
 				Code: "KKSJIDNA",
 			},
@@ -289,6 +309,28 @@ func TestCustomerController_Update(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update customer with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.UpdateCustomerRequest{
+				Code: "KKSJIDNA",
+				Name: "Wi",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update customer with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.UpdateCustomerRequest{
+				Code: "KKSJIDNA",
+				Name: "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -327,7 +369,7 @@ func TestCustomerController_Update(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)

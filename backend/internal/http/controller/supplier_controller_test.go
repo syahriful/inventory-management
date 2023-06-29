@@ -200,7 +200,7 @@ func TestSupplierController_Create(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Create supplier with missing name field",
+			name: "[missing] Create supplier with missing name field",
 			request: &request.CreateSupplierRequest{
 				Address: "Bhayangkara",
 				Phone:   "089911182399",
@@ -211,7 +211,31 @@ func TestSupplierController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
-			name: "Create supplier with missing address field",
+			name: "[missing] Create supplier with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.CreateSupplierRequest{
+				Name:    "Wi",
+				Address: "Bhayangkara",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create supplier with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.CreateSupplierRequest{
+				Name:    "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Address: "Bhayangkara",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create supplier with missing address field",
 			request: &request.CreateSupplierRequest{
 				Name:  "Widdy Arfiansyah",
 				Phone: "089911182399",
@@ -222,7 +246,19 @@ func TestSupplierController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Address' field"),
 		},
 		{
-			name: "Create supplier with missing phone field",
+			name: "[missing] Create supplier with does not meet the validation requirements with the 'max' tag at address field.",
+			request: &request.CreateSupplierRequest{
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkaradddddddddsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Address' field"),
+		},
+		{
+			name: "[missing] Create supplier with missing phone field",
 			request: &request.CreateSupplierRequest{
 				Name:    "Widdy Arfiansyah",
 				Address: "Bhayangkara",
@@ -231,6 +267,30 @@ func TestSupplierController_Create(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'Phone' field"),
+		},
+		{
+			name: "[missing] Create supplier with does not meet the validation requirements with the 'min' tag at phone field.",
+			request: &request.CreateSupplierRequest{
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkara",
+				Phone:   "0899111",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Phone' field"),
+		},
+		{
+			name: "[missing] Create supplier with does not meet the validation requirements with the 'max' tag at phone field.",
+			request: &request.CreateSupplierRequest{
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkara",
+				Phone:   "089911182399344352352235",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Phone' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -269,7 +329,7 @@ func TestSupplierController_Create(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)
@@ -322,7 +382,7 @@ func TestSupplierController_Update(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Update supplier with missing name field",
+			name: "[missing] Update supplier with missing name field",
 			request: &request.UpdateSupplierRequest{
 				Code:    "KKSJIDNA",
 				Address: "Bhayangkara",
@@ -334,7 +394,33 @@ func TestSupplierController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
-			name: "Update supplier with missing address field",
+			name: "[missing] Update supplier with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.UpdateSupplierRequest{
+				Code:    "KKSJIDNA",
+				Name:    "Wi",
+				Address: "Bhayangkara",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update supplier with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.UpdateSupplierRequest{
+				Code:    "KKSJIDNA",
+				Name:    "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Address: "Bhayangkara",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update supplier with missing address field",
 			request: &request.UpdateSupplierRequest{
 				Code:  "KKSJIDNA",
 				Name:  "Widdy Arfiansyah",
@@ -346,7 +432,20 @@ func TestSupplierController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Address' field"),
 		},
 		{
-			name: "Update supplier with missing phone field",
+			name: "[missing] Update supplier with does not meet the validation requirements with the 'max' tag at address field.",
+			request: &request.UpdateSupplierRequest{
+				Code:    "KKSJIDNA",
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkaradddddddddsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Phone:   "089911182399",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Address' field"),
+		},
+		{
+			name: "[missing] Update supplier with missing phone field",
 			request: &request.UpdateSupplierRequest{
 				Code:    "KKSJIDNA",
 				Name:    "Widdy Arfiansyah",
@@ -356,6 +455,32 @@ func TestSupplierController_Update(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'Phone' field"),
+		},
+		{
+			name: "[missing] Update supplier with does not meet the validation requirements with the 'min' tag at phone field.",
+			request: &request.UpdateSupplierRequest{
+				Code:    "KKSJIDNA",
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkara",
+				Phone:   "0899111",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Phone' field"),
+		},
+		{
+			name: "[missing] Update supplier with does not meet the validation requirements with the 'max' tag at phone field.",
+			request: &request.UpdateSupplierRequest{
+				Code:    "KKSJIDNA",
+				Name:    "Widdy Arfiansyah",
+				Address: "Bhayangkara",
+				Phone:   "089911182399344352352235",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Phone' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -396,7 +521,7 @@ func TestSupplierController_Update(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)

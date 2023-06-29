@@ -232,7 +232,7 @@ func TestProductController_Create(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Create product with missing name field",
+			name: "[missing] Create product with missing name field",
 			request: &request.CreateProductRequest{
 				UnitMassAcronym:     "kg",
 				UnitMassDescription: "kilogram",
@@ -257,7 +257,33 @@ func TestProductController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
-			name: "Create product with missing unit mass acronym field",
+			name: "[missing] Create product with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.CreateProductRequest{
+				Name:                "ProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProduk",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create product with missing unit mass acronym field",
 			request: &request.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassDescription: "kilogram",
@@ -282,7 +308,33 @@ func TestProductController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'UnitMassAcronym' field"),
 		},
 		{
-			name: "Create product with missing unit mass description field",
+			name: "[missing] Create product with does not meet the validation requirements with the 'max' tag at unit mass acronym field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'UnitMassAcronym' field"),
+		},
+		{
+			name: "[missing] Create product with missing unit mass description field",
 			request: &request.CreateProductRequest{
 				Name:            "Shrimp",
 				UnitMassAcronym: "kg",
@@ -307,7 +359,33 @@ func TestProductController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'UnitMassDescription' field"),
 		},
 		{
-			name: "Create product with missing product qualities field",
+			name: "[missing] Create product with does not meet the validation requirements with the 'max' tag at unit mass description field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogramkilogramkilogramkilogramkilogramkilogramkilogramkilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'UnitMassDescription' field"),
+		},
+		{
+			name: "[missing] Create product with missing product qualities field",
 			request: &request.CreateProductRequest{
 				Name:                "Shrimp",
 				UnitMassAcronym:     "kg",
@@ -317,6 +395,103 @@ func TestProductController_Create(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'ProductQualities' field"),
+		},
+		{
+			name: "[missing] Create product with does not meet the validation requirements with the 'required' tag at dive quality field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Quality' field"),
+		},
+		{
+			name: "[missing] Create product with does not meet the validation requirements with the 'max' tag at dive quality field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "FreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Quality' field"),
+		},
+		{
+			name: "[missing] Create product with does not meet the validation requirements with the 'required' tag at dive price field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Fresh",
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Price' field"),
+		},
+		{
+			name: "[missing] Create product with does not meet the validation requirements with the 'required' tag at dive type field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Type' field"),
+		},
+		{
+			name: "[missing] Create product with does not meet the validation requirements with the 'max' tag at dive type field.",
+			request: &request.CreateProductRequest{
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.CreateProductQualityRequest{
+					{
+						Quality:  "Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increaseincreaseincreaseincreaseincreaseincrease",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Type' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -369,7 +544,7 @@ func TestProductController_Create(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)
@@ -456,7 +631,7 @@ func TestProductController_Update(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Update product with missing name field",
+			name: "[missing] Update product with missing name field",
 			request: &request.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				UnitMassAcronym:     "kg",
@@ -484,7 +659,36 @@ func TestProductController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
-			name: "Update product with missing unit mass acronym field",
+			name: "[missing] Update product with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "ProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProdukProduk",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						ID:       2,
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update product with missing unit mass acronym field",
 			request: &request.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
@@ -512,7 +716,36 @@ func TestProductController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'UnitMassAcronym' field"),
 		},
 		{
-			name: "Update product with missing unit mass description field",
+			name: "[missing] Update product with does not meet the validation requirements with the 'max' tag at unit mass acronym field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkgkg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						ID:       2,
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'UnitMassAcronym' field"),
+		},
+		{
+			name: "[missing] Update product with missing unit mass description field",
 			request: &request.UpdateProductRequest{
 				Code:            "KKSJIDNA",
 				Name:            "Shrimp",
@@ -540,7 +773,36 @@ func TestProductController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'UnitMassDescription' field"),
 		},
 		{
-			name: "Update product with missing product qualities field",
+			name: "[missing] Update product with does not meet the validation requirements with the 'max' tag at unit mass description field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogramkilogramkilogramkilogramkilogramkilogramkilogramkilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Very Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+					{
+						ID:       2,
+						Quality:  "Fresh",
+						Price:    15000,
+						Quantity: 4.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'UnitMassDescription' field"),
+		},
+		{
+			name: "[missing] Update product with missing product qualities field",
 			request: &request.UpdateProductRequest{
 				Code:                "KKSJIDNA",
 				Name:                "Shrimp",
@@ -551,6 +813,113 @@ func TestProductController_Update(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'ProductQualities' field"),
+		},
+		{
+			name: "[missing] Update product with does not meet the validation requirements with the 'required' tag at dive quality field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Quality' field"),
+		},
+		{
+			name: "[missing] Update product with does not meet the validation requirements with the 'max' tag at dive quality field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "FreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFreshFresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Quality' field"),
+		},
+		{
+			name: "[missing] Update product with does not meet the validation requirements with the 'required' tag at dive price field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Fresh",
+						Quantity: 5.5,
+						Type:     "increase",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Price' field"),
+		},
+		{
+			name: "[missing] Update product with does not meet the validation requirements with the 'required' tag at dive type field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'required' for 'Type' field"),
+		},
+		{
+			name: "[missing] Update product with does not meet the validation requirements with the 'max' tag at dive type field.",
+			request: &request.UpdateProductRequest{
+				Code:                "KKSJIDNA",
+				Name:                "Shrimp",
+				UnitMassAcronym:     "kg",
+				UnitMassDescription: "kilogram",
+				ProductQualities: []*request.UpdateProductQualityRequest{
+					{
+						ID:       1,
+						Quality:  "Fresh",
+						Price:    20000,
+						Quantity: 5.5,
+						Type:     "increaseincreaseincreaseincreaseincreaseincrease",
+					},
+				},
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Type' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -607,7 +976,7 @@ func TestProductController_Update(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)

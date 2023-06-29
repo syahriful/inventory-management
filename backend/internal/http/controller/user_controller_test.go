@@ -214,6 +214,30 @@ func TestUserController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.CreateUserRequest{
+				Name:     "Wi",
+				Username: "wdyarfn",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.CreateUserRequest{
+				Name:     "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Username: "wdyarfn",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
 			name: "Create user with missing username field",
 			request: &request.CreateUserRequest{
 				Name:     "Widdy Arfiansyah",
@@ -225,6 +249,30 @@ func TestUserController_Create(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Username' field"),
 		},
 		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'min' tag at username field.",
+			request: &request.CreateUserRequest{
+				Name:     "Widdy Arfiansyah",
+				Username: "wd",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Username' field"),
+		},
+		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'max' tag at username field.",
+			request: &request.CreateUserRequest{
+				Name:     "Widdy Arfiansyah",
+				Username: "wdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfnwdyarfn",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Username' field"),
+		},
+		{
 			name: "Create user with missing password field",
 			request: &request.CreateUserRequest{
 				Name:     "Widdy Arfiansyah",
@@ -234,6 +282,30 @@ func TestUserController_Create(t *testing.T) {
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'required' for 'Password' field"),
+		},
+		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'min' tag at password field.",
+			request: &request.CreateUserRequest{
+				Name:     "Widdy Arfiansyah",
+				Username: "wdyarfn",
+				Password: "1234",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Password' field"),
+		},
+		{
+			name: "[missing] Create user with does not meet the validation requirements with the 'max' tag at password field.",
+			request: &request.CreateUserRequest{
+				Name:     "Widdy Arfiansyah",
+				Username: "wdyarfn",
+				Password: "123456789101123232312141433333333123456789101123232312141433333333333333333422222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222333333333422222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Password' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -272,7 +344,7 @@ func TestUserController_Create(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)
@@ -322,7 +394,7 @@ func TestUserController_Update(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "Update user with missing name field",
+			name: "[missing] Update user with missing name field",
 			request: &request.UpdateUserRequest{
 				Password: "12345678910",
 			},
@@ -332,15 +404,48 @@ func TestUserController_Update(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Name' field"),
 		},
 		{
-			name: "Update user with missing minimum characters password field",
+			name: "[missing] Update user with does not meet the validation requirements with the 'min' tag at name field.",
+			request: &request.UpdateUserRequest{
+				Name:     "Wi",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'min' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update user with does not meet the validation requirements with the 'max' tag at name field.",
+			request: &request.UpdateUserRequest{
+				Name:     "Widddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+				Password: "12345678910",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Name' field"),
+		},
+		{
+			name: "[missing] Update user with does not meet the validation requirements with the 'min' tag at password field.",
 			request: &request.UpdateUserRequest{
 				Name:     "Widdy Arfiansyah",
-				Password: "12",
+				Password: "1234",
 			},
 			expectedStatus: response.ErrorValidation,
 			expectedBody:   nil,
 			expectedCode:   http.StatusBadRequest,
 			expectedError:  errors.New("Error validation 'min' for 'Password' field"),
+		},
+		{
+			name: "[missing] Update user with does not meet the validation requirements with the 'max' tag at password field.",
+			request: &request.UpdateUserRequest{
+				Name:     "Widdy Arfiansyah",
+				Password: "123456789101123232312141433333333123456789101123232312141433333333333333333422222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222333333333422222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+			},
+			expectedStatus: response.ErrorValidation,
+			expectedBody:   nil,
+			expectedCode:   http.StatusBadRequest,
+			expectedError:  errors.New("Error validation 'max' for 'Password' field"),
 		},
 		{
 			name: "Service getting an error",
@@ -395,7 +500,7 @@ func TestUserController_Update(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)

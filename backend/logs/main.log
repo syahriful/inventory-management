@@ -857,3 +857,7 @@
 [29-Jun-2023 20:28:02] | 400 |  89.8µs | 127.0.0.1 | POST | /api/transactions | -
 [29-Jun-2023 20:30:33] | 400 | 871.7µs | 127.0.0.1 | POST | /api/transactions | -
 [29-Jun-2023 20:31:56] | 400 |      0s | 127.0.0.1 | POST | /api/transactions | -
+[29-Jun-2023 20:55:08] | 200 | 127.816ms | 127.0.0.1 | GET | /api/customers | -
+[29-Jun-2023 20:55:09] | 200 | 103.5456ms | 127.0.0.1 | GET | /api/customers | -
+[29-Jun-2023 20:55:15] | 400 |  87.8µs | 127.0.0.1 | PATCH | /api/customers/NTAQZSJE23 | -
+[29-Jun-2023 21:35:10] | 400 |      0s | 127.0.0.1 | POST | /api/products | -

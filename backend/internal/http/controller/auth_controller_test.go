@@ -40,7 +40,7 @@ func TestAuthController_Login(t *testing.T) {
 			expectedError: nil,
 		},
 		{
-			name: "User login with missing username field",
+			name: "[missing] User login with missing username field",
 			request: &request.LoginUserRequest{
 				Password: "12345678910",
 			},
@@ -50,7 +50,7 @@ func TestAuthController_Login(t *testing.T) {
 			expectedError:  errors.New("Error validation 'required' for 'Username' field"),
 		},
 		{
-			name: "User login with missing password field",
+			name: "[missing] User login with missing password field",
 			request: &request.LoginUserRequest{
 				Username: "wdyarfn",
 			},
@@ -106,7 +106,7 @@ func TestAuthController_Login(t *testing.T) {
 			res, err := app.Test(req, -1)
 			assert.Nil(t, err)
 
-			if strings.Contains(tc.name, "missing") {
+			if strings.Contains(tc.name, "[missing]") {
 				var responseBody response.ErrorValidationResponse
 				err = json.NewDecoder(res.Body).Decode(&responseBody)
 				assert.Nil(t, err)
