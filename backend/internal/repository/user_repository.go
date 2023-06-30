@@ -16,14 +16,24 @@ func NewUserRepository(db *gorm.DB) UserRepositoryContract {
 	}
 }
 
-func (repository *UserRepository) FindAll(ctx context.Context) ([]*model.User, error) {
+func (repository *UserRepository) FindAll(ctx context.Context, offset int, limit int) ([]*model.User, error) {
 	var users []*model.User
-	err := repository.DB.WithContext(ctx).Find(&users).Error
+	err := repository.DB.WithContext(ctx).Offset(offset).Limit(limit).Order("created_at DESC").Find(&users).Error
 	if err != nil {
 		return nil, err
 	}
 
 	return users, nil
+}
+
+func (repository *UserRepository) CountAll(ctx context.Context) (int64, error) {
+	var count int64
+	err := repository.DB.WithContext(ctx).Model(&model.User{}).Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (repository *UserRepository) FindByID(ctx context.Context, id int64) (*model.User, error) {

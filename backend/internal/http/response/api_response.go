@@ -48,3 +48,40 @@ func ReturnJSON(c *fiber.Ctx, code int, status string, data interface{}) error {
 		Data:   data,
 	})
 }
+
+type Pagination struct {
+	TotalRecords    int  `json:"total_records"`
+	Limit           int  `json:"limit"`
+	CurrentPage     int  `json:"current_page"`
+	TotalPages      int  `json:"total_pages"`
+	PreviousPage    int  `json:"previous_page"`
+	HasPreviousPage bool `json:"has_previous_page"`
+	NextPage        int  `json:"next_page"`
+	HasNextPage     bool `json:"has_next_page"`
+}
+
+type ApiResponseTest struct {
+	ctx        *fiber.Ctx
+	Code       int         `json:"code"`
+	Status     string      `json:"status"`
+	Data       interface{} `json:"data"`
+	Pagination *Pagination `json:"pagination,omitempty"`
+}
+
+func (r *ApiResponseTest) WithPagination(pagination *Pagination) *ApiResponseTest {
+	r.Pagination = pagination
+	return r
+}
+
+func (r *ApiResponseTest) Build() error {
+	return r.ctx.Status(r.Code).JSON(r)
+}
+
+func ReturnJSONTest(c *fiber.Ctx, code int, status string, data interface{}) *ApiResponseTest {
+	return &ApiResponseTest{
+		ctx:    c,
+		Code:   code,
+		Status: status,
+		Data:   data,
+	}
+}

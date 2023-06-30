@@ -9,7 +9,8 @@ import (
 
 type (
 	UserRepositoryContract interface {
-		FindAll(ctx context.Context) ([]*model.User, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*model.User, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByID(ctx context.Context, id int64) (*model.User, error)
 		FindByUsername(ctx context.Context, username string) (*model.User, error)
 		Create(ctx context.Context, user *model.User) (*model.User, error)

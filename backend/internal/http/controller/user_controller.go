@@ -30,12 +30,18 @@ func NewUserController(userService service.UserServiceContract, route fiber.Rout
 }
 
 func (controller *UserController) FindAll(ctx *fiber.Ctx) error {
-	users, err := controller.UserService.FindAll(ctx.UserContext())
+	totalRecords, err := controller.UserService.CountAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", users)
+	pagination, offset := util.CreatePagination(ctx, totalRecords)
+	users, err := controller.UserService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	return response.ReturnJSONTest(ctx, fiber.StatusOK, "OK", users).WithPagination(&pagination).Build()
 }
 
 func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
@@ -52,7 +58,7 @@ func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", user)
+	return response.ReturnJSONTest(ctx, fiber.StatusOK, "OK", user).Build()
 }
 
 func (controller *UserController) Create(ctx *fiber.Ctx) error {

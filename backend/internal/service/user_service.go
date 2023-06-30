@@ -19,8 +19,8 @@ func NewUserService(userRepository repository.UserRepositoryContract) UserServic
 	}
 }
 
-func (service *UserService) FindAll(ctx context.Context) ([]*response.UserResponse, error) {
-	users, err := service.UserRepository.FindAll(ctx)
+func (service *UserService) FindAll(ctx context.Context, offset int, limit int) ([]*response.UserResponse, error) {
+	users, err := service.UserRepository.FindAll(ctx, offset, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -31,6 +31,15 @@ func (service *UserService) FindAll(ctx context.Context) ([]*response.UserRespon
 	}
 
 	return userResponses, nil
+}
+
+func (service *UserService) CountAll(ctx context.Context) (int64, error) {
+	count, err := service.UserRepository.CountAll(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (service *UserService) FindByID(ctx context.Context, id int64) (*response.UserResponse, error) {
