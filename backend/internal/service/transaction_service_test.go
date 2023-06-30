@@ -89,9 +89,9 @@ func TestTransactionService_FindAll(t *testing.T) {
 			var repoT repository.TransactionRepositoryMock
 			var repoPQ repository.ProductQualityRepositoryMock
 			var repoTx repository.TxTransactionRepositoryMock
-			repoT.On("FindAll", ctx).Return(tc.expectedTransactionRepoFindAll, tc.expectedTransactionRepoFindAllError)
+			repoT.On("FindAll", ctx, 0, 10).Return(tc.expectedTransactionRepoFindAll, tc.expectedTransactionRepoFindAllError)
 			svc := NewTransactionService(&repoT, &repoPQ, &repoTx)
-			result, err := svc.FindAll(ctx)
+			result, err := svc.FindAll(ctx, 0, 10)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
 				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())

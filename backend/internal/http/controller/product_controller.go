@@ -30,12 +30,18 @@ func NewProductController(productService service.ProductServiceContract, route f
 }
 
 func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {
-	products, err := controller.ProductService.FindAll(ctx.UserContext())
+	totalRecords, err := controller.ProductService.CountAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", products)
+	pagination, offset := util.CreatePagination(ctx, totalRecords)
+	products, err := controller.ProductService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", products).WithPagination(&pagination).Build()
 }
 
 func (controller *ProductController) FindByCode(ctx *fiber.Ctx) error {
@@ -49,7 +55,7 @@ func (controller *ProductController) FindByCode(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", product)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", product).Build()
 }
 
 func (controller *ProductController) Create(ctx *fiber.Ctx) error {
@@ -67,7 +73,7 @@ func (controller *ProductController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", product)
+	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", product).Build()
 }
 
 func (controller *ProductController) Update(ctx *fiber.Ctx) error {
@@ -90,7 +96,7 @@ func (controller *ProductController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "updated", product)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "updated", product).Build()
 }
 
 func (controller *ProductController) Delete(ctx *fiber.Ctx) error {
@@ -103,5 +109,5 @@ func (controller *ProductController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "deleted", nil).Build()
 }

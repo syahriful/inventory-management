@@ -70,9 +70,9 @@ func TestUserService_FindAll(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
-			repo.On("FindAll", ctx).Return(tc.expectedUserRepoFindAll, tc.expectedUserRepoFindAllError)
+			repo.On("FindAll", ctx, 0, 10).Return(tc.expectedUserRepoFindAll, tc.expectedUserRepoFindAllError)
 			svc := NewUserService(&repo)
-			result, err := svc.FindAll(ctx)
+			result, err := svc.FindAll(ctx, 0, 10)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
 				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())

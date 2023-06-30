@@ -11,13 +11,22 @@ type TransactionServiceMock struct {
 	mock.Mock
 }
 
-func (mock *TransactionServiceMock) FindAll(ctx context.Context) ([]*response.TransactionResponse, error) {
-	args := mock.Called(ctx)
+func (mock *TransactionServiceMock) FindAll(ctx context.Context, offset int, limit int) ([]*response.TransactionResponse, error) {
+	args := mock.Called(ctx, offset, limit)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
 
 	return args.Get(0).([]*response.TransactionResponse), args.Error(1)
+}
+
+func (mock *TransactionServiceMock) CountAll(ctx context.Context) (int64, error) {
+	args := mock.Called(ctx)
+	if args.Get(0) == nil {
+		return 0, args.Error(1)
+	}
+
+	return args.Get(0).(int64), args.Error(1)
 }
 
 func (mock *TransactionServiceMock) FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*response.TransactionResponse, error) {

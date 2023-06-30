@@ -75,9 +75,9 @@ func NewRoutes(db *gorm.DB, app *fiber.App) {
 }
 
 func NotFoundHandler(c *fiber.Ctx) error {
-	return response.ReturnJSON(c, fiber.StatusNotFound, "the requested resource was not found", nil)
+	return response.ReturnJSON(c, fiber.StatusNotFound, "the requested resource was not found", nil).Build()
 }
 
 func WelcomeHandler(c *fiber.Ctx) error {
-	return response.ReturnJSON(c, fiber.StatusOK, "Welcome to the Inventory Management API", nil)
+	return response.ReturnJSON(c, fiber.StatusOK, "Welcome to the Inventory Management API", nil).Build()
 }

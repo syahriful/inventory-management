@@ -11,8 +11,8 @@ type UserServiceMock struct {
 	mock.Mock
 }
 
-func (m *UserServiceMock) FindAll(ctx context.Context) ([]*response.UserResponse, error) {
-	args := m.Called(ctx)
+func (mock *UserServiceMock) FindAll(ctx context.Context, offset int, limit int) ([]*response.UserResponse, error) {
+	args := mock.Called(ctx, offset, limit)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -20,8 +20,17 @@ func (m *UserServiceMock) FindAll(ctx context.Context) ([]*response.UserResponse
 	return args.Get(0).([]*response.UserResponse), args.Error(1)
 }
 
-func (m *UserServiceMock) FindByID(ctx context.Context, id int64) (*response.UserResponse, error) {
-	args := m.Called(ctx, id)
+func (mock *UserServiceMock) CountAll(ctx context.Context) (int64, error) {
+	args := mock.Called(ctx)
+	if args.Get(0) == nil {
+		return 0, args.Error(1)
+	}
+
+	return args.Get(0).(int64), args.Error(1)
+}
+
+func (mock *UserServiceMock) FindByID(ctx context.Context, id int64) (*response.UserResponse, error) {
+	args := mock.Called(ctx, id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -29,8 +38,8 @@ func (m *UserServiceMock) FindByID(ctx context.Context, id int64) (*response.Use
 	return args.Get(0).(*response.UserResponse), args.Error(1)
 }
 
-func (m *UserServiceMock) VerifyLogin(ctx context.Context, request *request.LoginUserRequest) (*response.UserLoginResponse, error) {
-	args := m.Called(ctx, request)
+func (mock *UserServiceMock) VerifyLogin(ctx context.Context, request *request.LoginUserRequest) (*response.UserLoginResponse, error) {
+	args := mock.Called(ctx, request)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -38,8 +47,8 @@ func (m *UserServiceMock) VerifyLogin(ctx context.Context, request *request.Logi
 	return args.Get(0).(*response.UserLoginResponse), args.Error(1)
 }
 
-func (m *UserServiceMock) Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error) {
-	args := m.Called(ctx, request)
+func (mock *UserServiceMock) Create(ctx context.Context, request *request.CreateUserRequest) (*response.UserResponse, error) {
+	args := mock.Called(ctx, request)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -47,8 +56,8 @@ func (m *UserServiceMock) Create(ctx context.Context, request *request.CreateUse
 	return args.Get(0).(*response.UserResponse), args.Error(1)
 }
 
-func (m *UserServiceMock) Update(ctx context.Context, request *request.UpdateUserRequest) (*response.UserResponse, error) {
-	args := m.Called(ctx, request)
+func (mock *UserServiceMock) Update(ctx context.Context, request *request.UpdateUserRequest) (*response.UserResponse, error) {
+	args := mock.Called(ctx, request)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -56,7 +65,7 @@ func (m *UserServiceMock) Update(ctx context.Context, request *request.UpdateUse
 	return args.Get(0).(*response.UserResponse), args.Error(1)
 }
 
-func (m *UserServiceMock) Delete(ctx context.Context, id int64) error {
-	args := m.Called(ctx, id)
+func (mock *UserServiceMock) Delete(ctx context.Context, id int64) error {
+	args := mock.Called(ctx, id)
 	return args.Error(0)
 }

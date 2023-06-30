@@ -31,12 +31,18 @@ func NewSupplierController(supplierService service.SupplierServiceContract, rout
 }
 
 func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
-	suppliers, err := controller.SupplierService.FindAll(ctx.UserContext())
+	totalRecords, err := controller.SupplierService.CountAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", suppliers)
+	pagination, offset := util.CreatePagination(ctx, totalRecords)
+	suppliers, err := controller.SupplierService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", suppliers).WithPagination(&pagination).Build()
 }
 
 func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
@@ -49,7 +55,7 @@ func (controller *SupplierController) FindByCode(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", supplier)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", supplier).Build()
 }
 
 func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
@@ -67,7 +73,7 @@ func (controller *SupplierController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusCreated, "created", supplier)
+	return response.ReturnJSON(ctx, http.StatusCreated, "created", supplier).Build()
 }
 
 func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
@@ -90,7 +96,7 @@ func (controller *SupplierController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "updated", supplier)
+	return response.ReturnJSON(ctx, http.StatusOK, "updated", supplier).Build()
 }
 
 func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
@@ -103,5 +109,5 @@ func (controller *SupplierController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil).Build()
 }

@@ -18,7 +18,8 @@ type (
 		Delete(ctx context.Context, id int64) error
 	}
 	ProductRepositoryContract interface {
-		FindAll(ctx context.Context) ([]*model.Product, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*model.Product, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCodeWithAssociations(ctx context.Context, code string) (*model.Product, error)
 		Create(ctx context.Context, product *model.Product) (*model.Product, error)
 		Update(ctx context.Context, product *model.Product) (*model.Product, error)
@@ -34,7 +35,8 @@ type (
 		DecreaseStock(ctx context.Context, id int64, quantity float64, tx *gorm.DB) error
 	}
 	SupplierRepositoryContract interface {
-		FindAll(ctx context.Context) ([]*model.Supplier, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*model.Supplier, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCodeWithAssociations(ctx context.Context, code string) (*model.Supplier, error)
 		FindByCode(ctx context.Context, code string) (*model.Supplier, error)
 		Create(ctx context.Context, supplier *model.Supplier) (*model.Supplier, error)
@@ -43,7 +45,8 @@ type (
 	}
 
 	CustomerRepositoryContract interface {
-		FindAll(ctx context.Context) ([]*model.Customer, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*model.Customer, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCodeWithAssociations(ctx context.Context, code string) (*model.Customer, error)
 		FindByCode(ctx context.Context, code string) (*model.Customer, error)
 		Create(ctx context.Context, customer *model.Customer) (*model.Customer, error)
@@ -52,7 +55,8 @@ type (
 	}
 
 	TransactionRepositoryContract interface {
-		FindAll(ctx context.Context, tx *gorm.DB) ([]*model.Transaction, error)
+		FindAll(ctx context.Context, offset int, limit int, tx *gorm.DB) ([]*model.Transaction, error)
+		CountAll(ctx context.Context, tx *gorm.DB) (int64, error)
 		FindAllBySupplierCode(ctx context.Context, supplierCode string, tx *gorm.DB) ([]*model.Transaction, error)
 		FindAllByCustomerCode(ctx context.Context, customerCode string, tx *gorm.DB) ([]*model.Transaction, error)
 		FindByCodeWithAssociations(ctx context.Context, code string, tx *gorm.DB) (*model.Transaction, error)

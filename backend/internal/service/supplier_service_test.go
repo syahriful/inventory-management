@@ -75,9 +75,9 @@ func TestSupplierService_FindAll(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.SupplierRepositoryMock
-			repo.On("FindAll", ctx).Return(tc.expectedSupplierRepoFindAll, tc.expectedSupplierRepoFindAllError)
+			repo.On("FindAll", ctx, 0, 10).Return(tc.expectedSupplierRepoFindAll, tc.expectedSupplierRepoFindAllError)
 			svc := NewSupplierService(&repo)
-			result, err := svc.FindAll(ctx)
+			result, err := svc.FindAll(ctx, 0, 10)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
 				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())

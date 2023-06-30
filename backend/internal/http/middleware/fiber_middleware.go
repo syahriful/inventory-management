@@ -31,7 +31,7 @@ func FiberConfig() fiber.Config {
 				code = e.Code
 			}
 
-			return response.ReturnJSON(ctx, code, err.Error(), nil)
+			return response.ReturnJSON(ctx, code, err.Error(), nil).Build()
 		},
 	}
 }
@@ -57,7 +57,7 @@ func NewJWTMiddleware() fiber.Handler {
 	return jwtware.New(jwtware.Config{
 		SigningKey: SecretKey,
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
-			return response.ReturnJSON(ctx, fiber.StatusUnauthorized, err.Error(), nil)
+			return response.ReturnJSON(ctx, fiber.StatusUnauthorized, err.Error(), nil).Build()
 		},
 		SuccessHandler: func(ctx *fiber.Ctx) error {
 			userContext := ctx.Locals("user").(*jwt.Token)

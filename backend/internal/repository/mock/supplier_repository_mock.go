@@ -10,13 +10,22 @@ type SupplierRepositoryMock struct {
 	mock.Mock
 }
 
-func (mock *SupplierRepositoryMock) FindAll(ctx context.Context) ([]*model.Supplier, error) {
-	args := mock.Called(ctx)
+func (mock *SupplierRepositoryMock) FindAll(ctx context.Context, offset int, limit int) ([]*model.Supplier, error) {
+	args := mock.Called(ctx, offset, limit)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
 
 	return args.Get(0).([]*model.Supplier), args.Error(1)
+}
+
+func (mock *SupplierRepositoryMock) CountAll(ctx context.Context) (int64, error) {
+	args := mock.Called(ctx)
+	if args.Get(0) == nil {
+		return 0, args.Error(1)
+	}
+
+	return args.Get(0).(int64), args.Error(1)
 }
 
 func (mock *SupplierRepositoryMock) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Supplier, error) {

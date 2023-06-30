@@ -16,14 +16,24 @@ func NewSupplierRepository(db *gorm.DB) SupplierRepositoryContract {
 	}
 }
 
-func (repository *SupplierRepository) FindAll(ctx context.Context) ([]*model.Supplier, error) {
+func (repository *SupplierRepository) FindAll(ctx context.Context, offset int, limit int) ([]*model.Supplier, error) {
 	var suppliers []*model.Supplier
-	err := repository.DB.WithContext(ctx).Find(&suppliers).Error
+	err := repository.DB.WithContext(ctx).Offset(offset).Limit(limit).Order("created_at DESC").Find(&suppliers).Error
 	if err != nil {
 		return nil, err
 	}
 
 	return suppliers, nil
+}
+
+func (repository *SupplierRepository) CountAll(ctx context.Context) (int64, error) {
+	var count int64
+	err := repository.DB.WithContext(ctx).Model(&model.Supplier{}).Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (repository *SupplierRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Supplier, error) {

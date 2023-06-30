@@ -75,9 +75,9 @@ func TestProductService_FindAll(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.ProductRepositoryMock
-			repo.On("FindAll", ctx).Return(tc.expectedProductRepoFindAll, tc.expectedProductRepoFindAllError)
+			repo.On("FindAll", ctx, 0, 10).Return(tc.expectedProductRepoFindAll, tc.expectedProductRepoFindAllError)
 			svc := NewProductService(&repo)
-			result, err := svc.FindAll(ctx)
+			result, err := svc.FindAll(ctx, 0, 10)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
 				assert.Equal(t, tc.expectedSvcError.Error(), err.Error())

@@ -11,13 +11,22 @@ type TransactionRepositoryMock struct {
 	mock.Mock
 }
 
-func (mock *TransactionRepositoryMock) FindAll(ctx context.Context, tx *gorm.DB) ([]*model.Transaction, error) {
-	args := mock.Called(ctx)
+func (mock *TransactionRepositoryMock) FindAll(ctx context.Context, offset int, limit int, tx *gorm.DB) ([]*model.Transaction, error) {
+	args := mock.Called(ctx, offset, limit)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
 
 	return args.Get(0).([]*model.Transaction), args.Error(1)
+}
+
+func (mock *TransactionRepositoryMock) CountAll(ctx context.Context, tx *gorm.DB) (int64, error) {
+	args := mock.Called(ctx)
+	if args.Get(0) == nil {
+		return 0, args.Error(1)
+	}
+
+	return args.Get(0).(int64), args.Error(1)
 }
 
 func (mock *TransactionRepositoryMock) FindAllBySupplierCode(ctx context.Context, supplierCode string, tx *gorm.DB) ([]*model.Transaction, error) {

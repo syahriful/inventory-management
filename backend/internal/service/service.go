@@ -17,7 +17,8 @@ type (
 		Delete(ctx context.Context, id int64) error
 	}
 	ProductServiceContract interface {
-		FindAll(ctx context.Context) ([]*response.ProductResponse, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*response.ProductResponse, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCode(ctx context.Context, code string) (*response.ProductResponse, error)
 		Create(ctx context.Context, request *request.CreateProductRequest) (*response.ProductResponse, error)
 		Update(ctx context.Context, request *request.UpdateProductRequest) (*response.ProductResponse, error)
@@ -30,21 +31,24 @@ type (
 		Delete(ctx context.Context, id int64) error
 	}
 	SupplierServiceContract interface {
-		FindAll(ctx context.Context) ([]*response.SupplierResponse, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*response.SupplierResponse, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCode(ctx context.Context, code string) (*response.SupplierResponse, error)
 		Create(ctx context.Context, request *request.CreateSupplierRequest) (*response.SupplierResponse, error)
 		Update(ctx context.Context, request *request.UpdateSupplierRequest) (*response.SupplierResponse, error)
 		Delete(ctx context.Context, code string) error
 	}
 	CustomerServiceContract interface {
-		FindAll(ctx context.Context) ([]*response.CustomerResponse, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*response.CustomerResponse, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error)
 		Create(ctx context.Context, request *request.CreateCustomerRequest) (*response.CustomerResponse, error)
 		Update(ctx context.Context, request *request.UpdateCustomerRequest) (*response.CustomerResponse, error)
 		Delete(ctx context.Context, code string) error
 	}
 	TransactionServiceContract interface {
-		FindAll(ctx context.Context) ([]*response.TransactionResponse, error)
+		FindAll(ctx context.Context, offset int, limit int) ([]*response.TransactionResponse, error)
+		CountAll(ctx context.Context) (int64, error)
 		FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*response.TransactionResponse, error)
 		FindAllByCustomerCode(ctx context.Context, customerCode string) ([]*response.TransactionResponse, error)
 		FindByCode(ctx context.Context, code string) (*response.TransactionResponse, error)

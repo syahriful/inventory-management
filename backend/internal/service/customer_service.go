@@ -18,8 +18,8 @@ func NewCustomerService(customerRepository repository.CustomerRepositoryContract
 	}
 }
 
-func (service *CustomerService) FindAll(ctx context.Context) ([]*response.CustomerResponse, error) {
-	customers, err := service.CustomerRepository.FindAll(ctx)
+func (service *CustomerService) FindAll(ctx context.Context, offset int, limit int) ([]*response.CustomerResponse, error) {
+	customers, err := service.CustomerRepository.FindAll(ctx, offset, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -30,6 +30,15 @@ func (service *CustomerService) FindAll(ctx context.Context) ([]*response.Custom
 	}
 
 	return customerResponses, nil
+}
+
+func (service *CustomerService) CountAll(ctx context.Context) (int64, error) {
+	count, err := service.CustomerRepository.CountAll(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (service *CustomerService) FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error) {

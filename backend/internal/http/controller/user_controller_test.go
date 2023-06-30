@@ -71,7 +71,8 @@ func TestUserController_FindAll(t *testing.T) {
 			ctx := context.Background()
 
 			var svc service.UserServiceMock
-			svc.On("FindAll", ctx).Return(tc.expectedBody, tc.expectedError)
+			svc.On("CountAll", ctx).Return(int64(2), nil)
+			svc.On("FindAll", ctx, 0, 10).Return(tc.expectedBody, tc.expectedError)
 
 			route := app.Group("/api")
 			ctrl := NewUserController(&svc, route)

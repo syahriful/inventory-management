@@ -18,8 +18,8 @@ func NewProductService(productRepository repository.ProductRepositoryContract) P
 	}
 }
 
-func (repository *ProductService) FindAll(ctx context.Context) ([]*response.ProductResponse, error) {
-	products, err := repository.ProductRepository.FindAll(ctx)
+func (service *ProductService) FindAll(ctx context.Context, offset int, limit int) ([]*response.ProductResponse, error) {
+	products, err := service.ProductRepository.FindAll(ctx, offset, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -32,8 +32,17 @@ func (repository *ProductService) FindAll(ctx context.Context) ([]*response.Prod
 	return productResponses, nil
 }
 
-func (repository *ProductService) FindByCode(ctx context.Context, code string) (*response.ProductResponse, error) {
-	product, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, code)
+func (service *ProductService) CountAll(ctx context.Context) (int64, error) {
+	count, err := service.ProductRepository.CountAll(ctx)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (service *ProductService) FindByCode(ctx context.Context, code string) (*response.ProductResponse, error) {
+	product, err := service.ProductRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +50,7 @@ func (repository *ProductService) FindByCode(ctx context.Context, code string) (
 	return product.ToResponseWithAssociations(), nil
 }
 
-func (repository *ProductService) Create(ctx context.Context, request *request.CreateProductRequest) (*response.ProductResponse, error) {
+func (service *ProductService) Create(ctx context.Context, request *request.CreateProductRequest) (*response.ProductResponse, error) {
 	var productQualities []*model.ProductQuality
 	for _, productQuality := range request.ProductQualities {
 		var productQualityRequest model.ProductQuality
@@ -59,7 +68,7 @@ func (repository *ProductService) Create(ctx context.Context, request *request.C
 	productRequest.UnitMassDescription = request.UnitMassDescription
 	productRequest.ProductQualities = productQualities
 
-	product, err := repository.ProductRepository.Create(ctx, &productRequest)
+	product, err := service.ProductRepository.Create(ctx, &productRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +76,7 @@ func (repository *ProductService) Create(ctx context.Context, request *request.C
 	return product.ToResponse(), nil
 }
 
-func (repository *ProductService) Update(ctx context.Context, request *request.UpdateProductRequest) (*response.ProductResponse, error) {
+func (service *ProductService) Update(ctx context.Context, request *request.UpdateProductRequest) (*response.ProductResponse, error) {
 	var productQualities []*model.ProductQuality
 	for _, productQuality := range request.ProductQualities {
 		var productQualityRequest model.ProductQuality
@@ -80,7 +89,7 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 		productQualities = append(productQualities, &productQualityRequest)
 	}
 
-	checkProduct, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, request.Code)
+	checkProduct, err := service.ProductRepository.FindByCodeWithAssociations(ctx, request.Code)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +99,7 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 	checkProduct.UnitMassDescription = request.UnitMassDescription
 	checkProduct.ProductQualities = productQualities
 
-	product, err := repository.ProductRepository.Update(ctx, checkProduct)
+	product, err := service.ProductRepository.Update(ctx, checkProduct)
 	if err != nil {
 		return nil, err
 	}
@@ -98,13 +107,13 @@ func (repository *ProductService) Update(ctx context.Context, request *request.U
 	return product.ToResponse(), nil
 }
 
-func (repository *ProductService) Delete(ctx context.Context, code string) error {
-	checkProduct, err := repository.ProductRepository.FindByCodeWithAssociations(ctx, code)
+func (service *ProductService) Delete(ctx context.Context, code string) error {
+	checkProduct, err := service.ProductRepository.FindByCodeWithAssociations(ctx, code)
 	if err != nil {
 		return err
 	}
 
-	err = repository.ProductRepository.Delete(ctx, checkProduct.Code)
+	err = service.ProductRepository.Delete(ctx, checkProduct.Code)
 	if err != nil {
 		return err
 	}

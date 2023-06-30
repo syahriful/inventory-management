@@ -41,7 +41,7 @@ func (controller *UserController) FindAll(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSONTest(ctx, fiber.StatusOK, "OK", users).WithPagination(&pagination).Build()
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", users).WithPagination(&pagination).Build()
 }
 
 func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
@@ -58,7 +58,7 @@ func (controller *UserController) FindByID(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSONTest(ctx, fiber.StatusOK, "OK", user).Build()
+	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", user).Build()
 }
 
 func (controller *UserController) Create(ctx *fiber.Ctx) error {
@@ -76,7 +76,7 @@ func (controller *UserController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", user)
+	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", user).Build()
 }
 
 func (controller *UserController) Update(ctx *fiber.Ctx) error {
@@ -103,7 +103,7 @@ func (controller *UserController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "updated", user)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "updated", user).Build()
 }
 
 func (controller *UserController) Delete(ctx *fiber.Ctx) error {
@@ -120,5 +120,5 @@ func (controller *UserController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, fiber.StatusOK, "deleted", nil).Build()
 }

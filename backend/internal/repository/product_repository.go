@@ -16,14 +16,24 @@ func NewProductRepository(db *gorm.DB) ProductRepositoryContract {
 	}
 }
 
-func (repository *ProductRepository) FindAll(ctx context.Context) ([]*model.Product, error) {
+func (repository *ProductRepository) FindAll(ctx context.Context, offset int, limit int) ([]*model.Product, error) {
 	var products []*model.Product
-	err := repository.DB.WithContext(ctx).Model(&model.Product{}).Find(&products).Error
+	err := repository.DB.WithContext(ctx).Offset(offset).Limit(limit).Order("created_at DESC").Find(&products).Error
 	if err != nil {
 		return nil, err
 	}
 
 	return products, nil
+}
+
+func (repository *ProductRepository) CountAll(ctx context.Context) (int64, error) {
+	var count int64
+	err := repository.DB.WithContext(ctx).Model(&model.Product{}).Count(&count).Error
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (repository *ProductRepository) FindByCodeWithAssociations(ctx context.Context, code string) (*model.Product, error) {

@@ -10,8 +10,8 @@ type ProductQualityServiceMock struct {
 	mock.Mock
 }
 
-func (m *ProductQualityServiceMock) FindAll(ctx context.Context) ([]*response.ProductQualityResponse, error) {
-	args := m.Called(ctx)
+func (mock *ProductQualityServiceMock) FindAll(ctx context.Context) ([]*response.ProductQualityResponse, error) {
+	args := mock.Called(ctx)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -19,8 +19,8 @@ func (m *ProductQualityServiceMock) FindAll(ctx context.Context) ([]*response.Pr
 	return args.Get(0).([]*response.ProductQualityResponse), args.Error(1)
 }
 
-func (m *ProductQualityServiceMock) FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error) {
-	args := m.Called(ctx, productCode)
+func (mock *ProductQualityServiceMock) FindAllByProductCode(ctx context.Context, productCode string) (*response.ProductQualityWithOwnProductResponse, error) {
+	args := mock.Called(ctx, productCode)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -28,8 +28,8 @@ func (m *ProductQualityServiceMock) FindAllByProductCode(ctx context.Context, pr
 	return args.Get(0).(*response.ProductQualityWithOwnProductResponse), args.Error(1)
 }
 
-func (m *ProductQualityServiceMock) FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error) {
-	args := m.Called(ctx, id)
+func (mock *ProductQualityServiceMock) FindByID(ctx context.Context, id int64) (*response.ProductQualityResponse, error) {
+	args := mock.Called(ctx, id)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -37,7 +37,7 @@ func (m *ProductQualityServiceMock) FindByID(ctx context.Context, id int64) (*re
 	return args.Get(0).(*response.ProductQualityResponse), args.Error(1)
 }
 
-func (m *ProductQualityServiceMock) Delete(ctx context.Context, id int64) error {
-	args := m.Called(ctx, id)
+func (mock *ProductQualityServiceMock) Delete(ctx context.Context, id int64) error {
+	args := mock.Called(ctx, id)
 	return args.Error(0)
 }

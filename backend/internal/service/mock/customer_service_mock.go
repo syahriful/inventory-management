@@ -11,8 +11,8 @@ type CustomerServiceMock struct {
 	mock.Mock
 }
 
-func (m *CustomerServiceMock) FindAll(ctx context.Context) ([]*response.CustomerResponse, error) {
-	args := m.Called(ctx)
+func (mock *CustomerServiceMock) FindAll(ctx context.Context, offset int, limit int) ([]*response.CustomerResponse, error) {
+	args := mock.Called(ctx, offset, limit)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -20,8 +20,17 @@ func (m *CustomerServiceMock) FindAll(ctx context.Context) ([]*response.Customer
 	return args.Get(0).([]*response.CustomerResponse), args.Error(1)
 }
 
-func (m *CustomerServiceMock) FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error) {
-	args := m.Called(ctx, code)
+func (mock *CustomerServiceMock) CountAll(ctx context.Context) (int64, error) {
+	args := mock.Called(ctx)
+	if args.Get(0) == nil {
+		return 0, args.Error(1)
+	}
+
+	return args.Get(0).(int64), args.Error(1)
+}
+
+func (mock *CustomerServiceMock) FindByCode(ctx context.Context, code string) (*response.CustomerResponse, error) {
+	args := mock.Called(ctx, code)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -29,8 +38,8 @@ func (m *CustomerServiceMock) FindByCode(ctx context.Context, code string) (*res
 	return args.Get(0).(*response.CustomerResponse), args.Error(1)
 }
 
-func (m *CustomerServiceMock) Create(ctx context.Context, request *request.CreateCustomerRequest) (*response.CustomerResponse, error) {
-	args := m.Called(ctx, request)
+func (mock *CustomerServiceMock) Create(ctx context.Context, request *request.CreateCustomerRequest) (*response.CustomerResponse, error) {
+	args := mock.Called(ctx, request)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -38,8 +47,8 @@ func (m *CustomerServiceMock) Create(ctx context.Context, request *request.Creat
 	return args.Get(0).(*response.CustomerResponse), args.Error(1)
 }
 
-func (m *CustomerServiceMock) Update(ctx context.Context, request *request.UpdateCustomerRequest) (*response.CustomerResponse, error) {
-	args := m.Called(ctx, request)
+func (mock *CustomerServiceMock) Update(ctx context.Context, request *request.UpdateCustomerRequest) (*response.CustomerResponse, error) {
+	args := mock.Called(ctx, request)
 	if args.Get(0) == nil {
 		return nil, args.Error(1)
 	}
@@ -47,7 +56,7 @@ func (m *CustomerServiceMock) Update(ctx context.Context, request *request.Updat
 	return args.Get(0).(*response.CustomerResponse), args.Error(1)
 }
 
-func (m *CustomerServiceMock) Delete(ctx context.Context, code string) error {
-	args := m.Called(ctx, code)
+func (mock *CustomerServiceMock) Delete(ctx context.Context, code string) error {
+	args := mock.Called(ctx, code)
 	return args.Error(0)
 }

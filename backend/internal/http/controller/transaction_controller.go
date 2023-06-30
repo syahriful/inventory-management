@@ -34,12 +34,18 @@ func NewTransactionController(transactionService service.TransactionServiceContr
 }
 
 func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {
-	transactions, err := controller.TransactionService.FindAll(ctx.UserContext())
+	totalRecords, err := controller.TransactionService.CountAll(ctx.UserContext())
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	pagination, offset := util.CreatePagination(ctx, totalRecords)
+	transactions, err := controller.TransactionService.FindAll(ctx.UserContext(), offset, pagination.Limit)
 	if err != nil {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions).WithPagination(&pagination).Build()
 }
 
 func (controller *TransactionController) FindAllBySupplierCode(ctx *fiber.Ctx) error {
@@ -52,7 +58,7 @@ func (controller *TransactionController) FindAllBySupplierCode(ctx *fiber.Ctx) e
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions).Build()
 }
 
 func (controller *TransactionController) FindAllByCustomerCode(ctx *fiber.Ctx) error {
@@ -65,7 +71,7 @@ func (controller *TransactionController) FindAllByCustomerCode(ctx *fiber.Ctx) e
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", transactions).Build()
 }
 
 func (controller *TransactionController) FindByCode(ctx *fiber.Ctx) error {
@@ -78,7 +84,7 @@ func (controller *TransactionController) FindByCode(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", transaction)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", transaction).Build()
 }
 
 func (controller *TransactionController) Create(ctx *fiber.Ctx) error {
@@ -101,7 +107,7 @@ func (controller *TransactionController) Create(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusCreated, "created", transaction)
+	return response.ReturnJSON(ctx, http.StatusCreated, "created", transaction).Build()
 }
 
 func (controller *TransactionController) Update(ctx *fiber.Ctx) error {
@@ -129,7 +135,7 @@ func (controller *TransactionController) Update(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "updated", transaction)
+	return response.ReturnJSON(ctx, http.StatusOK, "updated", transaction).Build()
 }
 
 func (controller *TransactionController) Delete(ctx *fiber.Ctx) error {
@@ -142,7 +148,7 @@ func (controller *TransactionController) Delete(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil)
+	return response.ReturnJSON(ctx, http.StatusOK, "deleted", nil).Build()
 }
 
 func (controller *TransactionController) TransferStock(ctx *fiber.Ctx) error {
@@ -172,5 +178,5 @@ func (controller *TransactionController) TransferStock(ctx *fiber.Ctx) error {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusCreated, "transferred", transaction)
+	return response.ReturnJSON(ctx, http.StatusCreated, "transferred", transaction).Build()
 }

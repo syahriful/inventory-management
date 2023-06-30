@@ -45,7 +45,7 @@ func (controller *AuthController) Login(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, http.StatusOK, "OK", userResponse)
+	return response.ReturnJSON(ctx, http.StatusOK, "OK", userResponse).Build()
 }
 
 func (controller *AuthController) Register(ctx *fiber.Ctx) error {
@@ -63,5 +63,5 @@ func (controller *AuthController) Register(ctx *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", user)
+	return response.ReturnJSON(ctx, fiber.StatusCreated, "created", user).Build()
 }

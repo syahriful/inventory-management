@@ -21,8 +21,8 @@ func NewTransactionService(transactionRepository repository.TransactionRepositor
 	}
 }
 
-func (service *TransactionService) FindAll(ctx context.Context) ([]*response.TransactionResponse, error) {
-	transactions, err := service.TransactionRepository.FindAll(ctx, nil)
+func (service *TransactionService) FindAll(ctx context.Context, offset int, limit int) ([]*response.TransactionResponse, error) {
+	transactions, err := service.TransactionRepository.FindAll(ctx, offset, limit, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -33,6 +33,15 @@ func (service *TransactionService) FindAll(ctx context.Context) ([]*response.Tra
 	}
 
 	return transactionResponses, nil
+}
+
+func (service *TransactionService) CountAll(ctx context.Context) (int64, error) {
+	count, err := service.TransactionRepository.CountAll(ctx, nil)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
 
 func (service *TransactionService) FindAllBySupplierCode(ctx context.Context, supplierCode string) ([]*response.TransactionResponse, error) {

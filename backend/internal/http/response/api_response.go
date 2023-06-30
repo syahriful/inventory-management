@@ -15,12 +15,6 @@ var (
 	ErrorUpdateTransactionTypeTransfer = "transaction type cannot be changed in transfer process"
 )
 
-type ApiResponse struct {
-	Code   int         `json:"code"`
-	Status string      `json:"status"`
-	Data   interface{} `json:"data"`
-}
-
 type ErrorResponse struct {
 	FailedField string `json:"failed_field,omitempty"`
 	Tag         string `json:"tag,omitempty"`
@@ -41,14 +35,6 @@ func ReturnErrorValidation(c *fiber.Ctx, err []*ErrorResponse) error {
 	})
 }
 
-func ReturnJSON(c *fiber.Ctx, code int, status string, data interface{}) error {
-	return c.Status(code).JSON(ApiResponse{
-		Code:   code,
-		Status: status,
-		Data:   data,
-	})
-}
-
 type Pagination struct {
 	TotalRecords    int  `json:"total_records"`
 	Limit           int  `json:"limit"`
@@ -60,7 +46,7 @@ type Pagination struct {
 	HasNextPage     bool `json:"has_next_page"`
 }
 
-type ApiResponseTest struct {
+type ApiResponse struct {
 	ctx        *fiber.Ctx
 	Code       int         `json:"code"`
 	Status     string      `json:"status"`
@@ -68,17 +54,17 @@ type ApiResponseTest struct {
 	Pagination *Pagination `json:"pagination,omitempty"`
 }
 
-func (r *ApiResponseTest) WithPagination(pagination *Pagination) *ApiResponseTest {
+func (r *ApiResponse) WithPagination(pagination *Pagination) *ApiResponse {
 	r.Pagination = pagination
 	return r
 }
 
-func (r *ApiResponseTest) Build() error {
+func (r *ApiResponse) Build() error {
 	return r.ctx.Status(r.Code).JSON(r)
 }
 
-func ReturnJSONTest(c *fiber.Ctx, code int, status string, data interface{}) *ApiResponseTest {
-	return &ApiResponseTest{
+func ReturnJSON(c *fiber.Ctx, code int, status string, data interface{}) *ApiResponse {
+	return &ApiResponse{
 		ctx:    c,
 		Code:   code,
 		Status: status,
