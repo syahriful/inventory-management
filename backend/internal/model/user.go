@@ -33,8 +33,8 @@ func (u *User) ToResponse() *response.UserResponse {
 		ID:        u.ID,
 		Name:      u.Name,
 		Username:  u.Username,
-		CreatedAt: u.CreatedAt.String(),
-		UpdatedAt: u.UpdatedAt.String(),
+		CreatedAt: u.CreatedAt.Local().String(),
+		UpdatedAt: u.UpdatedAt.Local().String(),
 	}
 }
 

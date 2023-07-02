@@ -27,8 +27,8 @@ func (c *Customer) ToResponse() *response.CustomerResponse {
 		ID:        c.ID,
 		Code:      c.Code,
 		Name:      c.Name,
-		CreatedAt: c.CreatedAt.String(),
-		UpdatedAt: c.UpdatedAt.String(),
+		CreatedAt: c.CreatedAt.Local().String(),
+		UpdatedAt: c.UpdatedAt.Local().String(),
 	}
 }
 
@@ -42,8 +42,8 @@ func (c *Customer) ToResponseWithAssociations() *response.CustomerResponse {
 		ID:           c.ID,
 		Code:         c.Code,
 		Name:         c.Name,
-		CreatedAt:    c.CreatedAt.String(),
-		UpdatedAt:    c.UpdatedAt.String(),
+		CreatedAt:    c.CreatedAt.Local().String(),
+		UpdatedAt:    c.UpdatedAt.Local().String(),
 		Transactions: transactionResponses,
 	}
 }

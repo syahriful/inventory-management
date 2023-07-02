@@ -1,14 +1,11 @@
 package util
 
 import (
-	"github.com/gofiber/fiber/v2"
 	"inventory-management/backend/internal/http/response"
 	"math"
 )
 
-func CreatePagination(ctx *fiber.Ctx, totalRecords int64) (pagination response.Pagination, offset int) {
-	currPage := ctx.QueryInt("page", 1)
-	limit := ctx.QueryInt("limit", 10)
+func CreatePagination(currPage int, limit int, totalRecords int64) (pagination response.Pagination) {
 	totalPages := math.Ceil(float64(totalRecords) / float64(limit))
 	prevPage := currPage - 1
 	nextPage := currPage + 1
@@ -25,7 +22,6 @@ func CreatePagination(ctx *fiber.Ctx, totalRecords int64) (pagination response.P
 
 	hasPreviousPage := currPage > 1
 	hasNextPage := currPage < int(totalPages)
-	offset = (currPage - 1) * limit
 
 	pagination.TotalRecords = int(totalRecords)
 	pagination.Limit = limit
@@ -36,5 +32,5 @@ func CreatePagination(ctx *fiber.Ctx, totalRecords int64) (pagination response.P
 	pagination.NextPage = nextPage
 	pagination.HasNextPage = hasNextPage
 
-	return pagination, offset
+	return pagination
 }

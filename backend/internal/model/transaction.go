@@ -69,8 +69,8 @@ func (t *Transaction) ToResponse() *response.TransactionResponse {
 		Quantity:                    t.Quantity,
 		Type:                        t.Type,
 		UnitMassAcronym:             t.UnitMassAcronym,
-		CreatedAt:                   t.CreatedAt.String(),
-		UpdatedAt:                   t.UpdatedAt.String(),
+		CreatedAt:                   t.CreatedAt.Local().String(),
+		UpdatedAt:                   t.UpdatedAt.Local().String(),
 	}
 }
 
@@ -105,7 +105,7 @@ func (t *Transaction) ToResponseWithAssociations() *response.TransactionResponse
 		Quantity:                    t.Quantity,
 		Type:                        t.Type,
 		UnitMassAcronym:             t.UnitMassAcronym,
-		CreatedAt:                   t.CreatedAt.String(),
-		UpdatedAt:                   t.UpdatedAt.String(),
+		CreatedAt:                   t.CreatedAt.Local().String(),
+		UpdatedAt:                   t.UpdatedAt.Local().String(),
 	}
 }

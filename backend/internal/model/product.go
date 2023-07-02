@@ -31,8 +31,8 @@ func (p *Product) ToResponse() *response.ProductResponse {
 		Name:                p.Name,
 		UnitMassAcronym:     p.UnitMassAcronym,
 		UnitMassDescription: p.UnitMassDescription,
-		CreatedAt:           p.CreatedAt.String(),
-		UpdatedAt:           p.UpdatedAt.String(),
+		CreatedAt:           p.CreatedAt.Local().String(),
+		UpdatedAt:           p.UpdatedAt.Local().String(),
 	}
 }
 
@@ -48,8 +48,8 @@ func (p *Product) ToResponseWithAssociations() *response.ProductResponse {
 		Name:                p.Name,
 		UnitMassAcronym:     p.UnitMassAcronym,
 		UnitMassDescription: p.UnitMassDescription,
-		CreatedAt:           p.CreatedAt.String(),
-		UpdatedAt:           p.UpdatedAt.String(),
+		CreatedAt:           p.CreatedAt.Local().String(),
+		UpdatedAt:           p.UpdatedAt.Local().String(),
 		ProductQualities:    productQualities,
 	}
 }

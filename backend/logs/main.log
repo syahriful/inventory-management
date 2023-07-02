@@ -1046,3 +1046,399 @@
 [30-Jun-2023 13:26:41] | 200 | 111.9174ms | 127.0.0.1 | GET | /api/transactions | -
 [30-Jun-2023 13:26:50] | 200 | 118.2262ms | 127.0.0.1 | GET | /api/transactions | -
 [30-Jun-2023 13:26:58] | 200 | 107.6165ms | 127.0.0.1 | GET | /api/transactions | -
+[02-Jul-2023 10:22:47] | 201 | 171.534ms | 127.0.0.1 | POST | /api/register | -
+[02-Jul-2023 10:30:43] | 201 | 238.8453ms | 127.0.0.1 | POST | /api/register | -
+[02-Jul-2023 10:33:51] | 201 | 256.9011ms | 127.0.0.1 | POST | /api/register | -
+[02-Jul-2023 10:34:38] | 200 | 435.5647ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 10:34:41] | 200 | 104.6287ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 10:34:46] | 200 | 118.4758ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:03:44] | 201 | 1.6181801s | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 11:04:29] | 400 | 425.1µs | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:05:21] | 500 | 14.2769ms | 127.0.0.1 | GET | /api/users/search | [400 Bad Request] {"error":{"root_cause":[{"type":"json_parse_exception","reason":"Unrecognized token 'wid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')\n at [Source: (org.elasticsearch.common.io.stream.ByteBufferStreamInput); line: 1, column: 4]"}],"type":"json_parse_exception","reason":"Unrecognized token 'wid': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')\n at [Source: (org.elasticsearch.common.io.stream.ByteBufferStreamInput); line: 1, column: 4]"},"status":400}
+[02-Jul-2023 11:06:11] | 200 | 33.1596ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:06:27] | 200 | 12.9441ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:06:41] | 200 | 8.3588ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:06:44] | 200 | 9.2848ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:06:54] | 200 | 7.573ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:10:41] | 200 | 25.8203ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:10:44] | 200 | 17.3267ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:10:45] | 200 | 8.2682ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:10:49] | 200 | 5.4747ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:11:01] | 200 | 7.8834ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:11:11] | 200 | 7.2536ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:11:22] | 200 | 8.447ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:11:24] | 200 | 6.4486ms | 127.0.0.1 | GET | /api/users/search | -
+[02-Jul-2023 11:13:17] | 200 | 26.0738ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:13:20] | 200 | 8.0107ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:13:26] | 200 | 6.7511ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:13:32] | 200 | 182.0703ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:14:21] | 200 | 178.2802ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:14:22] | 200 | 106.896ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:14:23] | 200 | 2.2219ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:14:47] | 200 | 178.5829ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:15:51] | 200 | 171.5723ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:15:55] | 200 | 112.045ms | 127.0.0.1 | GET | /api/transactions | -
+[02-Jul-2023 11:16:08] | 200 | 104.6952ms | 127.0.0.1 | GET | /api/transactions | -
+[02-Jul-2023 11:16:12] | 200 | 113.5419ms | 127.0.0.1 | GET | /api/transactions | -
+[02-Jul-2023 11:16:17] | 200 | 17.2297ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:24:50] | 200 | 28.176ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:25:13] | 200 | 13.3058ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:25:15] | 200 | 8.7158ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:27:31] | 500 | 16.327ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "parsing_exception",
+        "reason" : "[query_string] query does not support [name]",
+        "line" : 1,
+        "col" : 34
+      }
+    ],
+    "type" : "parsing_exception",
+    "reason" : "[query_string] query does not support [name]",
+    "line" : 1,
+    "col" : 34
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 11:27:42] | 200 | 45.5859ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:27:47] | 200 | 24.9028ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:27:49] | 200 | 9.3035ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:28:05] | 200 | 9.1655ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:28:27] | 201 | 284.9368ms | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 11:28:29] | 200 | 10.247ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:28:52] | 200 | 9.9372ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:29:15] | 200 | 8.2359ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:29:20] | 200 | 5.5671ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:29:42] | 200 | 6.6959ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:17] | 200 | 39.5206ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:28] | 200 | 524.7016ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:32] | 200 | 7.7293ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:39] | 200 | 7.7149ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:44] | 200 | 7.538ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:46] | 200 | 6.9252ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:47] | 200 | 7.1032ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:31:50] | 200 | 6.4449ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:14] | 200 | 14.3765ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:21] | 200 | 9.4701ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:39] | 200 | 6.5397ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:44] | 200 | 6.3992ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:51] | 200 | 7.1431ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:40:57] | 200 | 5.1389ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:41:02] | 200 | 5.2642ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:48:34] | 200 | 13.4353ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:49:03] | 200 | 16.6747ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:49:19] | 200 | 14.4201ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:50:17] | 200 | 9.4444ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:50:20] | 200 | 7.0211ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:50:26] | 200 | 5.3716ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:51:00] | 200 | 187.917ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 11:53:03] | 200 | 11.183ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:53:13] | 200 | 5.2744ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:53:18] | 200 | 5.7072ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:53:26] | 200 | 5.5619ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:53:51] | 200 | 8.6278ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:55:58] | 200 | 9.3508ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:56:01] | 200 | 6.4162ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:57:17] | 200 | 34.1227ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:57:24] | 200 | 52.5931ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:57:45] | 200 | 5.7879ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:57:48] | 200 | 7.0336ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:07] | 200 | 5.2794ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:14] | 200 | 6.5624ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:14] | 200 | 5.2313ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:15] | 200 | 5.9758ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:16] | 200 | 3.6021ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:37] | 200 | 17.9038ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:38] | 200 | 6.1002ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:39] | 200 | 5.8898ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:58:39] | 200 | 6.1591ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 11:59:46] | 200 | 22.9254ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:00:05] | 200 | 6.3191ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:00:09] | 201 | 294.0538ms | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 12:00:12] | 200 | 7.8201ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:00:22] | 200 | 9.561ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:09:39] | 200 | 183.2795ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:09:48] | 200 | 109.8591ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:09:58] | 200 | 111.7403ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:12:22] | 200 | 27.1746ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:12:36] | 200 | 42.4389ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:12:52] | 200 | 17.1986ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:16:44] | 200 | 49.9163ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:16:45] | 200 | 53.5361ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:17:48] | 500 | 19.8651ms | 127.0.0.1 | POST | /api/users/search | json: cannot unmarshal object into Go value of type int64
+[02-Jul-2023 12:19:17] | 200 | 19.8761ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:23:08] | 200 | 21.9827ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:23:27] | 200 | 8.4598ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:23:39] | 200 | 10.986ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:23:53] | 200 | 8.9904ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:24:00] | 200 | 7.9363ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:24:10] | 200 | 177.257ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:24:15] | 200 | 107.8028ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:24:19] | 200 | 116.7101ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:24:28] | 200 | 108.8103ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:33:22] | 200 | 17.5557ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:33:31] | 200 | 8.496ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:33:35] | 200 | 8.4127ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:33:48] | 200 | 8.0943ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:41:59] | 200 | 14.859ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:42:08] | 200 | 9.6712ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:42:23] | 200 | 9.6934ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:43:08] | 200 | 9.9818ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:43:10] | 200 | 7.2487ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:44:39] | 500 | 14.7972ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 12:45:01] | 200 | 18.605ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:45:52] | 500 | 15.9748ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 12:46:22] | 500 | 8.0724ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 12:46:27] | 200 | 194.1096ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 12:47:05] | 200 | 16.7126ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:47:14] | 500 | 15.2764ms | 127.0.0.1 | POST | /api/users/search | [404 Not Found] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "index_not_found_exception",
+        "reason" : "no such index [userss]",
+        "resource.type" : "index_or_alias",
+        "resource.id" : "userss",
+        "index_uuid" : "_na_",
+        "index" : "userss"
+      }
+    ],
+    "type" : "index_not_found_exception",
+    "reason" : "no such index [userss]",
+    "resource.type" : "index_or_alias",
+    "resource.id" : "userss",
+    "index_uuid" : "_na_",
+    "index" : "userss"
+  },
+  "status" : 404
+}
+
+[02-Jul-2023 12:56:12] | 204 | 124.4556ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:56:19] | 200 | 45.493ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:57:30] | 204 | 223.9556ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:57:31] | 204 | 13.943ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:57:34] | 200 | 836.0003ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:57:54] | 204 | 30.4145ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:57:56] | 200 | 14.1037ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:58:08] | 204 | 35.408ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:58:09] | 200 | 13.1409ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:58:25] | 204 | 28.6974ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:58:25] | 204 | 20.0983ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:58:27] | 200 | 9.912ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:58:28] | 200 | 6.0756ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:58:30] | 204 | 31.1615ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:58:31] | 200 | 12.2894ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 12:58:41] | 204 | 24.4814ms | 127.0.0.1 | DELETE | /api/users | -
+[02-Jul-2023 12:58:42] | 500 | 9.817ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 12:59:41] | 500 | 14.1235ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:00:01] | 200 | 12.1324ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:00:51] | 500 | 13.2196ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:00:52] | 500 | 5.7559ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:00:53] | 500 | 5.7226ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:01:42] | 500 | 13.813ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:01:43] | 500 | 5.2006ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:02:01] | 500 | 16.3265ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:04:41] | 400 | 16.9704ms | 127.0.0.1 | POST | /api/users/search | [400 Bad Request] {
+  "error" : {
+    "root_cause" : [
+      {
+        "type" : "illegal_argument_exception",
+        "reason" : "[from] parameter cannot be negative"
+      }
+    ],
+    "type" : "illegal_argument_exception",
+    "reason" : "[from] parameter cannot be negative"
+  },
+  "status" : 400
+}
+
+[02-Jul-2023 13:05:37] | 200 | 14.8506ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:05:59] | 200 | 171.8702ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:06:03] | 201 | 207.3884ms | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 13:06:04] | 200 | 12.9901ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:08] | 200 | 104.7869ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:06:16] | 201 | 184.8926ms | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 13:06:18] | 200 | 12.1862ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:26] | 200 | 7.634ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:34] | 200 | 14.7595ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:42] | 200 | 5.9925ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:50] | 200 | 9.2405ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:57] | 200 | 11.5647ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:06:59] | 200 | 7.222ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:07:11] | 200 | 6.9266ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:07:28] | 200 | 8.1353ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:07:36] | 201 | 243.5703ms | 127.0.0.1 | POST | /api/users | -
+[02-Jul-2023 13:07:38] | 200 | 520.1045ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:07:55] | 200 | 10.5199ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:08:39] | 200 | 8.5844ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:09:03] | 200 | 9.134ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:09:42] | 200 | 8.7681ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:09:48] | 200 | 8.6811ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:10:10] | 200 | 190.1379ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:10:12] | 200 | 104.1781ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:10:15] | 200 | 107.7754ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:10:17] | 200 | 112.7359ms | 127.0.0.1 | GET | /api/users | -
+[02-Jul-2023 13:10:39] | 200 | 12.205ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:10:42] | 200 | 7.1248ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:11:04] | 200 | 6.9982ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:11:19] | 200 | 10.265ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:21:20] | 200 | 11.1093ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:21:30] | 200 | 8.0422ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:21:33] | 200 | 10.2175ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:23:14] | 200 | 15.7652ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:23:21] | 200 | 7.2189ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:23:26] | 200 | 4.3569ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:23:31] | 200 | 5.9452ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:23:35] | 200 | 5.5482ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:24:31] | 200 | 15.4667ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:26:09] | 200 | 12.0111ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:26:47] | 200 | 16.6021ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:27:02] | 200 | 16.0629ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:27:04] | 200 | 9.8128ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:27:17] | 200 | 22.5919ms | 127.0.0.1 | POST | /api/users/search | -
+[02-Jul-2023 13:27:26] | 200 | 9.4681ms | 127.0.0.1 | POST | /api/users/search | -

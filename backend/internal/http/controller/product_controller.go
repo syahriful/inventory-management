@@ -30,12 +30,16 @@ func NewProductController(productService service.ProductServiceContract, route f
 }
 
 func (controller *ProductController) FindAll(ctx *fiber.Ctx) error {
+	currPage := ctx.QueryInt("page", 1)
+	limit := ctx.QueryInt("limit", 10)
+
 	totalRecords, err := controller.ProductService.CountAll(ctx.UserContext())
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 
-	pagination, offset := util.CreatePagination(ctx, totalRecords)
+	pagination := util.CreatePagination(currPage, limit, totalRecords)
+	offset := (pagination.CurrentPage - 1) * pagination.Limit
 	products, err := controller.ProductService.FindAll(ctx.UserContext(), offset, pagination.Limit)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())

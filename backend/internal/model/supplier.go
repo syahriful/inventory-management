@@ -31,8 +31,8 @@ func (s *Supplier) ToResponse() *response.SupplierResponse {
 		Name:      s.Name,
 		Address:   s.Address,
 		Phone:     s.Phone,
-		CreatedAt: s.CreatedAt.String(),
-		UpdatedAt: s.UpdatedAt.String(),
+		CreatedAt: s.CreatedAt.Local().String(),
+		UpdatedAt: s.UpdatedAt.Local().String(),
 	}
 }
 
@@ -48,8 +48,8 @@ func (s *Supplier) ToResponseWithAssociations() *response.SupplierResponse {
 		Name:         s.Name,
 		Address:      s.Address,
 		Phone:        s.Phone,
-		CreatedAt:    s.CreatedAt.String(),
-		UpdatedAt:    s.UpdatedAt.String(),
+		CreatedAt:    s.CreatedAt.Local().String(),
+		UpdatedAt:    s.UpdatedAt.Local().String(),
 		Transactions: transactionResponses,
 	}
 }

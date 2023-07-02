@@ -1,6 +1,7 @@
 package http
 
 import (
+	"github.com/elastic/go-elasticsearch/v7"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/recover"
@@ -32,13 +33,18 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 		return nil, err
 	}
 
+	es, err := elasticsearch.NewDefaultClient()
+	if err != nil {
+		return nil, err
+	}
+
 	// Register the routes
-	NewRoutes(db, app)
+	NewRoutes(db, app, es)
 
 	return app, nil
 }
 
-func NewRoutes(db *gorm.DB, app *fiber.App) {
+func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
 	// Init repositories
 	userRepository := repository.NewUserRepository(db)
 	transactionRepository := repository.NewTransactionRepository(db)
@@ -64,7 +70,7 @@ func NewRoutes(db *gorm.DB, app *fiber.App) {
 
 	app.Use(middleware.NewJWTMiddleware())
 
-	controller.NewUserController(userService, prefix)
+	controller.NewUserController(userService, es, prefix)
 	controller.NewCustomerController(customerService, prefix)
 	controller.NewProductQualityController(productQualityService, prefix)
 	controller.NewProductController(productService, prefix)

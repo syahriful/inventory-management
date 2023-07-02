@@ -2,4 +2,5 @@
 .vscode
 .env
 /backend/application.exe
+/backend/database/postgres/data
 tmp
