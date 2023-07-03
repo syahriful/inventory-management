@@ -5,8 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/elastic/go-elasticsearch/v7"
-	"github.com/elastic/go-elasticsearch/v7/esapi"
-	"inventory-management/backend/internal/model"
+	"inventory-management/backend/internal/http/response"
 	"strconv"
 )
 
@@ -68,19 +67,19 @@ func (service *UserElasticsearch) Search(ctx context.Context, data bytes.Buffer,
 	return searchResponse, nil
 }
 
-func (service *UserElasticsearch) Create(ctx context.Context, user *model.User) error {
+func (service *UserElasticsearch) Create(ctx context.Context, user *response.UserResponse) error {
 	data, err := json.Marshal(user)
 	if err != nil {
 		return err
 	}
 
-	reqEs := esapi.IndexRequest{
-		Index:      "users",
-		DocumentID: strconv.FormatInt(user.ID, 10),
-		Body:       bytes.NewReader(data),
-	}
-
-	res, err := reqEs.Do(ctx, service.Elasticsearch)
+	res, err := service.Elasticsearch.Create(
+		"users",
+		strconv.FormatInt(user.ID, 10),
+		bytes.NewReader(data),
+		service.Elasticsearch.Create.WithContext(ctx),
+		service.Elasticsearch.Create.WithPretty(),
+	)
 	if err != nil {
 		return err
 	}
@@ -89,9 +88,25 @@ func (service *UserElasticsearch) Create(ctx context.Context, user *model.User) 
 	return nil
 }
 
+func (service *UserElasticsearch) Update(ctx context.Context, user *response.UserResponse) error {
+	err := service.Delete(ctx, user.ID)
+	if err != nil {
+		return err
+	}
+
+	err = service.Create(ctx, user)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (service *UserElasticsearch) Delete(ctx context.Context, id int64) error {
 	idString := strconv.FormatInt(id, 10)
-	res, err := service.Elasticsearch.Delete("users", idString,
+	res, err := service.Elasticsearch.Delete(
+		"users",
+		idString,
 		service.Elasticsearch.Delete.WithContext(ctx),
 	)
 	if err != nil {

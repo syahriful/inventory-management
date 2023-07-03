@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"github.com/gofiber/fiber/v2"
 	"inventory-management/backend/internal/http/request"
 	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
@@ -109,7 +108,7 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 	}
 
 	// Insert to Elasticsearch
-	err = service.Elasticsearch.Create(ctx, user)
+	err = service.Elasticsearch.Create(ctx, user.ToResponse())
 	if err != nil {
 		return nil, err
 	}
@@ -140,6 +139,12 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 		return nil, err
 	}
 
+	// Update to Elasticsearch
+	err = service.Elasticsearch.Update(ctx, user.ToResponse())
+	if err != nil {
+		return nil, err
+	}
+
 	return user.ToResponse(), nil
 }
 
@@ -157,7 +162,7 @@ func (service *UserService) Delete(ctx context.Context, id int64) error {
 	// Delete from Elasticsearch
 	err = service.Elasticsearch.Delete(ctx, id)
 	if err != nil {
-		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	return nil

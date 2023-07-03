@@ -66,7 +66,7 @@ func (repository *UserRepository) Create(ctx context.Context, user *model.User) 
 }
 
 func (repository *UserRepository) Update(ctx context.Context, user *model.User) (*model.User, error) {
-	err := repository.DB.WithContext(ctx).Select("name", "password").Updates(&user).Error
+	err := repository.DB.WithContext(ctx).Select("name", "password").Updates(user).Error
 	if err != nil {
 		return nil, err
 	}

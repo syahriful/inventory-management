@@ -36,14 +36,9 @@ func ReturnErrorValidation(c *fiber.Ctx, err []*ErrorResponse) error {
 }
 
 type Pagination struct {
-	TotalRecords    int  `json:"total_records"`
-	Limit           int  `json:"limit"`
-	CurrentPage     int  `json:"current_page"`
-	TotalPages      int  `json:"total_pages"`
-	PreviousPage    int  `json:"previous_page"`
-	HasPreviousPage bool `json:"has_previous_page"`
-	NextPage        int  `json:"next_page"`
-	HasNextPage     bool `json:"has_next_page"`
+	TotalRecords int `json:"total_records"`
+	CurrentPage  int `json:"current_page"`
+	TotalPages   int `json:"total_pages"`
 }
 
 type ApiResponse struct {

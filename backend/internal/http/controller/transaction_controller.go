@@ -35,6 +35,9 @@ func NewTransactionController(transactionService service.TransactionServiceContr
 
 func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {
 	currPage := ctx.QueryInt("page", 1)
+	if currPage <= 0 {
+		currPage = 1
+	}
 	limit := ctx.QueryInt("limit", 10)
 
 	totalRecords, err := controller.TransactionService.CountAll(ctx.UserContext())
@@ -43,8 +46,8 @@ func (controller *TransactionController) FindAll(ctx *fiber.Ctx) error {
 	}
 
 	pagination := util.CreatePagination(currPage, limit, totalRecords)
-	offset := (pagination.CurrentPage - 1) * pagination.Limit
-	transactions, err := controller.TransactionService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	offset := (currPage - 1) * limit
+	transactions, err := controller.TransactionService.FindAll(ctx.UserContext(), offset, limit)
 	if err != nil {
 		return fiber.NewError(http.StatusInternalServerError, err.Error())
 	}

@@ -74,7 +74,7 @@ func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
 
 	app.Use(middleware.NewJWTMiddleware())
 
-	controller.NewUserController(userService, userElasticsearch, prefix)
+	controller.NewUserController(userService, prefix)
 	controller.NewCustomerController(customerService, prefix)
 	controller.NewProductQualityController(productQualityService, prefix)
 	controller.NewProductController(productService, prefix)

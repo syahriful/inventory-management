@@ -32,6 +32,9 @@ func NewSupplierController(supplierService service.SupplierServiceContract, rout
 
 func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
 	currPage := ctx.QueryInt("page", 1)
+	if currPage <= 0 {
+		currPage = 1
+	}
 	limit := ctx.QueryInt("limit", 10)
 
 	totalRecords, err := controller.SupplierService.CountAll(ctx.UserContext())
@@ -40,8 +43,8 @@ func (controller *SupplierController) FindAll(ctx *fiber.Ctx) error {
 	}
 
 	pagination := util.CreatePagination(currPage, limit, totalRecords)
-	offset := (pagination.CurrentPage - 1) * pagination.Limit
-	suppliers, err := controller.SupplierService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	offset := (currPage - 1) * limit
+	suppliers, err := controller.SupplierService.FindAll(ctx.UserContext(), offset, limit)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}

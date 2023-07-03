@@ -7,21 +7,17 @@ import (
 	"inventory-management/backend/internal/http/request"
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/service"
-	"inventory-management/backend/internal/third_party/es"
 	"inventory-management/backend/util"
-	"log"
 	"sync"
 )
 
 type UserController struct {
-	UserService   service.UserServiceContract
-	Elasticsearch third_party.UserElasticsearchContract
+	UserService service.UserServiceContract
 }
 
-func NewUserController(userService service.UserServiceContract, elasticsearch third_party.UserElasticsearchContract, route fiber.Router) UserController {
+func NewUserController(userService service.UserServiceContract, route fiber.Router) UserController {
 	controller := UserController{
-		UserService:   userService,
-		Elasticsearch: elasticsearch,
+		UserService: userService,
 	}
 
 	user := route.Group("/users")
@@ -50,13 +46,16 @@ func (controller *UserController) Search(ctx *fiber.Ctx) error {
 	}
 
 	currPage := ctx.QueryInt("page", 1)
+	if currPage <= 0 {
+		currPage = 1
+	}
 	limit := ctx.QueryInt("limit", 10)
 
 	var wg sync.WaitGroup
+	var pagination response.Pagination
+	totalRecords := make(chan int64)
 
 	wg.Add(2)
-	totalRecords := make(chan int64)
-	var pagination response.Pagination
 	go func() {
 		defer wg.Done()
 		pagination = util.CreatePagination(currPage, limit, <-totalRecords)
@@ -67,17 +66,20 @@ func (controller *UserController) Search(ctx *fiber.Ctx) error {
 		defer wg.Done()
 		offset := (currPage - 1) * limit
 		searchResponse, err = controller.UserService.Search(ctx.UserContext(), data, offset, limit, totalRecords)
-		if err != nil {
-			log.Fatal(err)
-		}
 	}()
 	wg.Wait()
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
 
 	return response.ReturnJSON(ctx, fiber.StatusOK, "OK", searchResponse).WithPagination(&pagination).Build()
 }
 
 func (controller *UserController) FindAll(ctx *fiber.Ctx) error {
 	currPage := ctx.QueryInt("page", 1)
+	if currPage <= 0 {
+		currPage = 1
+	}
 	limit := ctx.QueryInt("limit", 10)
 
 	totalRecords, err := controller.UserService.CountAll(ctx.UserContext())
@@ -86,8 +88,8 @@ func (controller *UserController) FindAll(ctx *fiber.Ctx) error {
 	}
 
 	pagination := util.CreatePagination(currPage, limit, totalRecords)
-	offset := (pagination.CurrentPage - 1) * pagination.Limit
-	users, err := controller.UserService.FindAll(ctx.UserContext(), offset, pagination.Limit)
+	offset := (currPage - 1) * limit
+	users, err := controller.UserService.FindAll(ctx.UserContext(), offset, limit)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
