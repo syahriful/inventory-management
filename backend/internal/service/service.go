@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	request "inventory-management/backend/internal/http/request"
 	response "inventory-management/backend/internal/http/response"
@@ -8,6 +9,7 @@ import (
 
 type (
 	UserServiceContract interface {
+		Search(ctx context.Context, data bytes.Buffer, offset int, limit int, totalRecord chan<- int64) (map[string]interface{}, error)
 		FindAll(ctx context.Context, offset int, limit int) ([]*response.UserResponse, error)
 		CountAll(ctx context.Context) (int64, error)
 		FindByID(ctx context.Context, id int64) (*response.UserResponse, error)

@@ -1,22 +1,42 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"errors"
+	"github.com/gofiber/fiber/v2"
 	"inventory-management/backend/internal/http/request"
 	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
+	third_party "inventory-management/backend/internal/third_party/es"
 )
 
 type UserService struct {
 	UserRepository repository.UserRepositoryContract
+	Elasticsearch  third_party.UserElasticsearchContract
 }
 
-func NewUserService(userRepository repository.UserRepositoryContract) UserServiceContract {
+func NewUserService(userRepository repository.UserRepositoryContract, elasticsearch third_party.UserElasticsearchContract) UserServiceContract {
 	return &UserService{
 		UserRepository: userRepository,
+		Elasticsearch:  elasticsearch,
 	}
+}
+
+func (service *UserService) Search(ctx context.Context, data bytes.Buffer, offset int, limit int, totalRecord chan<- int64) (map[string]interface{}, error) {
+	totalRecords, err := service.Elasticsearch.CountAll(ctx, data)
+	if err != nil {
+		return nil, err
+	}
+
+	totalRecord <- totalRecords
+	searchResponse, err := service.Elasticsearch.Search(ctx, data, offset, limit)
+	if err != nil {
+		return nil, err
+	}
+
+	return searchResponse, nil
 }
 
 func (service *UserService) FindAll(ctx context.Context, offset int, limit int) ([]*response.UserResponse, error) {
@@ -88,6 +108,12 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 		return nil, err
 	}
 
+	// Insert to Elasticsearch
+	err = service.Elasticsearch.Create(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
 	return user.ToResponse(), nil
 }
 
@@ -123,5 +149,16 @@ func (service *UserService) Delete(ctx context.Context, id int64) error {
 		return err
 	}
 
-	return service.UserRepository.Delete(ctx, id)
+	err = service.UserRepository.Delete(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	// Delete from Elasticsearch
+	err = service.Elasticsearch.Delete(ctx, id)
+	if err != nil {
+		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
+	}
+
+	return nil
 }

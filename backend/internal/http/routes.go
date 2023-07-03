@@ -13,6 +13,7 @@ import (
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/repository"
 	"inventory-management/backend/internal/service"
+	"inventory-management/backend/internal/third_party/es"
 	"os"
 )
 
@@ -45,6 +46,9 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 }
 
 func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
+	// Init third party services
+	userElasticsearch := third_party.NewUserElasticsearch(es)
+
 	// Init repositories
 	userRepository := repository.NewUserRepository(db)
 	transactionRepository := repository.NewTransactionRepository(db)
@@ -55,7 +59,7 @@ func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
 	txRepository := repository.NewTxRepository(db, transactionRepository, productQualityRepository)
 
 	// Init services
-	userService := service.NewUserService(userRepository)
+	userService := service.NewUserService(userRepository, userElasticsearch)
 	customerService := service.NewCustomerService(customerRepository)
 	productQualityService := service.NewProductQualityService(productQualityRepository, productRepository)
 	productService := service.NewProductService(productRepository)
@@ -70,7 +74,7 @@ func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
 
 	app.Use(middleware.NewJWTMiddleware())
 
-	controller.NewUserController(userService, es, prefix)
+	controller.NewUserController(userService, userElasticsearch, prefix)
 	controller.NewCustomerController(customerService, prefix)
 	controller.NewProductQualityController(productQualityService, prefix)
 	controller.NewProductController(productService, prefix)

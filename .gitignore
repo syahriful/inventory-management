@@ -3,4 +3,5 @@
 .env
 /backend/application.exe
 /backend/database/postgres/data
+/backend/database/elasticsearch/data
 tmp

@@ -10,14 +10,20 @@ func CreatePagination(currPage int, limit int, totalRecords int64) (pagination r
 	prevPage := currPage - 1
 	nextPage := currPage + 1
 
-	if currPage >= int(totalPages) {
-		currPage = int(totalPages)
-	}
 	if prevPage <= 0 {
 		prevPage = 1
 	}
-	if currPage >= int(totalPages) {
-		nextPage = int(totalPages)
+
+	if currPage <= 0 {
+		currPage = 1
+	}
+
+	if nextPage <= 0 {
+		nextPage = currPage + 1
+	}
+
+	if totalPages <= 0 {
+		totalPages = 1
 	}
 
 	hasPreviousPage := currPage > 1
