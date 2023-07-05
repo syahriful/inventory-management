@@ -31,13 +31,10 @@ services:
       - "9200:9200"
     networks:
       - inventory-management
+    restart: always
 
 volumes:
-  data01:
-    driver: local
-  data02:
-    driver: local
-  data03:
+  data:
     driver: local
 networks:
   inventory-management:

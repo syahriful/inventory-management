@@ -4,25 +4,26 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/elastic/go-elasticsearch/v7"
-	"inventory-management/backend/internal/http/response"
+	"reflect"
 	"strconv"
 )
 
-type UserElasticsearch struct {
+type Elasticsearch struct {
 	Elasticsearch *elasticsearch.Client
 }
 
-func NewUserElasticsearch(elasticsearch *elasticsearch.Client) UserElasticsearchContract {
-	return &UserElasticsearch{
+func NewElasticsearch(elasticsearch *elasticsearch.Client) ElasticsearchContract {
+	return &Elasticsearch{
 		Elasticsearch: elasticsearch,
 	}
 }
 
-func (service *UserElasticsearch) CountAll(ctx context.Context, data bytes.Buffer) (int64, error) {
+func (service *Elasticsearch) CountAll(ctx context.Context, index string, data bytes.Buffer) (int64, error) {
 	count, err := service.Elasticsearch.Count(
 		service.Elasticsearch.Count.WithContext(ctx),
-		service.Elasticsearch.Count.WithIndex("users"),
+		service.Elasticsearch.Count.WithIndex(index),
 		service.Elasticsearch.Count.WithBody(&data),
 		service.Elasticsearch.Count.WithPretty(),
 	)
@@ -44,10 +45,10 @@ func (service *UserElasticsearch) CountAll(ctx context.Context, data bytes.Buffe
 	return totalHitsInt, nil
 }
 
-func (service *UserElasticsearch) Search(ctx context.Context, data bytes.Buffer, offset int, limit int) (map[string]interface{}, error) {
+func (service *Elasticsearch) Search(ctx context.Context, index string, data bytes.Buffer, offset int, limit int) (map[string]interface{}, error) {
 	res, err := service.Elasticsearch.Search(
 		service.Elasticsearch.Search.WithContext(ctx),
-		service.Elasticsearch.Search.WithIndex("users"),
+		service.Elasticsearch.Search.WithIndex(index),
 		service.Elasticsearch.Search.WithBody(&data),
 		service.Elasticsearch.Search.WithTrackTotalHits(true),
 		service.Elasticsearch.Search.WithPretty(),
@@ -67,16 +68,22 @@ func (service *UserElasticsearch) Search(ctx context.Context, data bytes.Buffer,
 	return searchResponse, nil
 }
 
-func (service *UserElasticsearch) Create(ctx context.Context, user *response.UserResponse) error {
-	data, err := json.Marshal(user)
+func (service *Elasticsearch) Create(ctx context.Context, index string, request interface{}, id int64) error {
+	if reflect.TypeOf(request).Kind() != reflect.Struct {
+		return errors.New("the request is not a struct type")
+	}
+
+	data, err := json.Marshal(request)
 	if err != nil {
 		return err
 	}
 
+	idString := strconv.FormatInt(id, 10)
+	dataReader := bytes.NewReader(data)
 	res, err := service.Elasticsearch.Create(
-		"users",
-		strconv.FormatInt(user.ID, 10),
-		bytes.NewReader(data),
+		index,
+		idString,
+		dataReader,
 		service.Elasticsearch.Create.WithContext(ctx),
 		service.Elasticsearch.Create.WithPretty(),
 	)
@@ -88,13 +95,17 @@ func (service *UserElasticsearch) Create(ctx context.Context, user *response.Use
 	return nil
 }
 
-func (service *UserElasticsearch) Update(ctx context.Context, user *response.UserResponse) error {
-	err := service.Delete(ctx, user.ID)
+func (service *Elasticsearch) Update(ctx context.Context, index string, request interface{}, id int64) error {
+	if reflect.TypeOf(request).Kind() != reflect.Struct {
+		return errors.New("the request is not a struct type")
+	}
+
+	err := service.Delete(ctx, index, id)
 	if err != nil {
 		return err
 	}
 
-	err = service.Create(ctx, user)
+	err = service.Create(ctx, index, request, id)
 	if err != nil {
 		return err
 	}
@@ -102,10 +113,10 @@ func (service *UserElasticsearch) Update(ctx context.Context, user *response.Use
 	return nil
 }
 
-func (service *UserElasticsearch) Delete(ctx context.Context, id int64) error {
+func (service *Elasticsearch) Delete(ctx context.Context, index string, id int64) error {
 	idString := strconv.FormatInt(id, 10)
 	res, err := service.Elasticsearch.Delete(
-		"users",
+		index,
 		idString,
 		service.Elasticsearch.Delete.WithContext(ctx),
 	)

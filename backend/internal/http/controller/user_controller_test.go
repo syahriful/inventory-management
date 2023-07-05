@@ -12,7 +12,6 @@ import (
 	"inventory-management/backend/internal/http/request"
 	response "inventory-management/backend/internal/http/response"
 	service "inventory-management/backend/internal/service/mock"
-	third_party "inventory-management/backend/internal/third_party/es/mock"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -35,15 +34,15 @@ func TestUserController_FindAll(t *testing.T) {
 					ID:        1,
 					Username:  "wdyarfn",
 					Name:      "Widdy Arfiansyah",
-					CreatedAt: "2021-01-01 00:00:00",
-					UpdatedAt: "2021-01-01 00:00:00",
+					CreatedAt: "2021-01-01 07:00:00",
+					UpdatedAt: "2021-01-01 07:00:00",
 				},
 				{
 					ID:        2,
 					Username:  "Arfian",
 					Name:      "arfn",
-					CreatedAt: "2021-01-01 00:00:00",
-					UpdatedAt: "2021-01-01 00:00:00",
+					CreatedAt: "2021-01-01 07:00:00",
+					UpdatedAt: "2021-01-01 07:00:00",
 				},
 			},
 			expectedCode:  http.StatusOK,
@@ -71,13 +70,12 @@ func TestUserController_FindAll(t *testing.T) {
 
 			ctx := context.Background()
 
-			var es third_party.UserElasticsearchMock
 			var svc service.UserServiceMock
 			svc.On("CountAll", ctx).Return(int64(2), nil)
 			svc.On("FindAll", ctx, 0, 10).Return(tc.expectedBody, tc.expectedError)
 
 			route := app.Group("/api")
-			ctrl := NewUserController(&svc, &es, route)
+			ctrl := NewUserController(&svc, route)
 			app.Get("/api/users", ctrl.FindAll)
 
 			req := httptest.NewRequest(http.MethodGet, "/api/users", nil)
@@ -113,8 +111,8 @@ func TestUserController_FindByID(t *testing.T) {
 				ID:        1,
 				Username:  "wdyarfn",
 				Name:      "Widdy Arfiansyah",
-				CreatedAt: "2021-01-01 00:00:00",
-				UpdatedAt: "2021-01-01 00:00:00",
+				CreatedAt: "2021-01-01 07:00:00",
+				UpdatedAt: "2021-01-01 07:00:00",
 			},
 			expectedCode:  http.StatusOK,
 			expectedError: nil,
@@ -151,12 +149,11 @@ func TestUserController_FindByID(t *testing.T) {
 
 			ctx := context.Background()
 
-			var es third_party.UserElasticsearchMock
 			var svc service.UserServiceMock
 			svc.On("FindByID", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
 			route := app.Group("/api")
-			ctrl := NewUserController(&svc, &es, route)
+			ctrl := NewUserController(&svc, route)
 			app.Get("/api/users/:id", ctrl.FindByID)
 
 			url := fmt.Sprintf("/api/users/%d", tc.request)
@@ -200,8 +197,8 @@ func TestUserController_Create(t *testing.T) {
 				ID:        1,
 				Username:  "wdyarfn",
 				Name:      "Widdy Arfiansyah",
-				CreatedAt: "2021-01-01 00:00:00",
-				UpdatedAt: "2021-01-01 00:00:00",
+				CreatedAt: "2021-01-01 07:00:00",
+				UpdatedAt: "2021-01-01 07:00:00",
 			},
 			expectedCode:  http.StatusCreated,
 			expectedError: nil,
@@ -331,12 +328,11 @@ func TestUserController_Create(t *testing.T) {
 
 			ctx := context.Background()
 
-			var es third_party.UserElasticsearchMock
 			var svc service.UserServiceMock
 			svc.On("Create", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
 			route := app.Group("/api")
-			ctrl := NewUserController(&svc, &es, route)
+			ctrl := NewUserController(&svc, route)
 			app.Post("/api/users", ctrl.Create)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -392,8 +388,8 @@ func TestUserController_Update(t *testing.T) {
 				ID:        1,
 				Username:  "wdyarfn",
 				Name:      "Widdy Arfiansyah",
-				CreatedAt: "2021-01-01 00:00:00",
-				UpdatedAt: "2021-01-01 00:00:00",
+				CreatedAt: "2021-01-01 07:00:00",
+				UpdatedAt: "2021-01-01 07:00:00",
 			},
 			expectedCode:  http.StatusOK,
 			expectedError: nil,
@@ -484,12 +480,11 @@ func TestUserController_Update(t *testing.T) {
 
 			ctx := context.Background()
 
-			var es third_party.UserElasticsearchMock
 			var svc service.UserServiceMock
 			svc.On("Update", ctx, tc.request).Return(tc.expectedBody, tc.expectedError)
 
 			route := app.Group("/api")
-			ctrl := NewUserController(&svc, &es, route)
+			ctrl := NewUserController(&svc, route)
 			app.Patch("/api/users/:id", ctrl.Update)
 
 			byteRequest, err := json.Marshal(tc.request)
@@ -572,12 +567,11 @@ func TestUserController_Delete(t *testing.T) {
 
 			ctx := context.Background()
 
-			var es third_party.UserElasticsearchMock
 			var svc service.UserServiceMock
 			svc.On("Delete", ctx, tc.request).Return(tc.expectedError)
 
 			route := app.Group("/api")
-			ctrl := NewUserController(&svc, &es, route)
+			ctrl := NewUserController(&svc, route)
 			app.Delete("/api/users/:id", ctrl.Delete)
 
 			url := fmt.Sprintf("/api/users/%d", tc.request)

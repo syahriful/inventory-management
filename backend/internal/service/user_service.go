@@ -8,29 +8,31 @@ import (
 	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	"inventory-management/backend/internal/repository"
-	third_party "inventory-management/backend/internal/third_party/es"
+	third_party "inventory-management/backend/internal/third_party/elasticsearch"
 )
 
 type UserService struct {
-	UserRepository repository.UserRepositoryContract
-	Elasticsearch  third_party.UserElasticsearchContract
+	UserRepository     repository.UserRepositoryContract
+	Elasticsearch      third_party.ElasticsearchContract
+	IndexElasticsearch string
 }
 
-func NewUserService(userRepository repository.UserRepositoryContract, elasticsearch third_party.UserElasticsearchContract) UserServiceContract {
+func NewUserService(userRepository repository.UserRepositoryContract, elasticsearch third_party.ElasticsearchContract) UserServiceContract {
 	return &UserService{
-		UserRepository: userRepository,
-		Elasticsearch:  elasticsearch,
+		UserRepository:     userRepository,
+		Elasticsearch:      elasticsearch,
+		IndexElasticsearch: "users",
 	}
 }
 
 func (service *UserService) Search(ctx context.Context, data bytes.Buffer, offset int, limit int, totalRecord chan<- int64) (map[string]interface{}, error) {
-	totalRecords, err := service.Elasticsearch.CountAll(ctx, data)
+	totalRecords, err := service.Elasticsearch.CountAll(ctx, service.IndexElasticsearch, data)
 	if err != nil {
 		return nil, err
 	}
 
 	totalRecord <- totalRecords
-	searchResponse, err := service.Elasticsearch.Search(ctx, data, offset, limit)
+	searchResponse, err := service.Elasticsearch.Search(ctx, service.IndexElasticsearch, data, offset, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +110,7 @@ func (service *UserService) Create(ctx context.Context, request *request.CreateU
 	}
 
 	// Insert to Elasticsearch
-	err = service.Elasticsearch.Create(ctx, user.ToResponse())
+	err = service.Elasticsearch.Create(ctx, service.IndexElasticsearch, user.ToResponse(), user.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +142,7 @@ func (service *UserService) Update(ctx context.Context, request *request.UpdateU
 	}
 
 	// Update to Elasticsearch
-	err = service.Elasticsearch.Update(ctx, user.ToResponse())
+	err = service.Elasticsearch.Update(ctx, service.IndexElasticsearch, user.ToResponse(), user.ID)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +162,7 @@ func (service *UserService) Delete(ctx context.Context, id int64) error {
 	}
 
 	// Delete from Elasticsearch
-	err = service.Elasticsearch.Delete(ctx, id)
+	err = service.Elasticsearch.Delete(ctx, service.IndexElasticsearch, id)
 	if err != nil {
 		return err
 	}

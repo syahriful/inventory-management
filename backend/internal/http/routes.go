@@ -13,7 +13,7 @@ import (
 	"inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/repository"
 	"inventory-management/backend/internal/service"
-	"inventory-management/backend/internal/third_party/es"
+	"inventory-management/backend/internal/third_party/elasticsearch"
 	"os"
 )
 
@@ -47,7 +47,7 @@ func NewInitializedRoutes(configuration config.Config, logFile *os.File) (*fiber
 
 func NewRoutes(db *gorm.DB, app *fiber.App, es *elasticsearch.Client) {
 	// Init third party services
-	userElasticsearch := third_party.NewUserElasticsearch(es)
+	userElasticsearch := third_party.NewElasticsearch(es)
 
 	// Init repositories
 	userRepository := repository.NewUserRepository(db)

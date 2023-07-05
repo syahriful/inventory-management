@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	"github.com/stretchr/testify/mock"
 	"inventory-management/backend/internal/http/request"
@@ -9,6 +10,15 @@ import (
 
 type UserServiceMock struct {
 	mock.Mock
+}
+
+func (mock *UserServiceMock) Search(ctx context.Context, data bytes.Buffer, offset int, limit int, totalRecord chan<- int64) (map[string]interface{}, error) {
+	args := mock.Called(ctx, data, offset, limit, totalRecord)
+	if args.Get(0) == nil {
+		return nil, args.Error(1)
+	}
+
+	return args.Get(0).(map[string]interface{}), args.Error(1)
 }
 
 func (mock *UserServiceMock) FindAll(ctx context.Context, offset int, limit int) ([]*response.UserResponse, error) {

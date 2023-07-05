@@ -126,6 +126,9 @@ func (controller *UserController) Create(ctx *fiber.Ctx) error {
 
 	user, err := controller.UserService.Create(ctx.UserContext(), &userRequest)
 	if err != nil {
+		if err.Error() == response.ErrorUsernameExists {
+			return fiber.NewError(fiber.StatusBadRequest, err.Error())
+		}
 		return fiber.NewError(fiber.StatusInternalServerError, err.Error())
 	}
 

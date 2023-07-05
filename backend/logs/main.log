@@ -2034,3 +2034,22 @@
 [03-Jul-2023 22:02:08] | 200 | 10.8434ms | 127.0.0.1 | POST | /api/users/search | -
 [03-Jul-2023 22:02:16] | 200 | 136.0088ms | 127.0.0.1 | PATCH | /api/users/47 | -
 [03-Jul-2023 22:02:18] | 200 | 12.6815ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 11:44:07] | 200 | 277.1865ms | 127.0.0.1 | GET | /api/users | -
+[05-Jul-2023 11:44:13] | 200 | 149.3067ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 11:45:48] | 200 | 28.736ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 11:51:16] | 200 | 256.0597ms | 127.0.0.1 | PATCH | /api/users/47 | -
+[05-Jul-2023 11:51:19] | 200 | 167.2036ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:03:47] | 200 | 27.0868ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:03:47] | 200 | 11.9295ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:03:48] | 200 | 14.3896ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:03:56] | 200 | 17.5603ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:03:59] | 200 | 15.5789ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:04:02] | 200 | 12.3528ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:05] | 200 | 36.1769ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:14] | 200 | 11.0992ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:20] | 200 | 11.6654ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:25] | 200 | 11.1551ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:30] | 200 | 11.0509ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:08:34] | 200 | 9.199ms | 127.0.0.1 | POST | /api/users/search | -
+[05-Jul-2023 12:30:33] | 500 | 202.6939ms | 127.0.0.1 | POST | /api/users | username already exist
+[05-Jul-2023 12:31:05] | 400 | 182.6137ms | 127.0.0.1 | POST | /api/users | username already exist

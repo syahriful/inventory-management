@@ -134,8 +134,8 @@ func TestProductQualityService_FindAllByProductCode(t *testing.T) {
 					Name:                "Shrimp",
 					UnitMassAcronym:     "g",
 					UnitMassDescription: "gram",
-					CreatedAt:           "0001-01-01 00:00:00 +0000 UTC",
-					UpdatedAt:           "0001-01-01 00:00:00 +0000 UTC",
+					CreatedAt:           "0001-01-01 07:00:00 +0700 +07",
+					UpdatedAt:           "0001-01-01 07:00:00 +0700 +07",
 				},
 				ProductQualities: []*response.ProductQualityResponse{
 					{
@@ -232,8 +232,8 @@ func TestProductQualityService_FindByID(t *testing.T) {
 					Name:                "Shrimp",
 					UnitMassAcronym:     "g",
 					UnitMassDescription: "gram",
-					CreatedAt:           "0001-01-01 00:00:00 +0000 UTC",
-					UpdatedAt:           "0001-01-01 00:00:00 +0000 UTC",
+					CreatedAt:           "0001-01-01 07:00:00 +0700 +07",
+					UpdatedAt:           "0001-01-01 07:00:00 +0700 +07",
 				},
 			},
 			expectedProductQualityRepoFindByIDError: nil,

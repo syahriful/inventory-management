@@ -10,6 +10,7 @@ import (
 	response "inventory-management/backend/internal/http/response"
 	"inventory-management/backend/internal/model"
 	repository "inventory-management/backend/internal/repository/mock"
+	third_party "inventory-management/backend/internal/third_party/elasticsearch"
 	"testing"
 )
 
@@ -42,15 +43,15 @@ func TestUserService_FindAll(t *testing.T) {
 					ID:        1,
 					Name:      "Widdy Arfiansyah",
 					Username:  "wdyarfn",
-					CreatedAt: "0001-01-01 00:00:00 +0000 UTC",
-					UpdatedAt: "0001-01-01 00:00:00 +0000 UTC",
+					CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+					UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
 				},
 				{
 					ID:        2,
 					Name:      "Arfiansyah",
 					Username:  "arfn",
-					CreatedAt: "0001-01-01 00:00:00 +0000 UTC",
-					UpdatedAt: "0001-01-01 00:00:00 +0000 UTC",
+					CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+					UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
 				},
 			},
 			expectedUserRepoFindAllError: nil,
@@ -70,8 +71,9 @@ func TestUserService_FindAll(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindAll", ctx, 0, 10).Return(tc.expectedUserRepoFindAll, tc.expectedUserRepoFindAllError)
-			svc := NewUserService(&repo)
+			svc := NewUserService(&repo, &es)
 			result, err := svc.FindAll(ctx, 0, 10)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -106,8 +108,8 @@ func TestUserService_FindByID(t *testing.T) {
 				ID:        1,
 				Name:      "Widdy Arfiansyah",
 				Username:  "wdyarfn",
-				CreatedAt: "0001-01-01 00:00:00 +0000 UTC",
-				UpdatedAt: "0001-01-01 00:00:00 +0000 UTC",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
 			},
 			expectedUserRepoFindByIDError: nil,
 			expectedSvcError:              nil,
@@ -127,8 +129,9 @@ func TestUserService_FindByID(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindByID", ctx, tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
-			svc := NewUserService(&repo)
+			svc := NewUserService(&repo, &es)
 			result, err := svc.FindByID(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -202,8 +205,9 @@ func TestUserService_VerifyLogin(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindByUsername", ctx, tc.request.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
-			svc := NewUserService(&repo)
+			svc := NewUserService(&repo, &es)
 			result, err := svc.VerifyLogin(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -231,7 +235,9 @@ func TestUserService_Create(t *testing.T) {
 		expectedUserRepoCreate              *model.User
 		expectedUserRepoCreateError         error
 		expectedSvc                         *response.UserResponse
+		expected3rdParty                    *response.UserResponse
 		expectedSvcError                    error
+		expected3rdPartyError               error
 	}{
 		{
 			name: "Create user with required fields",
@@ -253,13 +259,23 @@ func TestUserService_Create(t *testing.T) {
 				Password: string(password),
 			},
 			expectedSvc: &response.UserResponse{
-				ID:       1,
-				Name:     "Widdy Arfiansyah",
-				Username: "wdyarfn",
+				ID:        1,
+				Name:      "Widdy Arfiansyah",
+				Username:  "wdyarfn",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
+			},
+			expected3rdParty: &response.UserResponse{
+				ID:        1,
+				Name:      "Widdy Arfiansyah",
+				Username:  "wdyarfn",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
 			},
 			expectedUserRepoCreateError:         nil,
 			expectedSvcError:                    nil,
 			expectedUserRepoFindByUsernameError: errors.New(response.ErrorNotFound),
+			expected3rdPartyError:               nil,
 		},
 		{
 			name: "Create user with given the exists username",
@@ -279,11 +295,19 @@ func TestUserService_Create(t *testing.T) {
 				Username: "wdyarfn",
 				Password: string(password),
 			},
+			expected3rdParty: &response.UserResponse{
+				ID:        1,
+				Name:      "Widdy Arfiansyah",
+				Username:  "wdyarfn",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
+			},
 			expectedUserRepoCreate:              nil,
 			expectedSvc:                         nil,
 			expectedUserRepoCreateError:         errors.New("getting an error"),
 			expectedSvcError:                    errors.New(response.ErrorUsernameExists),
 			expectedUserRepoFindByUsernameError: nil,
+			expected3rdPartyError:               errors.New("getting an error"),
 		},
 	}
 
@@ -292,9 +316,11 @@ func TestUserService_Create(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindByUsername", ctx, tc.requestRepo.Username).Return(tc.expectedUserRepoFindByUsername, tc.expectedUserRepoFindByUsernameError)
 			repo.On("Create", ctx, mock.Anything).Return(tc.expectedUserRepoCreate, tc.expectedUserRepoCreateError)
-			svc := NewUserService(&repo)
+			es.On("Create", ctx, "users", tc.expected3rdParty, tc.expected3rdParty.ID).Return(tc.expected3rdPartyError)
+			svc := NewUserService(&repo, &es)
 			result, err := svc.Create(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -320,7 +346,9 @@ func TestUserService_Update(t *testing.T) {
 		expectedUserRepoUpdate        *model.User
 		expectedUserRepoUpdateError   error
 		expectedSvc                   *response.UserResponse
+		expected3rdParty              *response.UserResponse
 		expectedSvcError              error
+		expected3rdPartyError         error
 	}{
 		{
 			name: "Update user with required fields",
@@ -345,12 +373,20 @@ func TestUserService_Update(t *testing.T) {
 				ID:        1,
 				Name:      "Arfian",
 				Username:  "wdyarfn",
-				CreatedAt: "0001-01-01 00:00:00 +0000 UTC",
-				UpdatedAt: "0001-01-01 00:00:00 +0000 UTC",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
+			},
+			expected3rdParty: &response.UserResponse{
+				ID:        1,
+				Name:      "Arfian",
+				Username:  "wdyarfn",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
 			},
 			expectedUserRepoUpdateError:   nil,
 			expectedSvcError:              nil,
 			expectedUserRepoFindByIDError: nil,
+			expected3rdPartyError:         nil,
 		},
 		{
 			name: "User doesnt exists with given ID when updating data",
@@ -359,6 +395,13 @@ func TestUserService_Update(t *testing.T) {
 				Name:     "Arfian",
 				Password: "7654321",
 			},
+			expected3rdParty: &response.UserResponse{
+				ID:        1,
+				Name:      "Arfian",
+				Username:  "wdyarfn",
+				CreatedAt: "0001-01-01 07:00:00 +0700 +07",
+				UpdatedAt: "0001-01-01 07:00:00 +0700 +07",
+			},
 			requestUserRepoFindByID:       1,
 			expectedUserRepoFindByID:      nil,
 			expectedUserRepoUpdate:        nil,
@@ -366,6 +409,7 @@ func TestUserService_Update(t *testing.T) {
 			expectedUserRepoUpdateError:   errors.New("getting an error"),
 			expectedSvcError:              errors.New(response.ErrorNotFound),
 			expectedUserRepoFindByIDError: errors.New(response.ErrorNotFound),
+			expected3rdPartyError:         errors.New("getting an error"),
 		},
 	}
 
@@ -374,9 +418,11 @@ func TestUserService_Update(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindByID", ctx, tc.requestUserRepoFindByID).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
 			repo.On("Update", ctx, mock.Anything).Return(tc.expectedUserRepoUpdate, tc.expectedUserRepoUpdateError)
-			svc := NewUserService(&repo)
+			es.On("Update", ctx, "users", tc.expected3rdParty, tc.expected3rdParty.ID).Return(tc.expected3rdPartyError)
+			svc := NewUserService(&repo, &es)
 			result, err := svc.Update(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
@@ -401,6 +447,7 @@ func TestUserService_Delete(t *testing.T) {
 		expectedUserRepoFindByIDError error
 		expectedUserRepoDeleteError   error
 		expectedSvcError              error
+		expected3rdPartyError         error
 	}{
 		{
 			name:    "User exists with given ID",
@@ -412,6 +459,7 @@ func TestUserService_Delete(t *testing.T) {
 			expectedUserRepoDeleteError:   nil,
 			expectedSvcError:              nil,
 			expectedUserRepoFindByIDError: nil,
+			expected3rdPartyError:         nil,
 		},
 		{
 			name:                          "User doesnt exists with given ID when deleting data",
@@ -420,6 +468,7 @@ func TestUserService_Delete(t *testing.T) {
 			expectedUserRepoDeleteError:   errors.New("getting an error"),
 			expectedSvcError:              errors.New(response.ErrorNotFound),
 			expectedUserRepoFindByIDError: errors.New(response.ErrorNotFound),
+			expected3rdPartyError:         errors.New("getting an error"),
 		},
 	}
 
@@ -428,9 +477,11 @@ func TestUserService_Delete(t *testing.T) {
 			ctx := context.Background()
 
 			var repo repository.UserRepositoryMock
+			var es third_party.ElasticsearchMock
 			repo.On("FindByID", ctx, tc.request).Return(tc.expectedUserRepoFindByID, tc.expectedUserRepoFindByIDError)
 			repo.On("Delete", ctx, tc.request).Return(tc.expectedUserRepoDeleteError)
-			svc := NewUserService(&repo)
+			es.On("Delete", ctx, "users", tc.request).Return(tc.expected3rdPartyError)
+			svc := NewUserService(&repo, &es)
 			err := svc.Delete(ctx, tc.request)
 			if tc.expectedSvcError != nil {
 				assert.Error(t, err)
